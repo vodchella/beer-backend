@@ -1,9 +1,11 @@
 aiofiles==0.4.0
+asyncpg==0.18.3
 httptools==0.0.13
 multidict==4.5.2
 pid==2.2.3
 PyYAML==5.1.1
 sanic==19.3.1
+sh==1.12.14
 ujson==1.35
 uvloop==0.12.2
 websockets==6.0

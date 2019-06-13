@@ -9,6 +9,7 @@ import yaml
 from glob import glob
 from pkg.app import app, v1
 from pkg.config import CONFIG, CFG_FILE
+from pkg.constants.version import SOFTWARE_VERSION
 from pkg.utils.errors import get_raised_error
 from pkg.utils.console import panic
 from pkg.utils.logger import DEFAULT_LOGGER
@@ -24,7 +25,7 @@ if __name__ == '__main__':
     try:
         with pid.PidFile(pid_file, piddir=pid_dir) as p:
             pid_ok = True
-            DEFAULT_LOGGER.info('MyBeer REST server started, PID: %s' % p.pid)
+            DEFAULT_LOGGER.info(f'{SOFTWARE_VERSION} starting, PID:{p.pid}')
             DEFAULT_LOGGER.info(f'Config loaded from {CFG_FILE}:\n{yaml.dump(CONFIG, default_flow_style=False)}')
 
             try:
@@ -37,10 +38,11 @@ if __name__ == '__main__':
             DEFAULT_LOGGER.info(f'Loading application modules...')
             for md in [os.path.basename(x)[:-3] for x in glob('./pkg/app/*.py') if x[-11:] != '__init__.py']:
                 importlib.import_module(f'pkg.app.{md}')
-                DEFAULT_LOGGER.info(f'...{md} loaded')
+                DEFAULT_LOGGER.info(f'... {md} loaded')
 
             app.blueprint(v1)
             app.host, app.port = host, port
+            app.static_routes = list(filter(lambda r: r.name == 'static', app.router.routes_all.values()))
             app.run(host=host, port=port, access_log=False)
     except:
         if pid_ok:

@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 from pkg.utils.errors import get_raised_error
 
 

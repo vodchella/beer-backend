@@ -1,0 +1,3 @@
+log:
+  file_name: beer-rest.log
+  path: /var/log/beer-rest

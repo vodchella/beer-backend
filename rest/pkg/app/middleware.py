@@ -26,7 +26,7 @@ async def log_request(request):
         args = f'\nARGS: {str(request.raw_args)}' if request.raw_args else ''
         log_body = f'{auth}{args}{body}'
         log_body = f'{log_body}\n' if log_body else ''
-        REST_LOGGER.info(f'REQUEST {request.method} {request.path} from {request.ip} {user_agent}{log_body}')
+        REST_LOGGER.info(f'{request.method} {request.path} from {request.ip} {user_agent}{log_body}')
 
 
 def is_static_content(request):

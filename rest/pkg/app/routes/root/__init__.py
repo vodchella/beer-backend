@@ -1,6 +1,7 @@
 from pkg.app import app
 from pkg.constants.version import SOFTWARE_VERSION
 from pkg.decorators import handle_exceptions
+from playhouse.shortcuts import model_to_dict
 from sanic import response
 
 
@@ -13,9 +14,11 @@ from sanic import response
 @handle_exceptions
 async def ping(request):
     from pkg.models import User
-    user = await app.db.aio.select(app.db.SelectQuery(User))
+    result = await app.db.aio.select(app.db.SelectQuery(User))
+    for user in result:
+        pass
 
-    return response.json({'software': SOFTWARE_VERSION, 'user': user})
+    return response.json({'software': SOFTWARE_VERSION, 'user': model_to_dict(user, exclude='aio')})
 
 
 #

@@ -1,8 +1,9 @@
 from datetime import datetime
 from peewee import *
+from pkg.app import app
 
 
-class User(Model):
+class User(app.db.AsyncModel):
     user_id = FixedCharField(max_length=16, primary_key=True)
     email = TextField()
     password = TextField()

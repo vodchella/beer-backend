@@ -12,7 +12,10 @@ from sanic import response
 @app.get('/')
 @handle_exceptions
 async def ping(request):
-    return response.json({'software': SOFTWARE_VERSION})
+    from pkg.models import User
+    obj = await User.aio.create()
+
+    return response.json({'software': SOFTWARE_VERSION, 'obj': obj})
 
 
 #

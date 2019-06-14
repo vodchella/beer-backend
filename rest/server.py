@@ -10,6 +10,7 @@ from glob import glob
 from pkg.app import app, v1
 from pkg.config import CONFIG, CFG_FILE
 from pkg.constants.version import SOFTWARE_VERSION
+from pkg.sanic_peewee import Peewee
 from pkg.utils.errors import get_raised_error
 from pkg.utils.console import panic
 from pkg.utils.logger import DEFAULT_LOGGER
@@ -40,6 +41,10 @@ if __name__ == '__main__':
             for md in [os.path.basename(x)[:-3] for x in glob('./pkg/app/*.py') if x[-11:] != '__init__.py']:
                 importlib.import_module(f'pkg.app.{md}')
                 DEFAULT_LOGGER.info(f'... {md} loaded')
+
+            peewee = Peewee('postgres://postgres:postgres@localhost:5432/beer')
+            db = peewee(app)
+            app.db = db
 
             app.blueprint(v1)
             app.host, app.port = host, port

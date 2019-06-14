@@ -1,0 +1,17 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd" logicalFilePath="src/base/changelog-base-cumulative.xml">
+
+    <include file="01-schemas.xml"         relativeToChangelogFile="true"/>
+    <include file="02-domains.xml"         relativeToChangelogFile="true"/>
+    <include file="03-tables.xml"          relativeToChangelogFile="true"/>
+    <include file="04-tables-data.xml"     relativeToChangelogFile="true"/>
+    <include file="05-foreigh-keys.xml"    relativeToChangelogFile="true"/>
+    <include file="06-indexes.xml"         relativeToChangelogFile="true"/>
+    <include file="07-functions.xml"       relativeToChangelogFile="true"/>
+    <include file="08-triggers.xml"        relativeToChangelogFile="true"/>
+
+    <changeSet author="twister" id="tag:base">
+        <tagDatabase tag="base"/>
+    </changeSet>
+
+</databaseChangeLog>

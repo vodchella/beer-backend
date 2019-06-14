@@ -13,9 +13,9 @@ from sanic import response
 @handle_exceptions
 async def ping(request):
     from pkg.models import User
-    obj = await User.aio.create()
+    user = await app.db.aio.select(app.db.SelectQuery(User))
 
-    return response.json({'software': SOFTWARE_VERSION, 'obj': obj})
+    return response.json({'software': SOFTWARE_VERSION, 'user': user})
 
 
 #

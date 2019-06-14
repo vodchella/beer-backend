@@ -13,4 +13,4 @@ class User(app.db.AsyncModel):
 
     class Meta:
         schema = 'public'
-        table_name = 'users'
+        db_table = 'users'

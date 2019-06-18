@@ -13,7 +13,7 @@ from sanic import response
 @app.get('/')
 @rest_context
 async def ping(context):
-    from pkg.models import User, Company
+    from pkg.models import User, Company, ServicePoint
 
     result = await app.db.aio.select(User.select().where(User.user_id == 'DaNhiRv862lsVbGx'))
     user = fetch_one(result)
@@ -21,10 +21,14 @@ async def ping(context):
     result = await app.db.aio.select(Company.select().where(Company.is_active))
     company = fetch_one(result)
 
+    result = await app.db.aio.select(ServicePoint.select().where(ServicePoint.company_id == 'hLL04DwaV9oGzF3n'))
+    service_point = fetch_one(result)
+
     return response.json({
         'software': SOFTWARE_VERSION,
         'some_id': generate_unique_id(),
         'company': model_to_json(company),
+        'service_point': model_to_json(service_point),
         'user': model_to_json(user)
     })
 

@@ -45,3 +45,15 @@ class Company(app.db.AsyncModel):
     class Meta:
         schema = 'public'
         db_table = 'companies'
+
+
+class ServicePoint(app.db.AsyncModel):
+    service_point_id = PrimaryKeyCharField()
+    name = TextField()
+    company = ForeignKeyField(Company)
+    is_active = IsActiveField()
+    created_at = CreatedAtField()
+
+    class Meta:
+        schema = 'public'
+        db_table = 'service_points'

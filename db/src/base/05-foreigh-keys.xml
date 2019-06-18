@@ -1,7 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd" logicalFilePath="src/base/05-foreigh-keys.xml">
-    <changeSet author="twister" id="empty">
-        <empty/>
-        <rollback/>
+    <changeSet author="twister" id="service_points_ref_companies">
+        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="service_points" constraintName="service_points_ref_companies" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="company_id" referencedTableName="companies"/>
     </changeSet>
 </databaseChangeLog>

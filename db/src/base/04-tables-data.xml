@@ -16,4 +16,12 @@
             TRUNCATE public.companies;
         </rollback>
     </changeSet>
+    <changeSet author="twister" id="PUBLIC.SERVICE_POINTS">
+        <sql>
+            INSERT INTO public.service_points (service_point_id, name, company_id) VALUES ('ej6FJhwGSCkkLILH', 'Тестовый магазин', 'hLL04DwaV9oGzF3n');
+        </sql>
+        <rollback>
+            TRUNCATE public.service_points;
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

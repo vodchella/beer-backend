@@ -11,9 +11,6 @@
             <column name="password" remarks="Пароль" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValueBoolean="false" name="seller_bool" remarks="Продавец" type="BOOLEAN">
-                <constraints nullable="false"/>
-            </column>
             <column defaultValueBoolean="true" name="active_bool" remarks="Активен" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>

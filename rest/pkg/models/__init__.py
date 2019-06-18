@@ -8,7 +8,7 @@ class User(app.db.AsyncModel):
     user_id = FixedCharField(max_length=ID_FIELD_LENGTH, primary_key=True)
     email = TextField()
     password = TextField()
-    active_bool = BooleanField(default=True)
+    is_active = BooleanField(default=True, db_column='active_bool')
     created_at = DateTimeField(default=datetime.now)
 
     class Meta:
@@ -19,7 +19,7 @@ class User(app.db.AsyncModel):
 class Company(app.db.AsyncModel):
     company_id = FixedCharField(max_length=ID_FIELD_LENGTH, primary_key=True)
     name = TextField()
-    active_bool = BooleanField(default=True)
+    is_active = BooleanField(default=True, db_column='active_bool')
     created_at = DateTimeField(default=datetime.now)
 
     class Meta:

@@ -9,16 +9,9 @@ from pkg.utils.rest import RestContext
 def rest_context(func):
     @wraps(func)
     async def wrapped(*positional, **named):
-        ctx = RestContext(positional[0])  # request
-        return await func(ctx, **named)
-    return wrapped
-
-
-def handle_exceptions(func):
-    @wraps(func)
-    async def wrapped(*positional, **named):
         try:
-            return await func(*positional, **named)
+            ctx = RestContext(positional[0])  # request
+            return await func(ctx, **named)
         except PostgresError as e:
             return response_error(ERROR_DATABASE_EXCEPTION, str(e), default_logger=DB_LOGGER_NAME)
         except:

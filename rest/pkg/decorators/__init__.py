@@ -3,6 +3,15 @@ from functools import wraps
 from pkg.constants.error_codes import ERROR_INTERNAL_EXCEPTION, ERROR_DATABASE_EXCEPTION
 from pkg.constants.logging import DB_LOGGER_NAME
 from pkg.utils.errors import response_error, get_raised_error
+from pkg.utils.rest import RestContext
+
+
+def rest_context(func):
+    @wraps(func)
+    async def wrapped(*positional, **named):
+        ctx = RestContext(positional[0])  # request
+        return await func(ctx, **named)
+    return wrapped
 
 
 def handle_exceptions(func):

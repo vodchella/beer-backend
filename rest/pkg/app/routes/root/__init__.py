@@ -13,13 +13,18 @@ from sanic import response
 @app.get('/')
 @rest_context
 async def ping(context):
-    from pkg.models import User
+    from pkg.models import User, Company
+
     result = await app.db.aio.select(User.select().where(User.user_id == 'DaNhiRv862lsVbGx'))
     user = fetch_one(result)
+
+    result = await app.db.aio.select(Company.select().where(Company.active_bool))
+    company = fetch_one(result)
 
     return response.json({
         'software': SOFTWARE_VERSION,
         'some_id': generate_unique_id(),
+        'company': model_to_json(company),
         'user': model_to_json(user)
     })
 

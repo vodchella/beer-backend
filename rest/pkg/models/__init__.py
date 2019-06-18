@@ -14,3 +14,14 @@ class User(app.db.AsyncModel):
     class Meta:
         schema = 'public'
         db_table = 'users'
+
+
+class Company(app.db.AsyncModel):
+    company_id = FixedCharField(max_length=ID_FIELD_LENGTH, primary_key=True)
+    name = TextField()
+    active_bool = BooleanField(default=True)
+    created_at = DateTimeField(default=datetime.now)
+
+    class Meta:
+        schema = 'public'
+        db_table = 'companies'

@@ -8,4 +8,12 @@
             TRUNCATE public.users;
         </rollback>
     </changeSet>
+    <changeSet author="twister" id="PUBLIC.COMPANIES">
+        <sql>
+            INSERT INTO public.companies (company_id, name) VALUES ('hLL04DwaV9oGzF3n', 'Тестовая компания');
+        </sql>
+        <rollback>
+            TRUNCATE public.companies;
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

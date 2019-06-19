@@ -1,24 +1,24 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd" logicalFilePath="src/base/05-foreigh-keys.xml">
     <changeSet author="twister" id="service_points_ref_companies">
-        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="service_points" constraintName="service_points_ref_companies" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="company_id" referencedTableName="companies"/>
+        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="service_points" constraintName="service_points_ref_companies" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="company_id" referencedTableName="companies"/>
     </changeSet>
     <changeSet author="twister" id="employees_ref_users">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="employees" constraintName="employees_ref_users" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="user_id" referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="employees" constraintName="employees_ref_users" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
     </changeSet>
     <changeSet author="twister" id="employees_ref_service_points">
-        <addForeignKeyConstraint baseColumnNames="service_point_id" baseTableName="employees" constraintName="employees_ref_service_points" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="service_point_id" referencedTableName="service_points"/>
+        <addForeignKeyConstraint baseColumnNames="service_point_id" baseTableName="employees" constraintName="employees_ref_service_points" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="service_point_id" referencedTableName="service_points"/>
     </changeSet>
     <changeSet author="twister" id="cards_ref_companies">
-        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="cards" constraintName="cards_ref_companies" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="company_id" referencedTableName="companies"/>
+        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="cards" constraintName="cards_ref_companies" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="company_id" referencedTableName="companies"/>
     </changeSet>
     <changeSet author="twister" id="cards_ref_users">
-        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="cards" constraintName="cards_ref_users" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="user_id" referencedTableName="users"/>
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="cards" constraintName="cards_ref_users" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
     </changeSet>
     <changeSet author="twister" id="cards_ref_employees">
-        <addForeignKeyConstraint baseColumnNames="issuer_id" baseTableName="cards" constraintName="cards_ref_employees" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="employee_id" referencedTableName="employees"/>
+        <addForeignKeyConstraint baseColumnNames="issuer_id" baseTableName="cards" constraintName="cards_ref_employees" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="employee_id" referencedTableName="employees"/>
     </changeSet>
     <changeSet author="twister" id="cards_ref_service_points">
-        <addForeignKeyConstraint baseColumnNames="issued_in_service_point_id" baseTableName="cards" constraintName="cards_ref_service_points" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="service_point_id" referencedTableName="service_points"/>
+        <addForeignKeyConstraint baseColumnNames="issued_in_service_point_id" baseTableName="cards" constraintName="cards_ref_service_points" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="service_point_id" referencedTableName="service_points"/>
     </changeSet>
 </databaseChangeLog>

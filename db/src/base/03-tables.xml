@@ -73,7 +73,7 @@
             <column name="card_number" remarks="Номер" type="char(8)">
                 <constraints nullable="false"/>
             </column>
-            <column name="type" remarks="Тип" type="PUBLIC.CARD_TYPE">
+            <column name="type_of_card" remarks="Тип" type="PUBLIC.CARD_TYPE">
                 <constraints nullable="false"/>
             </column>
             <column name="company_id" remarks="Принадлежит компании" type="char(16)">

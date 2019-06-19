@@ -3,7 +3,7 @@
     <changeSet author="twister" id="unq_card">
         <createIndex indexName="unq_card" schemaName="public" tableName="cards" unique="true">
             <column name="card_number"/>
-            <column name="type"/>
+            <column name="type_of_card"/>
             <column name="company_id"/>
         </createIndex>
     </changeSet>

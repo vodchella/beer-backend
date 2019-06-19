@@ -47,7 +47,7 @@ class Employee(app.db.AsyncModel):
 
 class Card(app.db.AsyncModel):
     card_id = PrimaryKeyCharField()
-    card_number = FixedCharField(max_length=8)
+    card_number = CharField(max_length=20)
     type_of_card = CharField(max_length=15)
     company_id = ForeignKeyCharField(Company)
     owner_id = ForeignKeyCharField(User)

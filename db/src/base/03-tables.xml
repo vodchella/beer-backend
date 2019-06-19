@@ -70,7 +70,7 @@
             <column name="card_id" remarks="Карта" type="char(16)">
                 <constraints primaryKey="true" primaryKeyName="pk_cards"/>
             </column>
-            <column name="card_number" remarks="Номер" type="char(8)">
+            <column name="card_number" remarks="Номер" type="varchar(20)">
                 <constraints nullable="false"/>
             </column>
             <column name="type_of_card" remarks="Тип" type="PUBLIC.CARD_TYPE">

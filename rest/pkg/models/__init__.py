@@ -35,3 +35,15 @@ class ServicePoint(app.db.AsyncModel):
     class Meta:
         schema = 'public'
         db_table = 'service_points'
+
+
+class Employee(app.db.AsyncModel):
+    employee_id = PrimaryKeyCharField()
+    user_id = ForeignKeyCharField(User)
+    service_point_id = ForeignKeyCharField(ServicePoint)
+    is_active = IsActiveField()
+    created_at = CreatedAtField()
+
+    class Meta:
+        schema = 'public'
+        db_table = 'employees'

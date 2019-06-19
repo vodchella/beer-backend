@@ -10,7 +10,6 @@ class User(app.db.AsyncModel):
     created_at = CreatedAtField()
 
     class Meta:
-        schema = 'public'
         db_table = 'users'
 
 
@@ -21,7 +20,6 @@ class Company(app.db.AsyncModel):
     created_at = CreatedAtField()
 
     class Meta:
-        schema = 'public'
         db_table = 'companies'
 
 
@@ -33,7 +31,6 @@ class ServicePoint(app.db.AsyncModel):
     created_at = CreatedAtField()
 
     class Meta:
-        schema = 'public'
         db_table = 'service_points'
 
 
@@ -45,5 +42,4 @@ class Employee(app.db.AsyncModel):
     created_at = CreatedAtField()
 
     class Meta:
-        schema = 'public'
         db_table = 'employees'

@@ -24,4 +24,12 @@
             TRUNCATE public.service_points;
         </rollback>
     </changeSet>
+    <changeSet author="twister" id="PUBLIC.EMPLOYEES">
+        <sql>
+            INSERT INTO public.employees (employee_id, user_id, service_point_id) VALUES ('uQfx7An8KHlK7khU', 'DaNhiRv862lsVbGx', 'ej6FJhwGSCkkLILH');
+        </sql>
+        <rollback>
+            TRUNCATE public.employees;
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

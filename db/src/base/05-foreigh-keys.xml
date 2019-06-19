@@ -3,4 +3,10 @@
     <changeSet author="twister" id="service_points_ref_companies">
         <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="service_points" constraintName="service_points_ref_companies" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="company_id" referencedTableName="companies"/>
     </changeSet>
+    <changeSet author="twister" id="employees_ref_users">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="employees" constraintName="employees_ref_users" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="user_id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="twister" id="employees_ref_service_points">
+        <addForeignKeyConstraint baseColumnNames="service_point_id" baseTableName="employees" constraintName="employees_ref_service_points" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="service_point_id" referencedTableName="service_points"/>
+    </changeSet>
 </databaseChangeLog>

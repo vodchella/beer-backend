@@ -34,7 +34,7 @@
     </changeSet>
     <changeSet author="twister" id="PUBLIC.CARDS">
         <sql>
-            INSERT INTO public.cards (card_id, number, type, company_id, owner_id, issuer_id, issued_in_service_point_id) VALUES ('HY3jBpIsGIWJ6fdj', '00000001', 'accumulation', 'hLL04DwaV9oGzF3n', 'DaNhiRv862lsVbGx', 'uQfx7An8KHlK7khU', 'ej6FJhwGSCkkLILH');
+            INSERT INTO public.cards (card_id, card_number, type, company_id, owner_id, issuer_id, issued_in_service_point_id) VALUES ('HY3jBpIsGIWJ6fdj', '00000001', 'accumulation', 'hLL04DwaV9oGzF3n', 'DaNhiRv862lsVbGx', 'uQfx7An8KHlK7khU', 'ej6FJhwGSCkkLILH');
         </sql>
         <rollback>
             TRUNCATE public.cards;

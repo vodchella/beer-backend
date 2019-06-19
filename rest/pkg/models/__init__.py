@@ -43,3 +43,18 @@ class Employee(app.db.AsyncModel):
 
     class Meta:
         db_table = 'employees'
+
+
+class Card(app.db.AsyncModel):
+    card_id = PrimaryKeyCharField()
+    card_number = FixedCharField(max_length=8)
+    type_of_card = CharField(max_length=15)
+    company_id = ForeignKeyCharField(Company)
+    owner_id = ForeignKeyCharField(User)
+    issuer_id = ForeignKeyCharField(Employee)
+    issued_in_service_point_id = ForeignKeyCharField(ServicePoint)
+    is_active = IsActiveField()
+    created_at = CreatedAtField()
+
+    class Meta:
+        db_table = 'cards'

@@ -27,7 +27,7 @@ async def ping(context):
     result = await app.db.aio.select(Employee.select())
     employee = fetch_one(result)
 
-    result = await app.db.aio.select(Card.select())
+    result = await app.db.aio.select(Card.select().where(Card.attributes.contains('name')))
     card = fetch_one(result)
 
     return response.json({

@@ -46,11 +46,11 @@ class Core:
             postgresqlext+pool://user:passwd@ip:port/dbname?max_connections=20
         """
         TYPES = {
-            "postgres": PostgresqlDatabase,
+            "postgresql": PostgresqlDatabase,
             "mysql": MySQLDatabase,
             "postgresql+pool": PooledPostgresqlDatabase,
             "mysql+pool": PooledMySQLDatabase,
-            "postgresqlext": PostgresqlDatabase,
+            "postgresqlext": PostgresqlExtDatabase,
             "postgresqlext+pool": PooledPostgresqlExtDatabase,
         }
 

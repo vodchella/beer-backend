@@ -42,7 +42,7 @@ if __name__ == '__main__':
                 importlib.import_module(f'pkg.app.{md}')
                 DEFAULT_LOGGER.info(f'... {md} loaded')
 
-            peewee = Peewee('postgres://postgres:postgres@localhost:5432/beer')
+            peewee = Peewee('postgresqlext://postgres:postgres@localhost:5432/beer')
             db = peewee(app)
             app.db = db
 

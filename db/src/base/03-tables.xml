@@ -76,6 +76,7 @@
             <column name="type_of_card" remarks="Тип" type="PUBLIC.CARD_TYPE">
                 <constraints nullable="false"/>
             </column>
+            <column name="attributes" remarks="Атрибуты" type="jsonb" />
             <column name="company_id" remarks="Принадлежит компании" type="char(16)">
                 <constraints nullable="false"/>
             </column>

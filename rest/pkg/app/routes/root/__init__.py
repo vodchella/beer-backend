@@ -29,6 +29,11 @@ async def ping(context):
 
     result = await app.db.aio.select(Card.select().where(Card.attributes.contains('name')))
     card = fetch_one(result)
+    card_dict = model_to_json(card)
+
+    await app.db.aio.update(Card.update(
+        attributes=Card.attributes.concat({'value': card_dict['attributes']['value'] + 1})
+    ))
 
     return response.json({
         'software': SOFTWARE_VERSION,

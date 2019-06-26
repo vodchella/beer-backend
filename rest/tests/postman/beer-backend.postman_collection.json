@@ -1,0 +1,50 @@
+{
+	"info": {
+		"_postman_id": "5ead67f9-804a-466d-95df-97e0fbd6377d",
+		"name": "beer-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "ping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{beer-backend-rest-server}}/api/v1/ping",
+							"host": [
+								"{{beer-backend-rest-server}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ping"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{beer-backend-rest-server}}/",
+					"host": [
+						"{{beer-backend-rest-server}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,9 +1,8 @@
-import requests
-from requests import HTTPError
+from requests import HTTPError, request
 
 
 def checked_request(method, url, **kwargs):
-    response = requests.request(method, url, **kwargs)
+    response = request(method, url, **kwargs)
     try:
         response.raise_for_status()
     except HTTPError as e:

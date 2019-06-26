@@ -11,7 +11,7 @@ from sanic import response
 
 @app.get('/')
 @rest_context
-async def ping(context):
+async def root(context):
     return response.json({
         'software': SOFTWARE_VERSION,
     })

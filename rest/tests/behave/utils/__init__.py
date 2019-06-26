@@ -1,5 +1,5 @@
 from json import JSONDecodeError
-from requests import HTTPError, request
+from requests import HTTPError, Session, request
 
 
 def get_response_json(response):
@@ -10,7 +10,13 @@ def get_response_json(response):
 
 
 def checked_request(method, url, **kwargs):
-    response = request(method, url, **kwargs)
+    session = Session()
+    response = request(method,
+                       url,
+                       headers={
+                           'User-Agent': f'BEHAVE ({session.headers["User-Agent"]})'
+                       },
+                       **kwargs)
     try:
         response.raise_for_status()
     except HTTPError as e:

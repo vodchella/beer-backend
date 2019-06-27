@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd" logicalFilePath="src/base/04-tables-data.xml">
     <changeSet author="twister" id="PUBLIC.USERS">
         <sql>
-            INSERT INTO public.users (user_id, email, password) VALUES ('DaNhiRv862lsVbGx', 'twister.kz@gmail.com', 'fake-pwd-hash');
+            INSERT INTO public.users (user_id, email, password) VALUES ('DaNhiRv862lsVbGx', 'twister.kz@gmail.com', '$argon2id$v=19$m=102400,t=2,p=8$wygF0CNnRxSuGPR8G+oZTg$AeQvD2YWJoCnHG9V+KZ9Tg');
         </sql>
         <rollback>
             TRUNCATE public.users;

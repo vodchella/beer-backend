@@ -2,7 +2,14 @@ from behave import *
 from tests.behave.utils import behave_request
 
 
-TEST_USER_PATH = 'http://localhost:8517/api/v1/users/DaNhiRv862lsVbGx'
+USERS_PATH = 'http://localhost:8517/api/v1/users'
+TEST_USER_PATH = f'{USERS_PATH}/DaNhiRv862lsVbGx'
+
+
+@given('I send incorrect user ID')
+def step_impl(context):
+    url = f'{USERS_PATH}/@@@-invalid-id-@@@'
+    context.response = behave_request('POST', url)
 
 
 @given('I send incorrect data to change password')

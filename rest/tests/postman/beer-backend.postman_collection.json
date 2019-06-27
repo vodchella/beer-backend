@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5ead67f9-804a-466d-95df-97e0fbd6377d",
+		"_postman_id": "35629e4b-f8e5-452a-bcf6-e75e9c9e976b",
 		"name": "beer-backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -8,6 +8,39 @@
 		{
 			"name": "v1",
 			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "change-password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/change-password",
+									"host": [
+										"{{beer-backend-rest-server}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":user_id",
+										"change-password"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "DaNhiRv862lsVbGx"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
 				{
 					"name": "ping",
 					"request": {

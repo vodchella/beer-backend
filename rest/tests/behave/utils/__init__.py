@@ -9,14 +9,17 @@ def get_response_json(response):
         raise Exception(f'JSONDecodeError: {e}\nINVALID JSON: {response.text}')
 
 
-def checked_request(method, url, **kwargs):
+def behave_request(method, url, **kwargs):
     session = Session()
-    response = request(method,
-                       url,
-                       headers={
-                           'User-Agent': f'BEHAVE ({session.headers["User-Agent"]})'
-                       },
-                       **kwargs)
+    return request(method, url,
+                   headers={
+                       'User-Agent': f'BEHAVE ({session.headers["User-Agent"]})'
+                   },
+                   **kwargs)
+
+
+def checked_behave_request(method, url, **kwargs):
+    response = behave_request(method, url, **kwargs)
     try:
         response.raise_for_status()
     except HTTPError as e:

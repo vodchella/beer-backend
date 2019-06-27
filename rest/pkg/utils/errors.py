@@ -27,3 +27,11 @@ def response_error(code, message, status=500, default_logger=REST_LOGGER_NAME, l
     logger.error(f'Status: {status}, JSON: {error_json}{stacktrace_log_msg}')
 
     return response.json(error_json, status=status)
+
+
+def response_400(request):
+    return response_error(400, f'Request data is invalid', 400)
+
+
+def response_404(request):
+    return response_error(404, f'Requested URL {request.path} not found', 404)

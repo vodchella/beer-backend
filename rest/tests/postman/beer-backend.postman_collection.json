@@ -15,7 +15,18 @@
 							"name": "change-password",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"old\": \"old-pwd\",\n\t\"new\": \"new-pwd\"\n}"
+								},
 								"url": {
 									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/change-password",
 									"host": [

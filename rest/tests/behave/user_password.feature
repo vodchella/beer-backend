@@ -15,3 +15,7 @@ Feature: User password management
   Scenario: Trying to change password with incorrect old one
       Given I send incorrect old password
        Then I will get "500" http error and "-32004" application error
+
+  Scenario: Really trying to change password
+      Given I send correct password data
+       Then I will get Ok http status and "ok" result

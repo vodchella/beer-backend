@@ -33,6 +33,15 @@ def step_impl(context):
     context.response = behave_request('POST', url, data=payload)
 
 
+@given('I send correct password data')
+def step_impl(context):
+    url = f'{TEST_USER_PATH}/change-password'
+    # Не будем менять фактический пароль, дабы не сломать тесты
+    # Хэш пароля в БД изменится
+    payload = '{"old": "11111", "new": "11111"}'
+    context.response = behave_request('POST', url, data=payload)
+
+
 @then('I will get "{http_error_code}" http error')
 def step_impl(context, http_error_code):
     assert context.response.status_code == int(http_error_code)
@@ -43,3 +52,10 @@ def step_impl(context, http_error_code, app_error_code):
     json = context.response.json()
     assert json['error']['code'] == int(app_error_code)
     assert context.response.status_code == int(http_error_code)
+
+
+@then('I will get Ok http status and "{result}" result')
+def step_impl(context, result):
+    json = context.response.json()
+    assert json['result'] == result
+    assert context.response.status_code == 200

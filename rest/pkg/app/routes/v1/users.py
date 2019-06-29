@@ -2,7 +2,7 @@ from pkg.app import app, v1
 from pkg.constants.error_codes import ERROR_PASSWORDS_DONT_MATCH
 from pkg.decorators import rest_context
 from pkg.models import User
-from pkg.utils.argon import verify_hash
+from pkg.utils.argon import *
 from pkg.utils.errors import response_400, response_error
 from pkg.utils.peewee import fetch_one
 from sanic import response
@@ -29,4 +29,6 @@ async def ping(context, user_id):
     except:
         return response_error(ERROR_PASSWORDS_DONT_MATCH, 'Passwords don\'t match')
 
-    return response.json({'user_id': user_id})
+    await app.db.aio.update(User.update(password=hash_password(new_password)).where(User.user_id == user_id))
+
+    return response.json({'result': "ok"})

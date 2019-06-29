@@ -25,7 +25,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"old\": \"old-pwd\",\n\t\"new\": \"new-pwd\"\n}"
+									"raw": "{\n\t\"old\": \"11111\",\n\t\"new\": \"11111\"\n}"
 								},
 								"url": {
 									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/change-password",
@@ -42,7 +42,8 @@
 									"variable": [
 										{
 											"key": "user_id",
-											"value": "DaNhiRv862lsVbGx"
+											"value": "DaNhiRv862lsVbGx",
+											"type": "string"
 										}
 									]
 								}

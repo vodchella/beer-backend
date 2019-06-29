@@ -26,6 +26,13 @@ def step_impl(context):
     context.response = behave_request('POST', url, data=payload)
 
 
+@given('I send incorrect old password')
+def step_impl(context):
+    url = f'{TEST_USER_PATH}/change-password'
+    payload = '{"old": "this is incorrect old password", "new": "some new password"}'
+    context.response = behave_request('POST', url, data=payload)
+
+
 @then('I will get "{http_error_code}" http error')
 def step_impl(context, http_error_code):
     assert context.response.status_code == int(http_error_code)

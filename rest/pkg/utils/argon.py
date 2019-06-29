@@ -8,5 +8,4 @@ def hash_password(password):
 
 
 def verify_hash(hash, password):
-    ph.verify(hash, password)
-
+    return ph.verify(hash, password)

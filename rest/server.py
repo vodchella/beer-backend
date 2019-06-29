@@ -37,14 +37,14 @@ if __name__ == '__main__':
             DEFAULT_LOGGER.info(f'{SOFTWARE_VERSION} starting, PID: {p.pid}, File: {pid_file_full}')
             DEFAULT_LOGGER.info(f'Config loaded from {CFG_FILE}:\n{yaml.dump(CONFIG, default_flow_style=False)}')
 
+            peewee = Peewee('postgresqlext://postgres:postgres@localhost:5432/beer')
+            db = peewee(app)
+            app.db = db
+
             DEFAULT_LOGGER.info(f'Loading application modules...')
             for md in [os.path.basename(x)[:-3] for x in glob('./pkg/app/*.py') if x[-11:] != '__init__.py']:
                 importlib.import_module(f'pkg.app.{md}')
                 DEFAULT_LOGGER.info(f'... {md} loaded')
-
-            peewee = Peewee('postgresqlext://postgres:postgres@localhost:5432/beer')
-            db = peewee(app)
-            app.db = db
 
             app.blueprint(v1)
             app.host, app.port = host, port

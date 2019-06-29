@@ -27,6 +27,7 @@ async def ping(context, user_id):
     except:
         return response_error(ERROR_PASSWORDS_DONT_MATCH, 'Passwords don\'t match')
 
-    await app.db.aio.update(User.update(password=hash_password(new_password)).where(User.user_id == user_id))
+    user.password = hash_password(new_password)
+    await app.db.aio.update(user)
 
     return response.json({'result': "ok"})

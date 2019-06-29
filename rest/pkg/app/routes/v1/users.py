@@ -4,7 +4,6 @@ from pkg.decorators import rest_context
 from pkg.models import User
 from pkg.utils.argon import *
 from pkg.utils.errors import response_400, response_error
-from pkg.utils.peewee import fetch_one
 from sanic import response
 
 
@@ -21,8 +20,7 @@ async def ping(context, user_id):
     if old_password is None or new_password is None:
         return response_400(context.request)
 
-    db_result = await app.db.aio.select(User.select().where(User.user_id == user_id))
-    user = fetch_one(db_result)
+    user = await app.db.aio.get(User, User.user_id == user_id)
 
     try:
         verify_hash(user.password, old_password)

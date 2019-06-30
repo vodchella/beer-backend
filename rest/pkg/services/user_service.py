@@ -1,7 +1,8 @@
 from pkg.models import User
 from pkg.rest import app
 from pkg.utils.argon import *
-from pkg.utils.jwt import create_token
+from pkg.utils.jwt import *
+from pkg.utils.peewee import generate_unique_id
 
 
 class UserService:
@@ -25,7 +26,13 @@ class UserService:
         await app.db.aio.update(user)
 
     @staticmethod
-    def create_new_tokens(user):
-        auth_token = create_token(user, 'a')
-        refresh_token = create_token(user, 'r')
+    async def create_new_tokens(user):
+        new_token_key = generate_unique_id()
+        user.token_key = new_token_key
+        await app.db.aio.update(user)
+
+        key = f'{user.password}-{user.user_id}-{new_token_key}'
+
+        auth_token = create_auth_token(user, key)
+        refresh_token = create_refresh_token(user, key)
         return {'auth': auth_token, 'refresh': refresh_token}

@@ -2,11 +2,10 @@ import jwt
 from datetime import datetime
 
 
-def create_token(user, token_type):
+def _create_token(user, key, token_type):
     if token_type not in ['a', 'r']:
         raise Exception('Invalid token type')
 
-    key = f'{user.password}-{user.user_id}'
     payload = {
         'uid': user.user_id,
         'exp': datetime.utcnow(),
@@ -14,3 +13,11 @@ def create_token(user, token_type):
     }
 
     return jwt.encode(payload, key, algorithm='HS256')
+
+
+def create_auth_token(user, key):
+    return _create_token(user, key, 'a')
+
+
+def create_refresh_token(user, key):
+    return _create_token(user, key, 'r')

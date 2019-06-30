@@ -47,4 +47,4 @@ async def login(context, user_id):
     if not UserService.verify_password(user, password):
         return response_error(ERROR_INCORRECT_PASSWORD, 'Incorrect password')
 
-    return response.json({'result': UserService.create_new_tokens(user)})
+    return response.json({'result': await UserService.create_new_tokens(user)})

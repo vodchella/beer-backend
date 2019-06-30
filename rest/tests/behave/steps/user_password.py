@@ -15,7 +15,7 @@ def step_impl(context):
 
 @given('I send incorrect user ID')
 def step_impl(context):
-    url = f'{USERS_PATH}/@@@-invalid-id-@@@'
+    url = f'{USERS_PATH}/incorrect-@@/change-password'
     context.response = behave_request('POST', url)
 
 

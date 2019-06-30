@@ -12,16 +12,16 @@ USER_PATH = '/users/<user_id:[A-z0-9]+>'
 @v1.post(f'{USER_PATH}/change-password')
 @rest_context
 async def change_password(context, user_id):
+    user = await UserService.find(user_id)
+    if user is None:
+        return response_404(context.request)
+
     body = context.request.json
     old_password = body.get('old', None)
     new_password = body.get('new', None)
 
     if old_password is None or new_password is None:
         return response_400(context.request)
-
-    user = await UserService.find(user_id)
-    if user is None:
-        return response_404(context.request)
 
     try:
         UserService.verify_password(user, old_password)

@@ -10,14 +10,11 @@
 """
 __all__ = ["Core"]
 
-import peewee
 from peewee import Model, BaseModel
-from peewee_async import Manager, execute
 from peewee_async import PostgresqlDatabase, MySQLDatabase,  PooledMySQLDatabase, PooledPostgresqlDatabase
 from peewee_asyncext import PostgresqlExtDatabase, PooledPostgresqlExtDatabase
-from functools import partial
 
-from pkg.sanic_peewee.async_manager import AsyncManager
+from lib.sanic_peewee.async_manager import AsyncManager
 from playhouse.db_url import parse
 
 

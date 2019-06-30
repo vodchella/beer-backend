@@ -7,10 +7,10 @@ import sys
 import tempfile
 import yaml
 from glob import glob
+from lib.sanic_peewee import Peewee
 from pkg.app import app, v1
 from pkg.config import CONFIG, CFG_FILE
 from pkg.constants.version import SOFTWARE_VERSION
-from pkg.sanic_peewee import Peewee
 from pkg.utils.errors import get_raised_error
 from pkg.utils.console import panic
 from pkg.utils.logger import DEFAULT_LOGGER

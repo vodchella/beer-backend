@@ -8,6 +8,10 @@ __all__ = ["select", "prefetch", "scalar", "atomic", "savepoint", "transaction",
 "count","create", "delete", "get", "insert", "update", "Peewee"]
 
 
+from lib.sanic_peewee.core import Core
+from lib.sanic_peewee.mixins import TableHandlerMixin, TransactionHandlerMixin, QueryHandlerMixin
+
+
 from peewee_async import select
 from peewee_async import prefetch
 from peewee_async import scalar
@@ -25,9 +29,6 @@ from peewee_async import delete_object as delete
 from peewee_async import get_object as get
 from peewee_async import insert
 from peewee_async import update_object as update
-
-from pkg.sanic_peewee.core import Core
-from pkg.sanic_peewee.mixins import TableHandlerMixin, TransactionHandlerMixin, QueryHandlerMixin
 
 from peewee import SelectQuery, UpdateQuery, InsertQuery, DeleteQuery
 

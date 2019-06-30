@@ -7,6 +7,7 @@ class User(app.db.AsyncModel):
     user_id = PrimaryKeyCharField()
     email = TextField()
     password = TextField()
+    token_key = FixedCharField(max_length=ID_FIELD_LENGTH)
     is_active = IsActiveField()
     created_at = CreatedAtField()
 

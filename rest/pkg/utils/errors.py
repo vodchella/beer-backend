@@ -33,5 +33,9 @@ def response_400(request):
     return response_error(400, f'Request data is invalid', 400)
 
 
+def response_403(request):
+    return response_error(403, f'Forbidden', 403)
+
+
 def response_404(request):
     return response_error(404, f'Requested URL {request.path} not found', 404)

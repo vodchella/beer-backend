@@ -13,7 +13,10 @@ class UserService:
 
     @staticmethod
     def verify_password(user, password):
-        return verify_hash(user.password, password)
+        try:
+            return verify_hash(user.password, password)
+        except:
+            return False
 
     @staticmethod
     async def set_password(user, new_password):

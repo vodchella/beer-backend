@@ -23,9 +23,7 @@ async def change_password(context, user_id):
     if old_password is None or new_password is None:
         return response_400(context.request)
 
-    try:
-        UserService.verify_password(user, old_password)
-    except:
+    if not UserService.verify_password(user, old_password):
         return response_error(ERROR_PASSWORDS_DONT_MATCH, 'Passwords don\'t match')
 
     await UserService.set_password(user, new_password)

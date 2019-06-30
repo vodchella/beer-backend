@@ -49,6 +49,49 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "login-by-passord",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"password\": \"11111\"\n}"
+								},
+								"url": {
+									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/login/password",
+									"host": [
+										"{{beer-backend-rest-server}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":user_id",
+										"login",
+										"password"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"type": "string",
+											"value": "DaNhiRv862lsVbGx"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"_postman_isSubFolder": true

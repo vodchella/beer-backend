@@ -11,6 +11,7 @@
             <column name="password" remarks="Пароль" type="TEXT">
                 <constraints nullable="false"/>
             </column>
+            <column name="token_key" remarks="Ключ валидации токенов" type="char(16)" />
             <column defaultValueBoolean="true" name="active_bool" remarks="Активен" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>

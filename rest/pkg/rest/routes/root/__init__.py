@@ -1,4 +1,4 @@
-from pkg.app import app
+from pkg.rest import app
 from pkg.constants.version import SOFTWARE_VERSION
 from pkg.decorators import rest_context
 from sanic import response

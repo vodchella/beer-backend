@@ -1,4 +1,4 @@
-from pkg.app import app, v1
+from pkg.rest import app, v1
 from pkg.constants.error_codes import ERROR_PASSWORDS_DONT_MATCH
 from pkg.decorators import rest_context
 from pkg.models import User

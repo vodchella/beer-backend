@@ -8,11 +8,11 @@ import tempfile
 import yaml
 from glob import glob
 from lib.sanic_peewee import Peewee
-from pkg.app import app, v1
 from pkg.config import CONFIG, CFG_FILE
 from pkg.constants.version import SOFTWARE_VERSION
-from pkg.utils.errors import get_raised_error
+from pkg.rest import app, v1
 from pkg.utils.console import panic
+from pkg.utils.errors import get_raised_error
 from pkg.utils.logger import DEFAULT_LOGGER
 
 
@@ -42,8 +42,8 @@ if __name__ == '__main__':
             app.db = db
 
             DEFAULT_LOGGER.info(f'Loading application modules...')
-            for md in [os.path.basename(x)[:-3] for x in glob('./pkg/app/*.py') if x[-11:] != '__init__.py']:
-                importlib.import_module(f'pkg.app.{md}')
+            for md in [os.path.basename(x)[:-3] for x in glob('./pkg/rest/*.py') if x[-11:] != '__init__.py']:
+                importlib.import_module(f'pkg.rest.{md}')
                 DEFAULT_LOGGER.info(f'... {md} loaded')
 
             app.blueprint(v1)

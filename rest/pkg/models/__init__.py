@@ -1,5 +1,5 @@
 from playhouse.postgres_ext import BinaryJSONField
-from pkg.app import app
+from pkg.rest import app
 from pkg.models.fields import *
 
 

@@ -15,8 +15,10 @@ def rest_context(func):
     @wraps(func)
     async def wrapped(*positional, **named):
         try:
-            context = RestContext(positional[0])  # request
-            return await func(context, **named)
+            request = positional[0]
+            if request.json or len(request.body) == 0:
+                context = RestContext(request)
+                return await func(context, **named)
         except PostgresError as e:
             return response_error(ERROR_DATABASE_EXCEPTION, str(e), default_logger=DB_LOGGER_NAME)
         except InvalidUsage as e:
@@ -39,12 +41,11 @@ def authenticated(func):
             if user:
                 secret = create_secret(user)
                 try:
-                    decoded = jwt.decode(token, secret, algorithms='HS256')
-                    context.user = user
-                    context.jwt = decoded
-                    return await func(context, **named)
+                    jwt.decode(token, secret, algorithms='HS256')
                 except:
                     return response_403(context.request, log_stacktrace=False, log_error=False)
+                context.user = user
+                return await func(context, **named)
             else:
                 return response_403(context.request)  # Здесь я хочу видеть ошибку, т.к данные в токене неверны
         else:

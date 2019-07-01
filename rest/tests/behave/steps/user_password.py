@@ -1,36 +1,33 @@
 from behave import *
-from tests.behave.utils import behave_request
-
-
-USERS_PATH = 'http://localhost:8517/api/v1/users'
-TEST_USER_PATH = f'{USERS_PATH}/DaNhiRv862lsVbGx'
+from tests.behave.constants import TEST_USER_PATH, USERS_PATH
+from tests.behave.utils import authorized_behave_request
 
 
 @given('I send invalid JSON')
 def step_impl(context):
     url = f'{TEST_USER_PATH}/change-password'
     payload = 'invalid-json'
-    context.response = behave_request('POST', url, data=payload)
+    context.response = authorized_behave_request('POST', url, data=payload)
 
 
 @given('I send incorrect user ID')
 def step_impl(context):
     url = f'{USERS_PATH}/incorrect-@@/change-password'
-    context.response = behave_request('POST', url)
+    context.response = authorized_behave_request('POST', url)
 
 
 @given('I send incorrect data to change password')
 def step_impl(context):
     url = f'{TEST_USER_PATH}/change-password'
     payload = '{"wrong_param": true}'
-    context.response = behave_request('POST', url, data=payload)
+    context.response = authorized_behave_request('POST', url, data=payload)
 
 
 @given('I send incorrect old password')
 def step_impl(context):
     url = f'{TEST_USER_PATH}/change-password'
     payload = '{"old": "this is incorrect old password", "new": "some new password"}'
-    context.response = behave_request('POST', url, data=payload)
+    context.response = authorized_behave_request('POST', url, data=payload)
 
 
 @given('I send correct password data')
@@ -39,7 +36,7 @@ def step_impl(context):
     # Не будем менять фактический пароль, дабы не сломать тесты
     # Хэш пароля в БД изменится
     payload = '{"old": "11111", "new": "11111"}'
-    context.response = behave_request('POST', url, data=payload)
+    context.response = authorized_behave_request('POST', url, data=payload)
 
 
 @then('I will get "{http_error_code}" http error')

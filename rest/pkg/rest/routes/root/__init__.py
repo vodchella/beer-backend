@@ -1,6 +1,6 @@
 from pkg.rest import app
 from pkg.constants.version import SOFTWARE_VERSION
-from pkg.decorators import rest_context, authenticated
+from pkg.decorators import rest_context
 from sanic import response
 
 
@@ -14,15 +14,6 @@ from sanic import response
 async def root(context):
     return response.json({
         'software': SOFTWARE_VERSION,
-    })
-
-
-@app.get('/test_jwt')
-@rest_context
-@authenticated
-async def root(context):
-    return response.json({
-        'result': 'ok',
     })
 
 

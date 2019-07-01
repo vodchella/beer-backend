@@ -6,7 +6,7 @@ def step_impl(context, http_error_code):
     assert context.response.status_code == int(http_error_code)
 
 
-@then('I will get "{http_error_code}" http error and "{app_error_code}" application error')
+@then('I will get "{http_error_code}" http error with "{app_error_code}" application error')
 def step_impl(context, http_error_code, app_error_code):
     json = context.response.json()
     assert json['error']['code'] == int(app_error_code)

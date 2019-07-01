@@ -16,3 +16,10 @@ def step_impl(context):
     url = f'{USERS_PATH}/incorrectid/login/password'
     payload = {'password': PASSWORD}
     context.response = behave_request('GET', url, data=json.dumps(payload))
+
+
+@given('I try to login with incorrect password')
+def step_impl(context):
+    url = f'{USERS_PATH}/incorrectid/login/password'
+    payload = '"password1": "incorrect"'
+    context.response = behave_request('GET', url, payload)

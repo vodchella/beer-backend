@@ -46,11 +46,7 @@ async def login(context, user_id):
     body = context.request.json
     if body:
         password = body.get('password', None)
-
-        if password is None:
-            return response_400(context.request)
-
-        if not UserService.verify_password(user, password):
+        if password is None or not UserService.verify_password(user, password):
             return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
 
         return response.json({'result': await UserService.create_new_tokens(user)})

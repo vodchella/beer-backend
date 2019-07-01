@@ -2,7 +2,7 @@ Feature: Change password
 
   Scenario: Send invalid JSON when trying to change password
       Given I try to change password with invalid JSON
-       Then I will get "500" http error and "-32003" application error
+       Then I will get "500" http error with "-32003" application error
 
   Scenario: Specify incorrect user ID when trying to change password
       Given I try to change password with incorrect user ID
@@ -14,7 +14,7 @@ Feature: Change password
 
   Scenario: Trying to change password with incorrect old one
       Given I send incorrect old password
-       Then I will get "500" http error and "-32004" application error
+       Then I will get "500" http error with "-32004" application error
 
   Scenario: Really trying to change password
       Given I send correct password data

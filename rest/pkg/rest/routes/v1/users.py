@@ -1,12 +1,13 @@
 from pkg.rest import v1
-from pkg.constants.error_codes import ERROR_INCORRECT_PASSWORD
+from pkg.constants.error_codes import ERROR_INCORRECT_PASSWORD, ERROR_INVALID_USER_OR_PASSWORD
 from pkg.decorators import authenticated, rest_context
 from pkg.services.user_service import UserService
-from pkg.utils.errors import response_error, response_400, response_403, response_404
+from pkg.utils.errors import response_error, response_400, response_404
 from sanic import response
 
 
 USER_PATH = '/users/<user_id:[A-z0-9]+>'
+INVALID_USER_OR_PASSWORD_TEXT = 'Invalid user_id or password'
 
 
 @v1.post(f'{USER_PATH}/change-password')
@@ -26,7 +27,7 @@ async def change_password(context, user_id):
             return response_404(context.request)
 
         if not UserService.verify_password(user, old_password):
-            return response_error(ERROR_INCORRECT_PASSWORD, 'Passwords don\'t match')
+            return response_error(ERROR_INCORRECT_PASSWORD, 'Invalid old password')
 
         await UserService.set_password(user, new_password)
 
@@ -40,7 +41,7 @@ async def change_password(context, user_id):
 async def login(context, user_id):
     user = await UserService.find(user_id)
     if user is None:
-        return response_404(context.request)
+        return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
 
     body = context.request.json
     password = body.get('password', None)
@@ -49,6 +50,6 @@ async def login(context, user_id):
         return response_400(context.request)
 
     if not UserService.verify_password(user, password):
-        return response_error(ERROR_INCORRECT_PASSWORD, 'Incorrect password')
+        return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
 
     return response.json({'result': await UserService.create_new_tokens(user)})

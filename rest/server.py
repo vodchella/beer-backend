@@ -41,7 +41,7 @@ if __name__ == '__main__':
             db = peewee(app)
             app.db = db
 
-            DEFAULT_LOGGER.info(f'Loading application modules...')
+            DEFAULT_LOGGER.info(f'Loading REST modules...')
             for md in [os.path.basename(x)[:-3] for x in glob('./pkg/rest/*.py') if x[-11:] != '__init__.py']:
                 importlib.import_module(f'pkg.rest.{md}')
                 DEFAULT_LOGGER.info(f'... {md} loaded')

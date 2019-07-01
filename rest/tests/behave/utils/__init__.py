@@ -18,9 +18,7 @@ def behave_request(method, url, token=None, **kwargs):
     }
     if token:
         headers.update({'authorization': f'Bearer {token}'})
-    return request(method, url,
-                   headers=headers,
-                   **kwargs)
+    return request(method, url, headers=headers, **kwargs)
 
 
 def authorized_behave_request(method, url, **kwargs):
@@ -35,6 +33,6 @@ def checked_behave_request(method, url, **kwargs):
     try:
         response.raise_for_status()
     except HTTPError as e:
-        json = get_response_json(response)
-        raise Exception(f'{e}\nRESPONSE: {json}')
+        json_ = get_response_json(response)
+        raise Exception(f'{e}\nRESPONSE: {json_}')
     return get_response_json(response)

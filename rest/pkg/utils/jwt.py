@@ -1,14 +1,18 @@
 import jwt
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def _create_token(user, secret, token_type):
-    if token_type not in ['a', 'r']:
+    if token_type == 'a':
+        expires_at = datetime.utcnow() + timedelta(hours=2)
+    elif token_type == 'r':
+        expires_at = datetime.utcnow() + timedelta(days=7)
+    else:
         raise Exception('Invalid token type')
 
     payload = {
         'uid': user.user_id,
-        'exp': datetime.utcnow(),
+        'exp': expires_at,
         'typ': token_type
     }
 

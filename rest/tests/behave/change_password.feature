@@ -1,11 +1,11 @@
-Feature: User password management
+Feature: Change password feature
 
-  Scenario: Trying to send invalid JSON
-      Given I send invalid JSON
+  Scenario: Send invalid JSON when trying to change password
+      Given I try to change password with invalid JSON
        Then I will get "500" http error and "-32003" application error
 
-  Scenario: Trying to specify incorrect user ID
-      Given I send incorrect user ID
+  Scenario: Specify incorrect user ID when trying to change password
+      Given I try to change password with incorrect user ID
        Then I will get "404" http error
 
   Scenario: Trying to change password with invalid request data

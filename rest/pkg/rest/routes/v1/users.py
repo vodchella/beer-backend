@@ -23,7 +23,7 @@ async def change_password(context, user_id):
             return response_400(context.request)
 
         if user.user_id != user_id:
-            return response_403(context.request)
+            return response_404(context.request)
 
         if not UserService.verify_password(user, old_password):
             return response_error(ERROR_INCORRECT_PASSWORD, 'Passwords don\'t match')

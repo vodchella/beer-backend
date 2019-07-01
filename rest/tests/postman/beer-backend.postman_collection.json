@@ -14,6 +14,16 @@
 						{
 							"name": "change-password",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJEYU5oaVJ2ODYybHNWYkd4IiwiZXhwIjoxNTYyMDEwNTI5LCJ0eXAiOiJhIn0.IgCKI29s6UEIcCpKWVB6o45rrSjb8XRlRutJakjcvtc",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{

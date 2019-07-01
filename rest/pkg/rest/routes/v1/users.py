@@ -1,5 +1,5 @@
 from pkg.rest import v1
-from pkg.constants.error_codes import ERROR_INCORRECT_PASSWORD, ERROR_INVALID_USER_OR_PASSWORD
+from pkg.constants.error_codes import *
 from pkg.decorators import authenticated, rest_context
 from pkg.services.user_service import UserService
 from pkg.utils.errors import response_error, response_400, response_404
@@ -33,7 +33,7 @@ async def change_password(context, user_id):
 
         return response.json({'result': 'ok'})
     else:
-        return response_400(context.request)
+        return response_error(ERROR_JSON_PARSING_EXCEPTION, 'Invalid JSON')
 
 
 @v1.get(f'{USER_PATH}/login/password')
@@ -44,12 +44,15 @@ async def login(context, user_id):
         return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
 
     body = context.request.json
-    password = body.get('password', None)
+    if body:
+        password = body.get('password', None)
 
-    if password is None:
-        return response_400(context.request)
+        if password is None:
+            return response_400(context.request)
 
-    if not UserService.verify_password(user, password):
-        return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
+        if not UserService.verify_password(user, password):
+            return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
 
-    return response.json({'result': await UserService.create_new_tokens(user)})
+        return response.json({'result': await UserService.create_new_tokens(user)})
+    else:
+        return response_error(ERROR_JSON_PARSING_EXCEPTION, 'Invalid JSON')

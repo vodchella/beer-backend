@@ -1,4 +1,4 @@
-Feature: Change password feature
+Feature: Change password
 
   Scenario: Send invalid JSON when trying to change password
       Given I try to change password with invalid JSON

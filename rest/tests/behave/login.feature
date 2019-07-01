@@ -1,4 +1,4 @@
-Feature: Login feature
+Feature: Login
 
   Scenario: Send invalid JSON when login
       Given I try to login with invalid JSON

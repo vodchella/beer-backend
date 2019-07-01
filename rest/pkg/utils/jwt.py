@@ -2,7 +2,7 @@ import jwt
 from datetime import datetime
 
 
-def _create_token(user, key, token_type):
+def _create_token(user, secret, token_type):
     if token_type not in ['a', 'r']:
         raise Exception('Invalid token type')
 
@@ -12,12 +12,17 @@ def _create_token(user, key, token_type):
         'typ': token_type
     }
 
-    return jwt.encode(payload, key, algorithm='HS256')
+    return jwt.encode(payload, secret, algorithm='HS256')
 
 
-def create_auth_token(user, key):
-    return _create_token(user, key, 'a')
+def create_auth_token(user, secret):
+    return _create_token(user, secret, 'a')
 
 
-def create_refresh_token(user, key):
-    return _create_token(user, key, 'r')
+def create_refresh_token(user, secret):
+    return _create_token(user, secret, 'r')
+
+
+def create_secret(user, token_key=None):
+    key = token_key if token_key else user.token_key
+    return f'{user.password}-{user.user_id}-{key}'

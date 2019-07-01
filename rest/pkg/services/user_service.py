@@ -31,8 +31,8 @@ class UserService:
         user.token_key = new_token_key
         await app.db.aio.update(user)
 
-        key = f'{user.password}-{user.user_id}-{new_token_key}'
+        secret = create_secret(user)
 
-        auth_token = create_auth_token(user, key)
-        refresh_token = create_refresh_token(user, key)
+        auth_token = create_auth_token(user, secret)
+        refresh_token = create_refresh_token(user, secret)
         return {'auth': auth_token, 'refresh': refresh_token}

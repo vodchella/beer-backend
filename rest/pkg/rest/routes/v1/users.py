@@ -7,7 +7,7 @@ from sanic import response
 
 
 USER_PATH = '/users/<user_id:[A-z0-9]+>'
-INVALID_USER_OR_PASSWORD_TEXT = 'Invalid user_id or password'
+INVALID_USER_OR_PASSWORD_TEXT = 'Invalid user ID or password'
 
 
 @v1.post(f'{USER_PATH}/change-password')

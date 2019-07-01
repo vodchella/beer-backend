@@ -38,11 +38,11 @@ async def root(context):
                     'result': decoded,
                 })
             except:
-                return response_403(context.request)
+                return response_403(context.request, log_stacktrace=False, log_error=False)
         else:
-            return response_403(context.request)
+            return response_403(context.request)  # Здесь я хочу видеть ошибку, т.к данные в токене неверны
     else:
-        return response_403(context.request)
+        return response_403(context.request, log_stacktrace=False, log_error=False)
 
 
 #

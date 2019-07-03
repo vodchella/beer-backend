@@ -37,15 +37,26 @@ def authenticated(func):
         if authorization:
             token = authorization[len('Bearer '):]
             payload = jwt.decode(token, verify=False)
-            user = await UserService.find(payload.get('uid', None))
-            if user:
-                secret = create_secret(user)
-                try:
-                    jwt.decode(token, secret, algorithms='HS256')
-                except:
+
+            user_id = payload.get('uid', None)
+            if user_id:
+                typ = payload.get('typ', None)
+                refresh_tokens_url = f'/api/v1/users/{user_id}/refresh-tokens'
+                if (typ == 'r' and context.request.path != refresh_tokens_url) or \
+                   (typ == 'a' and context.request.path == refresh_tokens_url):
                     return response_403(context.request, log_stacktrace=False, log_error=False)
-                context.user = user
-                return await func(context, **named)
+
+                user = await UserService.find(user_id)
+                if user:
+                    secret = create_secret(user)
+                    try:
+                        jwt.decode(token, secret, algorithms='HS256')
+                    except:
+                        return response_403(context.request, log_stacktrace=False, log_error=False)
+                    context.user = user
+                    return await func(context, **named)
+                else:
+                    return response_403(context.request)  # Здесь я хочу видеть ошибку, т.к данные в токене неверны
             else:
                 return response_403(context.request)  # Здесь я хочу видеть ошибку, т.к данные в токене неверны
         else:

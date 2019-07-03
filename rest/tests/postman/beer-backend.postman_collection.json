@@ -19,7 +19,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJEYU5oaVJ2ODYybHNWYkd4IiwiZXhwIjoxNTYyMDEwNTI5LCJ0eXAiOiJhIn0.IgCKI29s6UEIcCpKWVB6o45rrSjb8XRlRutJakjcvtc",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJEYU5oaVJ2ODYybHNWYkd4IiwiZXhwIjoxNTYyMTY0MTYzLCJ0eXAiOiJhIn0.EVx6HD8TPdD_sk9DM3l-0ADB_s5B9KNtnDMolKZaazs",
 											"type": "string"
 										}
 									]
@@ -91,6 +91,58 @@
 										":user_id",
 										"login",
 										"password"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "DaNhiRv862lsVbGx",
+											"type": "string"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh-tokens",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJEYU5oaVJ2ODYybHNWYkd4IiwiZXhwIjoxNTYyNzYxNzYzLCJ0eXAiOiJyIn0.7umRqIs30Nv0Cn58IBdVDdd7CYAq9knWU-GNPvq-2-s",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"password\": \"11111\"\n}"
+								},
+								"url": {
+									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/refresh-tokens",
+									"host": [
+										"{{beer-backend-rest-server}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":user_id",
+										"refresh-tokens"
 									],
 									"variable": [
 										{

@@ -52,3 +52,15 @@ async def login(context, user_id):
         return response.json({'result': await UserService.create_new_tokens(user)})
     else:
         return response_error(ERROR_JSON_PARSING_EXCEPTION, 'Invalid JSON')
+
+
+@v1.get(f'{USER_PATH}/refresh-tokens')
+@rest_context
+@authenticated
+async def refresh_tokens(context, user_id):
+    user = context.user
+
+    if user.user_id != user_id:
+        return response_404(context.request)
+
+    return response.json({'result': await UserService.create_new_tokens(user)})

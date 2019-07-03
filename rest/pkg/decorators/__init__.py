@@ -29,7 +29,7 @@ def rest_context(func):
     return wrapped
 
 
-REFRESH_TOKENS_REGEXP = re.compile(r'^\/api\/v1\/users\/[A-z0-9]+\/refresh-tokens$', re.IGNORECASE)
+REFRESH_TOKENS_REGEXP = re.compile(r'^/api/v1/users/[A-z0-9]+/refresh-tokens$', re.IGNORECASE)
 
 
 def authenticated(func):

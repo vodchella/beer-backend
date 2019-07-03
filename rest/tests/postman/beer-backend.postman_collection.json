@@ -105,9 +105,6 @@
 						},
 						{
 							"name": "refresh-tokens",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -128,10 +125,6 @@
 										"value": "application/json"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"password\": \"11111\"\n}"
-								},
 								"url": {
 									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/refresh-tokens",
 									"host": [

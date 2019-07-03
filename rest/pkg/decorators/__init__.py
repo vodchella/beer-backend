@@ -1,4 +1,5 @@
 import jwt
+import re
 from asyncpg.exceptions._base import PostgresError
 from functools import wraps
 from pkg.constants.error_codes import *
@@ -28,6 +29,9 @@ def rest_context(func):
     return wrapped
 
 
+REFRESH_TOKENS_REGEXP = re.compile(r'^\/api\/v1\/users\/[A-z0-9]+\/refresh-tokens$', re.IGNORECASE)
+
+
 def authenticated(func):
     @wraps(func)
     async def wrapped(*positional, **named):
@@ -41,9 +45,8 @@ def authenticated(func):
             user_id = payload.get('uid', None)
             if user_id:
                 typ = payload.get('typ', None)
-                refresh_tokens_url = f'/api/v1/users/{user_id}/refresh-tokens'
-                if (typ == 'r' and context.request.path != refresh_tokens_url) or \
-                   (typ == 'a' and context.request.path == refresh_tokens_url):
+                if (typ == 'r' and not REFRESH_TOKENS_REGEXP.fullmatch(context.request.path)) or \
+                   (typ == 'a' and REFRESH_TOKENS_REGEXP.fullmatch(context.request.path)):
                     return response_403(context.request, log_stacktrace=False, log_error=False)
 
                 user = await UserService.find(user_id)

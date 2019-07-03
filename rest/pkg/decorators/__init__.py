@@ -32,8 +32,9 @@ def rest_context(func):
 REFRESH_TOKENS_REGEXP = re.compile(r'^/api/v1/users/[A-z0-9]+/refresh-tokens$', re.IGNORECASE)
 
 
-def authenticated(func):
+def authenticated_rest_context(func):
     @wraps(func)
+    @rest_context
     async def wrapped(*positional, **named):
         context = positional[0]
         headers = context.request.headers

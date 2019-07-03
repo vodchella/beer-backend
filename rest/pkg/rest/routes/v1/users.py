@@ -1,6 +1,6 @@
 from pkg.rest import v1
 from pkg.constants.error_codes import *
-from pkg.decorators import authenticated, rest_context
+from pkg.decorators import authenticated_rest_context, rest_context
 from pkg.services.user_service import UserService
 from pkg.utils.errors import response_error, response_400, response_404
 from sanic import response
@@ -11,8 +11,7 @@ INVALID_USER_OR_PASSWORD_TEXT = 'Invalid user ID or password'
 
 
 @v1.post(f'{USER_PATH}/change-password')
-@rest_context
-@authenticated
+@authenticated_rest_context
 async def change_password(context, user_id):
     user = context.user
     body = context.request.json
@@ -55,8 +54,7 @@ async def login(context, user_id):
 
 
 @v1.get(f'{USER_PATH}/refresh-tokens')
-@rest_context
-@authenticated
+@authenticated_rest_context
 async def refresh_tokens(context, user_id):
     user = context.user
 

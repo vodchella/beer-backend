@@ -42,29 +42,22 @@ def authenticated_rest_context(func):
         if authorization:
             token = authorization[len('Bearer '):]
             payload = jwt.decode(token, verify=False)
-
             user_id = payload.get('uid', None)
             if user_id:
                 typ = payload.get('typ', None)
-                if (typ == 'r' and not REFRESH_TOKENS_REGEXP.fullmatch(context.request.path)) or \
-                   (typ == 'a' and REFRESH_TOKENS_REGEXP.fullmatch(context.request.path)):
-                    return response_403(context.request, log_stacktrace=False, log_error=False)
-
-                user = await UserService.find(user_id)
-                if user:
-                    secret = create_secret(user)
-                    try:
-                        jwt.decode(token, secret, algorithms='HS256')
-                    except:
-                        return response_403(context.request, log_stacktrace=False, log_error=False)
-                    context.user = user
-                    return await func(context, **named)
-                else:
-                    return response_403(context.request)  # Здесь я хочу видеть ошибку, т.к данные в токене неверны
-            else:
-                return response_403(context.request)  # Здесь я хочу видеть ошибку, т.к данные в токене неверны
-        else:
-            return response_403(context.request, log_stacktrace=False, log_error=False)
+                if not ((typ == 'r' and not REFRESH_TOKENS_REGEXP.fullmatch(context.request.path)) or
+                        (typ == 'a' and REFRESH_TOKENS_REGEXP.fullmatch(context.request.path))):
+                    user = await UserService.find(user_id)
+                    if user:
+                        secret = create_secret(user)
+                        try:
+                            jwt.decode(token, secret, algorithms='HS256')
+                        except:
+                            pass  # Всё равно перейдём к response_403()
+                        else:
+                            context.user = user
+                            return await func(context, **named)
+        return response_403(context.request, log_stacktrace=False, log_error=False)
     return wrapped
 
 

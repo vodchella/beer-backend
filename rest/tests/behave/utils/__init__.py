@@ -21,11 +21,11 @@ def behave_request(method, url, token=None, **kwargs):
     return request(method, url, headers=headers, **kwargs)
 
 
-def authorized_behave_request(method, url, **kwargs):
+def authorized_behave_request(method, url, token_type='auth', **kwargs):
     login_url = f'{TEST_USER_PATH}/login/password'
     payload = {'password': PASSWORD}
     tokens = json.loads(behave_request('GET', login_url, data=json.dumps(payload)).text)['result']
-    return behave_request(method, url, token=tokens['auth'], **kwargs)
+    return behave_request(method, url, token=tokens[token_type], **kwargs)
 
 
 def checked_behave_request(method, url, **kwargs):

@@ -20,6 +20,11 @@ def step_impl(context, http_error_code, http_error_code2, app_error_code):
         (context.response.status_code == int(http_error_code2) and json['error']['code'] == int(app_error_code))
 
 
+@then('I will get Ok http status')
+def step_impl(context):
+    assert context.response.status_code == 200
+
+
 @then('I will get Ok http status and "{result}" result')
 def step_impl(context, result):
     json = context.response.json()

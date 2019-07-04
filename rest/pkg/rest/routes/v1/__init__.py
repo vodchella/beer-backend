@@ -1,3 +1,4 @@
+import pkg.rest.routes.v1.cards
 import pkg.rest.routes.v1.users
 from pkg.rest import v1
 from pkg.constants.version import SERVER_VERSION_FULL

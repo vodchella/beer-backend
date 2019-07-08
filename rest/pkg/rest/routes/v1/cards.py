@@ -23,5 +23,5 @@ async def create_card(context):
             else:
                 return response_400(context.request)
         else:
-            return response_error(ERROR_JSON_PARSING_EXCEPTION, 'Invalid JSON')
+            return response_error(ERROR_JSON_PARSING_EXCEPTION)
     return response_403_short()

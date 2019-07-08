@@ -7,7 +7,6 @@ from sanic import response
 
 
 USER_PATH = '/users/<user_id:[A-z0-9]+>'
-INVALID_USER_OR_PASSWORD_TEXT = 'Invalid user ID or password'
 
 
 @v1.post(f'{USER_PATH}/change-password')
@@ -26,13 +25,13 @@ async def change_password(context, user_id):
             return response_404(context.request)
 
         if not UserService.verify_password(user, old_password):
-            return response_error(ERROR_INCORRECT_PASSWORD, 'Invalid old password')
+            return response_error(ERROR_INCORRECT_PASSWORD)
 
         await UserService.set_password(user, new_password)
 
         return response.json({'result': 'ok'})
     else:
-        return response_error(ERROR_JSON_PARSING_EXCEPTION, 'Invalid JSON')
+        return response_error(ERROR_JSON_PARSING_EXCEPTION)
 
 
 @v1.get(f'{USER_PATH}/login')
@@ -45,7 +44,7 @@ async def login(context, user_id):
             password = args.get('password', None)
             if password and UserService.verify_password(user, password):
                 return response.json({'result': await UserService.create_new_tokens(user)})
-    return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
+    return response_error(ERROR_INVALID_USER_OR_PASSWORD)
 
 
 @v1.get(f'{USER_PATH}/refresh-tokens')

@@ -1,6 +1,7 @@
 import logging
 import sys
 import traceback
+from pkg.constants.error_codes import ERROR_TEXT_MAP
 from pkg.constants.logging import REST_LOGGER_NAME
 from sanic import response
 
@@ -16,8 +17,10 @@ def get_raised_error(full=False):
         return (e[-1:][0]).strip('\n')
 
 
-def response_error(code, message, status=500, default_logger=REST_LOGGER_NAME, log_stacktrace=True, log_error=True):
-    error_json = {'error': {'code': code, 'message': message}}
+def response_error(code, message=None, status=500, default_logger=REST_LOGGER_NAME, log_stacktrace=True, log_error=True):
+    msg = message if message else ERROR_TEXT_MAP[code]
+
+    error_json = {'error': {'code': code, 'message': msg}}
     stacktrace_log_msg = ''
 
     if log_stacktrace:

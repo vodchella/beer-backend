@@ -39,6 +39,10 @@ def response_403(request, log_stacktrace=True, log_error=True):
     return response_error(403, f'Forbidden', 403, log_stacktrace=log_stacktrace, log_error=log_error)
 
 
+def response_403_short():
+    return response_403(None, log_stacktrace=False, log_error=False)
+
+
 def response_404(request, log_stacktrace=True, log_error=True):
     return response_error(404, f'Requested URL {request.path} not found', 404,
                           log_stacktrace=log_stacktrace, log_error=log_error)

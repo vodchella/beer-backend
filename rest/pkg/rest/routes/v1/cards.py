@@ -4,7 +4,7 @@ from pkg.decorators import authenticated_rest_context
 from pkg.services.card_service import CardService
 from pkg.services.employee_service import EmployeeService
 from pkg.services.user_service import UserService
-from pkg.utils.errors import response_400, response_403, response_error
+from pkg.utils.errors import response_400, response_403_short, response_error
 from pkg.utils.peewee import model_to_json
 from sanic import response
 
@@ -24,4 +24,4 @@ async def create_card(context):
                 return response_400(context.request)
         else:
             return response_error(ERROR_JSON_PARSING_EXCEPTION, 'Invalid JSON')
-    return response_403(context.request, log_stacktrace=False, log_error=False)
+    return response_403_short()

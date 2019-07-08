@@ -5,7 +5,7 @@ from functools import wraps
 from pkg.constants.error_codes import *
 from pkg.constants.logging import DB_LOGGER_NAME
 from pkg.services.user_service import UserService
-from pkg.utils.errors import response_403
+from pkg.utils.errors import response_403_short
 from pkg.utils.errors import response_error, get_raised_error
 from pkg.utils.jwt import create_secret
 from pkg.utils.rest import RestContext
@@ -53,11 +53,11 @@ def authenticated_rest_context(func):
                         try:
                             jwt.decode(token, secret, algorithms='HS256')
                         except:
-                            pass  # Всё равно перейдём к response_403()
+                            pass  # Всё равно перейдём к response_403_short()
                         else:
                             context.user = user
                             return await func(context, **named)
-        return response_403(context.request, log_stacktrace=False, log_error=False)
+        return response_403_short()
     return wrapped
 
 

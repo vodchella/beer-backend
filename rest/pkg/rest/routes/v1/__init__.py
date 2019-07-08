@@ -1,6 +1,6 @@
-from pkg.rest import v1
 from pkg.constants.version import SERVER_VERSION_FULL
 from pkg.decorators import rest_context
+from pkg.rest import v1
 from pkg.utils.dynamic_import import dynamic_import
 from sanic import response
 

@@ -13,6 +13,6 @@ async def create_card(context):
     current_user = context.user
     employee = await EmployeeService.find_by_user_id(current_user.user_id)
     if employee and employee.is_active:
-        card = await CardService.create()
+        card = await CardService.create(employee)
         return response.json({'result': model_to_json(card)})
     return response_403(context.request, log_stacktrace=False, log_error=False)

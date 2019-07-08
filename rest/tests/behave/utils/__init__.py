@@ -22,9 +22,9 @@ def behave_request(method, url, token=None, **kwargs):
 
 
 def authorized_behave_request(method, url, token_type='auth', **kwargs):
-    login_url = f'{TEST_USER_PATH}/login/password'
+    login_url = f'{TEST_USER_PATH}/login'
     payload = {'password': PASSWORD}
-    tokens = json.loads(behave_request('GET', login_url, data=json.dumps(payload)).text)['result']
+    tokens = json.loads(behave_request('GET', login_url, params=payload).text)['result']
     return behave_request(method, url, token=tokens[token_type], **kwargs)
 
 

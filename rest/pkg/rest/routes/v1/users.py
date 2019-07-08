@@ -35,22 +35,17 @@ async def change_password(context, user_id):
         return response_error(ERROR_JSON_PARSING_EXCEPTION, 'Invalid JSON')
 
 
-@v1.get(f'{USER_PATH}/login/password')
+@v1.get(f'{USER_PATH}/login')
 @rest_context
 async def login(context, user_id):
     user = await UserService.find(user_id)
-    if user is None:
-        return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
-
-    body = context.request.json
-    if body:
-        password = body.get('password', None)
-        if password is None or not UserService.verify_password(user, password):
-            return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
-
-        return response.json({'result': await UserService.create_new_tokens(user)})
-    else:
-        return response_error(ERROR_JSON_PARSING_EXCEPTION, 'Invalid JSON')
+    if user:
+        args = context.request.raw_args
+        if args:
+            password = args.get('password', None)
+            if password and UserService.verify_password(user, password):
+                return response.json({'result': await UserService.create_new_tokens(user)})
+    return response_error(ERROR_INVALID_USER_OR_PASSWORD, INVALID_USER_OR_PASSWORD_TEXT)
 
 
 @v1.get(f'{USER_PATH}/refresh-tokens')

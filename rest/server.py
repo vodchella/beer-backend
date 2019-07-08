@@ -1,16 +1,14 @@
 #!/usr/bin/env python3.6
 
-import importlib
-import os
 import pid
 import sys
 import tempfile
 import yaml
-from glob import glob
 from lib.sanic_peewee import Peewee
 from pkg.config import CONFIG, CFG_FILE
 from pkg.constants.version import SOFTWARE_VERSION
 from pkg.rest import app, v1
+from pkg.utils.dynamic_import import dynamic_import
 from pkg.utils.console import panic
 from pkg.utils.errors import get_raised_error
 from pkg.utils.logger import DEFAULT_LOGGER
@@ -41,10 +39,10 @@ if __name__ == '__main__':
             db = peewee(app)
             app.db = db
 
-            DEFAULT_LOGGER.info(f'Loading REST modules...')
-            for md in [os.path.basename(x)[:-3] for x in glob('./pkg/rest/*.py') if x[-11:] != '__init__.py']:
-                importlib.import_module(f'pkg.rest.{md}')
-                DEFAULT_LOGGER.info(f'... {md} loaded')
+            dynamic_import('./pkg/rest',
+                           'pkg.rest',
+                           'Loading REST modules...',
+                           '... %s loaded')
 
             app.blueprint(v1)
             app.host, app.port = host, port

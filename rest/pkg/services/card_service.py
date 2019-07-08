@@ -1,5 +1,5 @@
 from nanoid import generate
-from pkg.constants.database import CARD_NUMBER_LENGTH, CARD_NUMBER_ALPHABET
+from pkg.constants.database import CARD_NUMBER_ALPHABET
 from pkg.models import Card
 from pkg.utils.peewee import generate_unique_id
 
@@ -7,7 +7,7 @@ from pkg.utils.peewee import generate_unique_id
 class CardService:
     @staticmethod
     def generate_number():
-        return generate(CARD_NUMBER_ALPHABET, CARD_NUMBER_LENGTH)
+        return generate(CARD_NUMBER_ALPHABET, 8)
 
     @staticmethod
     async def create():

@@ -1,5 +1,5 @@
 from behave import *
-from tests.behave.constants import TEST_USER_PATH, USERS_PATH
+from tests.behave.utils.constants import TEST_USER_PATH, USERS_PATH
 from tests.behave.utils import authorized_behave_request
 
 

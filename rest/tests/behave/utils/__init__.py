@@ -1,7 +1,7 @@
 import json
 from json import JSONDecodeError
 from requests import HTTPError, Session, request
-from tests.behave.constants import PASSWORD, TEST_USER_PATH
+from tests.behave.utils.constants import PASSWORD, TEST_USER_PATH
 
 
 def get_response_json(response):

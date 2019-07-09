@@ -1,5 +1,5 @@
 from behave import *
-from tests.behave.constants import *
+from tests.behave.utils.constants import *
 from tests.behave.utils import behave_request
 
 

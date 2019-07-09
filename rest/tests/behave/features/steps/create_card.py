@@ -1,5 +1,5 @@
 from behave import *
-from tests.behave.constants import CARDS_PATH
+from tests.behave.utils.constants import CARDS_PATH
 from tests.behave.utils import behave_request, authorized_behave_request
 
 

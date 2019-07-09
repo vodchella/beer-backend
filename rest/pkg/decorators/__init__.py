@@ -2,11 +2,11 @@ import jwt
 import re
 from asyncpg.exceptions._base import PostgresError
 from functools import wraps
+from jwt.exceptions import PyJWTError
 from pkg.constants.error_codes import *
 from pkg.constants.logging import DB_LOGGER_NAME
 from pkg.services.user_service import UserService
-from pkg.utils.errors import response_403_short
-from pkg.utils.errors import response_error, get_raised_error
+from pkg.utils.errors import response_error, response_403_short, get_raised_error
 from pkg.utils.jwt import create_secret
 from pkg.utils.rest import RestContext
 from sanic.exceptions import InvalidUsage
@@ -24,6 +24,8 @@ def rest_context(func):
             return response_error(ERROR_DATABASE_EXCEPTION, str(e), default_logger=DB_LOGGER_NAME)
         except InvalidUsage as e:
             return response_error(ERROR_JSON_PARSING_EXCEPTION, str(e))
+        except PyJWTError as e:
+            return response_error(ERROR_JWT_EXCEPTION, str(e), 403)
         except:
             return response_error(ERROR_INTERNAL_EXCEPTION, get_raised_error())
     return wrapped

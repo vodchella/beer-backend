@@ -53,4 +53,4 @@ async def log_response(request, response):
                 except:
                     body = response.body.decode('utf-8') if response.body else ''
         body = f'\nBODY: {body}'
-        REST_LOGGER.info(f'RESPONSE {response.content_type}:{body}\n')
+        REST_LOGGER.info(f'RESPONSE {response.status} {response.content_type}:{body}\n')

@@ -9,6 +9,102 @@
 			"name": "v1",
 			"item": [
 				{
+					"name": "cards",
+					"item": [
+						{
+							"name": "create",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "bfb31d08-7323-4d27-bd48-7b28833b3519",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"owner_id\": \"DaNhiRv862lsVbGx\"\n}"
+								},
+								"url": {
+									"raw": "{{beer-backend-rest-server}}/api/v1/cards/create",
+									"host": [
+										"{{beer-backend-rest-server}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cards",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "740d456f-e0b5-420d-b2ab-4d12bdffc85b",
+								"type": "text/javascript",
+								"exec": [
+									"const serverAddress = pm.variables.get('beer-backend-rest-server');",
+									"",
+									"request = {",
+									"    url: serverAddress + '/api/v1/users/DaNhiRv862lsVbGx/login?password=11111',",
+									"    method: 'GET'",
+									"}",
+									"",
+									"pm.sendRequest(request, function (err, response) {",
+									"    if (response.code === 200) {",
+									"        token = response.json()['result']['auth'];",
+									"        pm.environment.set('bearer-token', token)",
+									"    } else {",
+									"        console.log(err ? err : response.json());",
+									"    }",
+									"});",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c1ddfab8-997e-40b8-a9d2-2eedb997a8c2",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "users",
 					"item": [
 						{
@@ -62,25 +158,18 @@
 						},
 						{
 							"name": "login-by-passord",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"method": "GET",
 								"header": [
 									{
 										"key": "Content-Type",
 										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
+										"value": "application/json",
+										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"password\": \"11111\"\n}"
-								},
 								"url": {
-									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/login/password",
+									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/login?password=11111",
 									"host": [
 										"{{beer-backend-rest-server}}"
 									],
@@ -89,8 +178,13 @@
 										"v1",
 										"users",
 										":user_id",
-										"login",
-										"password"
+										"login"
+									],
+									"query": [
+										{
+											"key": "password",
+											"value": "11111"
+										}
 									],
 									"variable": [
 										{

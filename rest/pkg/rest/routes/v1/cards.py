@@ -17,8 +17,9 @@ async def create_card(context):
         body = context.request.parsed_json
         if body:
             owner = await UserService.find(body.get('owner_id', None))
-            if owner:
-                card = await CardService.create(employee, owner)
+            name = body.get('name', None)
+            if owner and name and len(name.strip()):
+                card = await CardService.create(employee, owner, name)
                 return response.json({'result': model_to_json(card)})
             else:
                 return response_400(context.request)

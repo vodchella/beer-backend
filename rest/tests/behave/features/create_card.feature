@@ -12,6 +12,10 @@ Feature: Create card
       Given I try to create card with invalid owner ID
        Then I will get "400" http error
 
+  Scenario: Specify empty name
+      Given I try to create card with empty name
+       Then I will get "400" http error
+
   Scenario: Really trying to create card
       Given I send correct card data
        Then I will get Ok http status and new card in result

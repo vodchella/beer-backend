@@ -11,7 +11,7 @@ class CardService:
         return generate(CARD_NUMBER_ALPHABET, 8)
 
     @staticmethod
-    async def create(issuer: Employee, owner: User):
+    async def create(issuer: Employee, owner: User, name: str):
         company = await CompanyService.find_by_service_point_id(issuer.service_point_id)
         return await Card.aio.create(card_id=generate_unique_id(),
                                      card_number=CardService.generate_number(),
@@ -20,4 +20,8 @@ class CardService:
                                      owner_id=owner.user_id,
                                      issuer_id=issuer.employee_id,
                                      issued_in_service_point_id=issuer.service_point_id,
-                                     )
+                                     attributes={
+                                         'name': name,
+                                         'limit': 19,
+                                         'value': 0,
+                                     })

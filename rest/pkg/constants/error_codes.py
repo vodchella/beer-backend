@@ -6,6 +6,8 @@ ERROR_INVALID_USER_OR_PASSWORD = -32005
 ERROR_JWT_EXCEPTION = -32006
 
 ERROR_UNALLOWED_CARD_TYPE = -33001
+ERROR_CARD_LIMIT_EXCEEDED = -33002
+ERROR_CARD_IS_NOT_ACTIVE = -33003
 
 ERROR_TEXT_MAP = {
     ERROR_INTERNAL_EXCEPTION: 'Internal exception',
@@ -15,4 +17,6 @@ ERROR_TEXT_MAP = {
     ERROR_INVALID_USER_OR_PASSWORD: 'Invalid user ID or password',
 
     ERROR_UNALLOWED_CARD_TYPE: 'Unallowed card type for this operation',
+    ERROR_CARD_LIMIT_EXCEEDED: 'Card limit will be exceeded with this increase value',
+    ERROR_CARD_IS_NOT_ACTIVE: 'Card is not active, operation prohibited',
 }

@@ -3,7 +3,7 @@ from pkg.constants.error_codes import ERROR_JSON_PARSING_EXCEPTION
 from pkg.decorators import employee_rest_context
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
-from pkg.utils.errors import response_400, response_error
+from pkg.utils.errors import response_400, response_404, response_error
 from pkg.utils.peewee import model_to_json
 from sanic import response
 
@@ -25,3 +25,23 @@ async def create_card(context):
             return response_400(context.request)
     else:
         return response_error(ERROR_JSON_PARSING_EXCEPTION)
+
+
+@v1.post(f'{CARD_PATH}/accumulate')
+@employee_rest_context
+async def accumulate_value(context, card_id):
+    card = await CardService.find(card_id)
+    if card:
+        body = context.request.parsed_json
+        if body:
+            increase_by = body.get('increase_by', None)
+            if increase_by and increase_by > 0:
+                card.attributes['value'] += increase_by
+                await CardService.update(card)
+                return response.json({'result': model_to_json(card)})
+            else:
+                return response_400(context.request)
+        else:
+            return response_error(ERROR_JSON_PARSING_EXCEPTION)
+    else:
+        return response_404(context.request)

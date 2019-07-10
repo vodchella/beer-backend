@@ -12,6 +12,66 @@
 					"name": "cards",
 					"item": [
 						{
+							"name": "accumulate",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "bfb31d08-7323-4d27-bd48-7b28833b3519",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"increase_by\": 1\n}"
+								},
+								"url": {
+									"raw": "{{beer-backend-rest-server}}/api/v1/cards/:card_id/accumulate",
+									"host": [
+										"{{beer-backend-rest-server}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cards",
+										":card_id",
+										"accumulate"
+									],
+									"variable": [
+										{
+											"key": "card_id",
+											"value": "HY3jBpIsGIWJ6fdj"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "create",
 							"event": [
 								{
@@ -47,7 +107,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"owner_id\": \"DaNhiRv862lsVbGx\"\n}"
+									"raw": "{\n\t\"owner_id\": \"DaNhiRv862lsVbGx\",\n\t\"name\": \"Test card\"\n}"
 								},
 								"url": {
 									"raw": "{{beer-backend-rest-server}}/api/v1/cards/create",

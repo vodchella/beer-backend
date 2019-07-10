@@ -1,6 +1,7 @@
 from nanoid import generate
 from pkg.constants.database import CARD_NUMBER_ALPHABET
 from pkg.models import Card, Employee, User
+from pkg.rest import app
 from pkg.services.company_service import CompanyService
 from pkg.utils.peewee import generate_unique_id
 
@@ -25,3 +26,14 @@ class CardService:
                                          'limit': 19,
                                          'value': 0,
                                      })
+
+    @staticmethod
+    async def find(card_id):
+        try:
+            return await app.db.aio.get(Card, Card.card_id == card_id)
+        except:
+            return None
+
+    @staticmethod
+    async def update(card: Card):
+        await app.db.aio.update(card)

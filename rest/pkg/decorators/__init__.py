@@ -5,6 +5,7 @@ from functools import wraps
 from jwt.exceptions import PyJWTError
 from pkg.constants.error_codes import *
 from pkg.constants.logging import DB_LOGGER_NAME
+from pkg.services.employee_service import EmployeeService
 from pkg.services.user_service import UserService
 from pkg.utils.errors import response_error, response_403_short, get_raised_error
 from pkg.utils.jwt import create_secret
@@ -59,6 +60,19 @@ def authenticated_rest_context(func):
                         else:
                             context.user = user
                             return await func(context, **named)
+        return response_403_short()
+    return wrapped
+
+
+def employee_rest_context(func):
+    @wraps(func)
+    @authenticated_rest_context
+    async def wrapped(*positional, **named):
+        context = positional[0]
+        employee = await EmployeeService.find_by_user_id(context.user.user_id)
+        if employee and employee.is_active:
+            context.employee = employee
+            return await func(context, **named)
         return response_403_short()
     return wrapped
 

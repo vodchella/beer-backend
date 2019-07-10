@@ -49,7 +49,11 @@ async def accumulate_value(context, card_id):
 
                         card.attributes['value'] = new_value
                         await CardService.update(card)
-                        return response.json({'result': model_to_json(card)})
+
+                        response_json = {'result': model_to_json(card)}
+                        if not card.is_active:
+                            response_json['message'] = 'Card was deactivated because of fullfilled'
+                        return response.json(response_json)
                     else:
                         return response_400(context.request)
                 else:

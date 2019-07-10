@@ -1,5 +1,5 @@
 from pkg.rest import v1
-from pkg.constants.error_codes import ERROR_JSON_PARSING_EXCEPTION
+from pkg.constants.error_codes import ERROR_JSON_PARSING_EXCEPTION, ERROR_UNALLOWED_CARD_TYPE
 from pkg.decorators import employee_rest_context
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
@@ -32,16 +32,19 @@ async def create_card(context):
 async def accumulate_value(context, card_id):
     card = await CardService.find(card_id)
     if card:
-        body = context.request.parsed_json
-        if body:
-            increase_by = body.get('increase_by', None)
-            if increase_by and increase_by > 0:
-                card.attributes['value'] += increase_by
-                await CardService.update(card)
-                return response.json({'result': model_to_json(card)})
+        if card.type_of_card == 'accumulation':
+            body = context.request.parsed_json
+            if body:
+                increase_by = body.get('increase_by', None)
+                if increase_by and increase_by > 0:
+                    card.attributes['value'] += increase_by
+                    await CardService.update(card)
+                    return response.json({'result': model_to_json(card)})
+                else:
+                    return response_400(context.request)
             else:
-                return response_400(context.request)
+                return response_error(ERROR_JSON_PARSING_EXCEPTION)
         else:
-            return response_error(ERROR_JSON_PARSING_EXCEPTION)
+            return response_error(ERROR_UNALLOWED_CARD_TYPE)
     else:
         return response_404(context.request)

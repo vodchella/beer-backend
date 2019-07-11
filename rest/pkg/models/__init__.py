@@ -39,6 +39,7 @@ class ServicePoint(app.db.AsyncModel):
 class Employee(app.db.AsyncModel):
     employee_id = PrimaryKeyCharField()
     user_id = ForeignKeyCharField(User)
+    company_id = ForeignKeyCharField(Company)
     service_point_id = ForeignKeyCharField(ServicePoint)
     is_active = IsActiveField()
     created_at = CreatedAtField()

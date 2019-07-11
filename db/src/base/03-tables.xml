@@ -57,7 +57,10 @@
             <column name="user_id" remarks="Пользователь" type="char(16)">
                 <constraints nullable="false"/>
             </column>
-            <column name="service_point_id" remarks="Точка обслуживания" type="char(16)">
+            <column name="company_id" remarks="Работает в компании" type="char(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="service_point_id" remarks="Работает в точке обслуживания" type="char(16)">
                 <constraints nullable="false"/>
             </column>
             <column defaultValueBoolean="true" name="active_bool" remarks="Активен" type="BOOLEAN">

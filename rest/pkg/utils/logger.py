@@ -1,9 +1,10 @@
 import logging.handlers
 import os
 import sys
+from logdna import LogDNAHandler
 from pkg.config import CONFIG
 from pkg.constants.date_formats import DATE_FORMAT_FULL
-from pkg.constants.logging import DEFAULT_LOGGER_NAME, DB_LOGGER_NAME, REST_LOGGER_NAME, LOGGING_FORMAT
+from pkg.constants.logging import *
 
 
 LOG_CONFIG = {
@@ -26,6 +27,13 @@ LOG_CONFIG = {
             'when': 'midnight',
             'filename': os.path.join(CONFIG['log']['path'],
                                      CONFIG['log']['file_name'])
+        },
+        'logdna': {
+            'class': 'logging.handlers.LogDNAHandler',
+            'key': CONFIG['log']['logdna_key'],
+            'options': {
+                'app': 'My Beer',
+            },
         }
     },
     'loggers': {
@@ -41,6 +49,10 @@ LOG_CONFIG = {
             'level': 'DEBUG',
             'handlers': ['internal', 'timedRotatingFile']
         },
+        LOGDNA_LOGGER_NAME: {
+            'level': 'DEBUG',
+            'handlers': ['logdna']
+        }
     }
 }
 
@@ -48,3 +60,4 @@ LOG_CONFIG = {
 DEFAULT_LOGGER = logging.getLogger(DEFAULT_LOGGER_NAME)
 REST_LOGGER = logging.getLogger(REST_LOGGER_NAME)
 DB_LOGGER = logging.getLogger(DB_LOGGER_NAME)
+LOGDNA_LOGGER = logging.getLogger(LOGDNA_LOGGER_NAME)

@@ -1,6 +1,6 @@
 import json
 from pkg.constants.version import SOFTWARE_VERSION
-from pkg.utils.logger import REST_LOGGER, LOGDNA_LOGGER
+from pkg.utils.logger import REST_LOGGER
 from . import app
 
 
@@ -29,7 +29,6 @@ async def log_request(request):
         log_body = f'{log_body}\n' if log_body else ''
         log = f'{request.method} {request.path} from {request.ip} {user_agent}{log_body}'
         REST_LOGGER.info(log)
-        LOGDNA_LOGGER.info(log)
 
 
 def is_static_content(request):
@@ -58,4 +57,3 @@ async def log_response(request, response):
         body = f'\nBODY: {body}'
         log = f'RESPONSE {response.status} {response.content_type}:{body}\n'
         REST_LOGGER.info(log)
-        LOGDNA_LOGGER.info(log)

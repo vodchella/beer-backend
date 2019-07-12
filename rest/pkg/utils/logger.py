@@ -39,15 +39,15 @@ LOG_CONFIG = {
     'loggers': {
         DEFAULT_LOGGER_NAME: {
             'level': 'DEBUG',
-            'handlers': ['internal', 'timedRotatingFile']
+            'handlers': ['internal', 'timedRotatingFile', 'logdna']
         },
         REST_LOGGER_NAME: {
             'level': 'DEBUG',
-            'handlers': ['internal', 'timedRotatingFile']
+            'handlers': ['internal', 'timedRotatingFile', 'logdna']
         },
         DB_LOGGER_NAME: {
             'level': 'DEBUG',
-            'handlers': ['internal', 'timedRotatingFile']
+            'handlers': ['internal', 'timedRotatingFile', 'logdna']
         },
         LOGDNA_LOGGER_NAME: {
             'level': 'DEBUG',

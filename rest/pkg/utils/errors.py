@@ -2,7 +2,7 @@ import logging
 import sys
 import traceback
 from pkg.constants.error_codes import ERROR_TEXT_MAP
-from pkg.constants.logging import REST_LOGGER_NAME, LOGDNA_LOGGER_NAME
+from pkg.constants.logging import REST_LOGGER_NAME
 from sanic import response
 
 
@@ -31,10 +31,8 @@ def response_error(code, message=None, status=500, default_logger=REST_LOGGER_NA
 
     if log_error:
         logger = logging.getLogger(default_logger)
-        logdna = logging.getLogger(LOGDNA_LOGGER_NAME)
         log = f'Status: {status}, JSON: {error_json}{stacktrace_log_msg}'
         logger.error(log)
-        logdna.error(log)
 
     return response.json(error_json, status=status)
 

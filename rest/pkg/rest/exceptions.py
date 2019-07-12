@@ -4,6 +4,7 @@ from pkg.utils.errors import response_error
 from . import app
 
 
+# noinspection PyUnusedLocal
 @app.exception(InvalidUsage)
 @app.exception(NotFound)
 @app.exception(ServerError)

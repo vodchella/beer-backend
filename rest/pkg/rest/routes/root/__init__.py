@@ -9,6 +9,7 @@ from sanic import response
 #
 
 
+# noinspection PyUnusedLocal
 @app.get('/')
 @rest_context
 async def root(context):

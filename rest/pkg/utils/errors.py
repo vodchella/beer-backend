@@ -17,7 +17,9 @@ def get_raised_error(full=False):
         return (e[-1:][0]).strip('\n')
 
 
-def response_error(code, message=None, status=500, default_logger=REST_LOGGER_NAME, log_stacktrace=True, log_error=True):
+def response_error(code, message=None, status=500, default_logger=REST_LOGGER_NAME,
+                   log_stacktrace=True, log_error=True):
+
     msg = message if message else ERROR_TEXT_MAP[code]
 
     error_json = {'error': {'code': code, 'message': msg}}
@@ -34,10 +36,12 @@ def response_error(code, message=None, status=500, default_logger=REST_LOGGER_NA
     return response.json(error_json, status=status)
 
 
+# noinspection PyUnusedLocal
 def response_400(request, log_stacktrace=True, log_error=True):
     return response_error(400, f'Request data is invalid', 400, log_stacktrace=log_stacktrace, log_error=log_error)
 
 
+# noinspection PyUnusedLocal
 def response_403(request, log_stacktrace=True, log_error=True):
     return response_error(403, f'Forbidden', 403, log_stacktrace=log_stacktrace, log_error=log_error)
 

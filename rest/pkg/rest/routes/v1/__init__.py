@@ -11,6 +11,7 @@ dynamic_import('./pkg/rest/routes/v1',
                '...... %s route loaded')
 
 
+# noinspection PyUnusedLocal
 @v1.get('/ping')
 @rest_context
 async def ping(context):

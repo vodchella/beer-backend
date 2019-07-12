@@ -9,6 +9,7 @@ IGNORE_REQUESTS_LOGGING = [
 ]
 
 
+# noinspection PyUnusedLocal
 @app.middleware('response')
 async def custom_headers(request, resp):
     resp.headers['Server'] = SOFTWARE_VERSION

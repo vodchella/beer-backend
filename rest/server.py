@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.6
 
+import copy
 import pid
 import sys
 import tempfile
@@ -32,8 +33,12 @@ if __name__ == '__main__':
     try:
         with pid.PidFile(pid_file, piddir=pid_dir) as p:
             pid_ok = True
+
+            secure_config = copy.deepcopy(CONFIG)
+            secure_config['log']['logdna_key'] = '*****'
+
             DEFAULT_LOGGER.info(f'{SOFTWARE_VERSION} starting, PID: {p.pid}, File: {pid_file_full}')
-            DEFAULT_LOGGER.info(f'Config loaded from {CFG_FILE}:\n{yaml.dump(CONFIG, default_flow_style=False)}')
+            DEFAULT_LOGGER.info(f'Config loaded from {CFG_FILE}:\n{yaml.dump(secure_config, default_flow_style=False)}')
 
             peewee = Peewee('postgresqlext://postgres:postgres@localhost:5432/beer')
             db = peewee(app)

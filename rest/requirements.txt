@@ -8,6 +8,7 @@ cffi==1.12.3
 chardet==3.0.4
 httptools==0.0.13
 idna==2.8
+logdna==1.4.2
 multidict==4.5.2
 nanoid==2.0.0
 parse==1.12.0

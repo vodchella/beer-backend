@@ -6,4 +6,6 @@ rest:
 log:
   file_name: beer-rest.log
   path: /var/log/beer-rest
-  logdna_key: secret-key
+  logdna:
+    enabled: True
+    key: secret-key

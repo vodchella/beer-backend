@@ -30,7 +30,7 @@ LOG_CONFIG = {
         },
         'logdna': {
             'class': 'logging.handlers.LogDNAHandler',
-            'key': CONFIG['log']['logdna_key'],
+            'key': CONFIG['log']['logdna']['key'],
             'options': {
                 'app': f'{APP_NAME}-{CONFIG["app"]["type"]}',
             },
@@ -39,15 +39,15 @@ LOG_CONFIG = {
     'loggers': {
         DEFAULT_LOGGER_NAME: {
             'level': 'DEBUG',
-            'handlers': ['internal', 'timedRotatingFile', 'logdna']
+            'handlers': ['internal', 'timedRotatingFile']
         },
         REST_LOGGER_NAME: {
             'level': 'DEBUG',
-            'handlers': ['internal', 'timedRotatingFile', 'logdna']
+            'handlers': ['internal', 'timedRotatingFile']
         },
         DB_LOGGER_NAME: {
             'level': 'DEBUG',
-            'handlers': ['internal', 'timedRotatingFile', 'logdna']
+            'handlers': ['internal', 'timedRotatingFile']
         },
         LOGDNA_LOGGER_NAME: {
             'level': 'DEBUG',
@@ -57,7 +57,12 @@ LOG_CONFIG = {
 }
 
 
+if CONFIG['log']['logdna']['enabled'].lower() == 'true':
+    for name in [DEFAULT_LOGGER_NAME, REST_LOGGER_NAME, DB_LOGGER_NAME]:
+        LOG_CONFIG['loggers'][name]['handlers'].append(LOGDNA_LOGGER_NAME)
+
+
 DEFAULT_LOGGER = logging.getLogger(DEFAULT_LOGGER_NAME)
 REST_LOGGER = logging.getLogger(REST_LOGGER_NAME)
-DB_LOGGER = logging.getLogger(DB_LOGGER_NAME)
-LOGDNA_LOGGER = logging.getLogger(LOGDNA_LOGGER_NAME)
+# DB_LOGGER = logging.getLogger(DB_LOGGER_NAME)
+# LOGDNA_LOGGER = logging.getLogger(LOGDNA_LOGGER_NAME)

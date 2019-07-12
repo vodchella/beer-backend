@@ -5,7 +5,7 @@ from logdna import LogDNAHandler
 from pkg.config import CONFIG
 from pkg.constants.date_formats import DATE_FORMAT_FULL
 from pkg.constants.logging import *
-
+from pkg.constants.version import APP_NAME
 
 LOG_CONFIG = {
     'version': 1,
@@ -32,7 +32,7 @@ LOG_CONFIG = {
             'class': 'logging.handlers.LogDNAHandler',
             'key': CONFIG['log']['logdna_key'],
             'options': {
-                'app': 'My Beer',
+                'app': f'{APP_NAME}-{CONFIG["app"]["type"]}',
             },
         }
     },

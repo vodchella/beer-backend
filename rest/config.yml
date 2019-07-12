@@ -1,6 +1,0 @@
-rest:
-  listen_host: localhost
-  listen_port: 8517
-log:
-  file_name: beer-rest.log
-  path: /var/log/beer-rest

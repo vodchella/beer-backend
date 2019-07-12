@@ -22,5 +22,5 @@ async def root(context):
 #
 
 
-app.static('/favicon.png', './pkg/app/static/images/favicon.png')
-app.static('/favicon.ico', './pkg/app/static/images/favicon.ico')
+app.static('/favicon.png', './pkg/rest/static/images/favicon.png')
+app.static('/favicon.ico', './pkg/rest/static/images/favicon.ico')

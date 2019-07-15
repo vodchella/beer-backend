@@ -14,7 +14,7 @@ from pkg.utils.context import ServerContext
 from sanic.exceptions import InvalidUsage
 
 
-def rest_context(func):
+def app_context(func):
     @wraps(func)
     async def wrapped(*positional, **named):
         try:
@@ -39,9 +39,9 @@ def rest_context(func):
 REFRESH_TOKENS_REGEXP = re.compile(r'^/api/v1/users/[A-z0-9]+/refresh-tokens$', re.IGNORECASE)
 
 
-def authenticated_rest_context(func):
+def authenticated_app_context(func):
     @wraps(func)
-    @rest_context
+    @app_context
     async def wrapped(*positional, **named):
         context = positional[0]
         headers = context.request.headers
@@ -68,9 +68,9 @@ def authenticated_rest_context(func):
     return wrapped
 
 
-def employee_rest_context(func):
+def employee_app_context(func):
     @wraps(func)
-    @authenticated_rest_context
+    @authenticated_app_context
     async def wrapped(*positional, **named):
         context = positional[0]
         employee = await EmployeeService.find_by_user_id(context.user.user_id)

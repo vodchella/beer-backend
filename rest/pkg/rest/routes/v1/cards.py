@@ -1,6 +1,6 @@
 from pkg.rest import v1
 from pkg.constants.error_codes import *
-from pkg.decorators import employee_rest_context
+from pkg.decorators import employee_app_context
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
 from pkg.utils.errors import response_400, response_403, response_404, response_error
@@ -12,7 +12,7 @@ CARD_PATH = '/cards/<card_id:[A-z0-9]+>'
 
 
 @v1.post(f'/cards/create')
-@employee_rest_context
+@employee_app_context
 async def create_card(context):
     body = context.request.parsed_json
     if body:
@@ -28,7 +28,7 @@ async def create_card(context):
 
 
 @v1.post(f'{CARD_PATH}/accumulate')
-@employee_rest_context
+@employee_app_context
 async def accumulate_value(context, card_id):
     card = await CardService.find(card_id)
     if card:

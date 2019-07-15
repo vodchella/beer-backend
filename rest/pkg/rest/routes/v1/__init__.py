@@ -1,5 +1,5 @@
 from pkg.constants.version import SERVER_VERSION_FULL
-from pkg.decorators import rest_context
+from pkg.decorators import app_context
 from pkg.rest import v1
 from pkg.utils.dynamic_import import dynamic_import
 from sanic import response
@@ -13,6 +13,6 @@ dynamic_import('./pkg/rest/routes/v1',
 
 # noinspection PyUnusedLocal
 @v1.get('/ping')
-@rest_context
+@app_context
 async def ping(context):
     return response.json({'version': SERVER_VERSION_FULL})

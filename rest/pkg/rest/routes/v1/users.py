@@ -1,6 +1,6 @@
 from pkg.rest import v1
 from pkg.constants.error_codes import *
-from pkg.decorators import authenticated_rest_context, rest_context
+from pkg.decorators import authenticated_app_context, app_context
 from pkg.services.user_service import UserService
 from pkg.utils.errors import response_error, response_400, response_404
 from sanic import response
@@ -10,7 +10,7 @@ USER_PATH = '/users/<user_id:[A-z0-9]+>'
 
 
 @v1.post(f'{USER_PATH}/change-password')
-@authenticated_rest_context
+@authenticated_app_context
 async def change_password(context, user_id):
     user = context.user
     body = context.request.json
@@ -35,7 +35,7 @@ async def change_password(context, user_id):
 
 
 @v1.get(f'{USER_PATH}/login')
-@rest_context
+@app_context
 async def login(context, user_id):
     user = await UserService.find(user_id)
     if user:
@@ -48,7 +48,7 @@ async def login(context, user_id):
 
 
 @v1.get(f'{USER_PATH}/refresh-tokens')
-@authenticated_rest_context
+@authenticated_app_context
 async def refresh_tokens(context, user_id):
     user = context.user
 

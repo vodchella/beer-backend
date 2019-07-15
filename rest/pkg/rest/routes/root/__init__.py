@@ -1,6 +1,6 @@
 from pkg.rest import app
 from pkg.constants.version import SOFTWARE_VERSION
-from pkg.decorators import rest_context
+from pkg.decorators import app_context
 from sanic import response
 
 
@@ -11,7 +11,7 @@ from sanic import response
 
 # noinspection PyUnusedLocal
 @app.get('/')
-@rest_context
+@app_context
 async def root(context):
     return response.json({
         'software': SOFTWARE_VERSION,

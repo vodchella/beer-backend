@@ -23,7 +23,8 @@ def rest_context(func):
                 context = ServerContext()
                 context.request = request
                 context.db = app.db.aio
-                return await func(context, **named)
+                async with app.db.async_atomic():
+                    return await func(context, **named)
         except PostgresError as e:
             return response_error(ERROR_DATABASE_EXCEPTION, str(e), default_logger=DB_LOGGER_NAME)
         except InvalidUsage as e:

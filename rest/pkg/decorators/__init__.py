@@ -9,7 +9,7 @@ from pkg.services.employee_service import EmployeeService
 from pkg.services.user_service import UserService
 from pkg.utils.errors import response_error, response_403_short, get_raised_error
 from pkg.utils.jwt import create_secret
-from pkg.utils.rest import RestContext
+from pkg.utils.context import ServerContext
 from sanic.exceptions import InvalidUsage
 
 
@@ -19,7 +19,8 @@ def rest_context(func):
         try:
             request = positional[0]
             if request.json or len(request.body) == 0:
-                context = RestContext(request)
+                context = ServerContext()
+                context.request = request
                 return await func(context, **named)
         except PostgresError as e:
             return response_error(ERROR_DATABASE_EXCEPTION, str(e), default_logger=DB_LOGGER_NAME)

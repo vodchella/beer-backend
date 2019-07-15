@@ -5,9 +5,10 @@ def get_current_context():
     stack = inspect.stack()
     for frame_info in stack:
         args = frame_info.frame.f_locals
-        for _, value in args.items():
-            if type(value) == ServerContext:
-                return value
+        if args:
+            for _, value in args.items():
+                if type(value) == ServerContext:
+                    return value
 
 
 class ServerContext:

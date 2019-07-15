@@ -12,6 +12,7 @@ def get_current_context():
 
 
 class ServerContext:
+    db = None
     request = None
     user = None
     employee = None

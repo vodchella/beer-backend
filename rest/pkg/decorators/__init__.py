@@ -5,6 +5,7 @@ from functools import wraps
 from jwt.exceptions import PyJWTError
 from pkg.constants.error_codes import *
 from pkg.constants.logging import DB_LOGGER_NAME
+from pkg.rest import app
 from pkg.services.employee_service import EmployeeService
 from pkg.services.user_service import UserService
 from pkg.utils.errors import response_error, response_403_short, get_raised_error
@@ -21,6 +22,7 @@ def rest_context(func):
             if request.json or len(request.body) == 0:
                 context = ServerContext()
                 context.request = request
+                context.db = app.db.aio
                 return await func(context, **named)
         except PostgresError as e:
             return response_error(ERROR_DATABASE_EXCEPTION, str(e), default_logger=DB_LOGGER_NAME)

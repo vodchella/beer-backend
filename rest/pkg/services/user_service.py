@@ -1,6 +1,6 @@
 from pkg.models import User
-from pkg.rest import app
 from pkg.utils.argon import *
+from pkg.utils.context import get_current_context
 from pkg.utils.jwt import *
 from pkg.utils.peewee import generate_unique_id
 
@@ -8,8 +8,9 @@ from pkg.utils.peewee import generate_unique_id
 class UserService:
     @staticmethod
     async def find(user_id):
+        ctx = get_current_context()
         try:
-            return await app.db.aio.get(User, User.user_id == user_id)
+            return await ctx.db.get(User, User.user_id == user_id)
         except:
             return None
 
@@ -22,14 +23,17 @@ class UserService:
 
     @staticmethod
     async def set_password(user, new_password):
+        ctx = get_current_context()
         user.password = hash_password(new_password)
-        await app.db.aio.update(user)
+        await ctx.db.update(user)
 
     @staticmethod
     async def create_new_tokens(user):
+        ctx = get_current_context()
+
         new_token_key = generate_unique_id()
         user.token_key = new_token_key
-        await app.db.aio.update(user)
+        await ctx.db.update(user)
 
         secret = create_secret(user)
 

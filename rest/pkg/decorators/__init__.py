@@ -1,5 +1,6 @@
 import jwt
 import re
+# noinspection PyProtectedMember
 from asyncpg.exceptions._base import PostgresError
 from functools import wraps
 from jwt.exceptions import PyJWTError
@@ -15,16 +16,18 @@ from sanic.exceptions import InvalidUsage
 
 
 def app_context(func):
-    @wraps(func)
+    context = ServerContext()
+    func._app_context = context
+
+    @wraps(func, assigned=['_app_context'])
     async def wrapped(*positional, **named):
         try:
             request = positional[0]
             if request.json or len(request.body) == 0:
-                context = ServerContext()
                 context.request = request
                 context.db = app.db.aio
                 async with app.db.async_atomic():
-                    return await func(context, **named)
+                    return await func(*positional, **named)
         except PostgresError as e:
             return response_error(ERROR_DATABASE_EXCEPTION, str(e), default_logger=DB_LOGGER_NAME)
         except InvalidUsage as e:
@@ -33,6 +36,7 @@ def app_context(func):
             return response_error(ERROR_JWT_EXCEPTION, str(e), 403)
         except:
             return response_error(ERROR_INTERNAL_EXCEPTION, get_raised_error())
+
     return wrapped
 
 
@@ -40,10 +44,11 @@ REFRESH_TOKENS_REGEXP = re.compile(r'^/api/v1/users/[A-z0-9]+/refresh-tokens$', 
 
 
 def authenticated_app_context(func):
-    @wraps(func)
+    @wraps(func, assigned=['_app_context'])
     @app_context
     async def wrapped(*positional, **named):
-        context = positional[0]
+        # noinspection PyProtectedMember
+        context = wrapped._app_context
         headers = context.request.headers
         authorization = headers.get('authorization', None)
         if authorization:
@@ -63,20 +68,21 @@ def authenticated_app_context(func):
                             pass  # Всё равно перейдём к response_403_short()
                         else:
                             context.user = user
-                            return await func(context, **named)
+                            return await func(*positional, **named)
         return response_403_short()
     return wrapped
 
 
 def employee_app_context(func):
-    @wraps(func)
+    @wraps(func, assigned=['_app_context'])
     @authenticated_app_context
     async def wrapped(*positional, **named):
-        context = positional[0]
+        # noinspection PyProtectedMember
+        context = wrapped._app_context
         employee = await EmployeeService.find_by_user_id(context.user.user_id)
         if employee and employee.is_active:
             context.employee = employee
-            return await func(context, **named)
+            return await func(*positional, **named)
         return response_403_short()
     return wrapped
 

@@ -58,5 +58,5 @@ async def refresh_tokens(request, user_id):
     ctx = get_current_context()
     user = ctx.user
     if user.user_id != user_id:
-        return response_404(ctx.request)
+        return response_404(request)
     return response.json({'result': await UserService.create_new_tokens(user)})

@@ -12,8 +12,9 @@ class CardService:
         return generate(CARD_NUMBER_ALPHABET, 8)
 
     @staticmethod
-    async def create(issuer: Employee, owner: User, name: str):
+    async def create(owner: User, name: str):
         ctx = get_current_context()
+        issuer = ctx.employee
         company = await CompanyService.find_by_service_point_id(issuer.service_point_id)
         card_id = await ctx.db.insert(Card.insert(card_id=generate_unique_id(),
                                                   card_number=CardService.generate_number(),

@@ -12,7 +12,6 @@ from sanic import response
 CARD_PATH = '/cards/<card_id:[A-z0-9]+>'
 
 
-# noinspection PyUnusedLocal
 @v1.post(f'/cards/create')
 @employee_app_context
 async def create_card(request):
@@ -29,7 +28,6 @@ async def create_card(request):
         return response_error(ERROR_JSON_PARSING_EXCEPTION)
 
 
-# noinspection PyUnusedLocal
 @v1.post(f'{CARD_PATH}/accumulate')
 @employee_app_context
 async def accumulate_value(request, card_id):

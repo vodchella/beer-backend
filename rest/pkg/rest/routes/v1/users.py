@@ -10,7 +10,6 @@ from sanic import response
 USER_PATH = '/users/<user_id:[A-z0-9]+>'
 
 
-# noinspection PyUnusedLocal
 @v1.post(f'{USER_PATH}/change-password')
 @authenticated_app_context
 async def change_password(request, user_id):
@@ -37,7 +36,6 @@ async def change_password(request, user_id):
         return response_error(ERROR_JSON_PARSING_EXCEPTION)
 
 
-# noinspection PyUnusedLocal
 @v1.get(f'{USER_PATH}/login')
 @app_context
 async def login(request, user_id):
@@ -51,7 +49,6 @@ async def login(request, user_id):
     return response_error(ERROR_INVALID_USER_OR_PASSWORD)
 
 
-# noinspection PyUnusedLocal
 @v1.get(f'{USER_PATH}/refresh-tokens')
 @authenticated_app_context
 async def refresh_tokens(request, user_id):

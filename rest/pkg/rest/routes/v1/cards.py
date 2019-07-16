@@ -16,16 +16,16 @@ CARD_PATH = '/cards/<card_id:[A-z0-9]+>'
 @v1.post(f'/cards/create')
 @employee_app_context
 async def create_card(request):
-    ctx = get_current_context()
-    body = ctx.request.parsed_json
+    body = request.parsed_json
     if body:
         owner = await UserService.find(body.get('owner_id', None))
         name = body.get('name', None)
         if owner and name and len(name.strip()):
+            ctx = get_current_context()
             card = await CardService.create(ctx.employee, owner, name)
             return response.json({'result': model_to_json(card)})
         else:
-            return response_400(ctx.request)
+            return response_400(request)
     else:
         return response_error(ERROR_JSON_PARSING_EXCEPTION)
 
@@ -34,13 +34,13 @@ async def create_card(request):
 @v1.post(f'{CARD_PATH}/accumulate')
 @employee_app_context
 async def accumulate_value(request, card_id):
-    ctx = get_current_context()
     card = await CardService.find(card_id)
     if card:
         if card.type_of_card == 'accumulation':
             if card.is_active:
+                ctx = get_current_context()
                 if ctx.employee.company_id == card.company_id:
-                    body = ctx.request.parsed_json
+                    body = request.parsed_json
                     if body:
                         increase_by = body.get('increase_by', None)
                         if increase_by and increase_by > 0:
@@ -61,7 +61,7 @@ async def accumulate_value(request, card_id):
                                 response_json['message'] = 'Card was deactivated because of fullfilled'
                             return response.json(response_json)
                         else:
-                            return response_400(ctx.request)
+                            return response_400(request)
                     else:
                         return response_error(ERROR_JSON_PARSING_EXCEPTION)
                 else:
@@ -71,4 +71,4 @@ async def accumulate_value(request, card_id):
         else:
             return response_error(ERROR_UNALLOWED_CARD_TYPE)
     else:
-        return response_404(ctx.request)
+        return response_404(request)

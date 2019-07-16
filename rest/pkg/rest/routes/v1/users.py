@@ -14,18 +14,18 @@ USER_PATH = '/users/<user_id:[A-z0-9]+>'
 @v1.post(f'{USER_PATH}/change-password')
 @authenticated_app_context
 async def change_password(request, user_id):
-    ctx = get_current_context()
-    user = ctx.user
-    body = ctx.request.json
+    body = request.json
     if body:
         old_password = body.get('old', None)
         new_password = body.get('new', None)
 
         if old_password is None or new_password is None:
-            return response_400(ctx.request)
+            return response_400(request)
 
+        ctx = get_current_context()
+        user = ctx.user
         if user.user_id != user_id:
-            return response_404(ctx.request)
+            return response_404(request)
 
         if not UserService.verify_password(user, old_password):
             return response_error(ERROR_INCORRECT_PASSWORD)
@@ -41,10 +41,9 @@ async def change_password(request, user_id):
 @v1.get(f'{USER_PATH}/login')
 @app_context
 async def login(request, user_id):
-    ctx = get_current_context()
     user = await UserService.find(user_id)
     if user:
-        args = ctx.request.raw_args
+        args = request.raw_args
         if args:
             password = args.get('password', None)
             if password and UserService.verify_password(user, password):

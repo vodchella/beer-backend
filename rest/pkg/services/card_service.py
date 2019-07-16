@@ -1,6 +1,6 @@
 from nanoid import generate
 from pkg.constants.database import CARD_NUMBER_ALPHABET
-from pkg.models import Card, Employee, User
+from pkg.models import Card, User
 from pkg.services.company_service import CompanyService
 from pkg.utils.context import get_current_context
 from pkg.utils.peewee import generate_unique_id

@@ -35,7 +35,7 @@ if __name__ == '__main__':
             pid_ok = True
 
             secure_config = copy.deepcopy(CONFIG)
-            secure_config['log']['logdna_key'] = '*****'
+            secure_config['log']['logdna']['key'] = '*****'
 
             DEFAULT_LOGGER.info(f'{SOFTWARE_VERSION} starting, PID: {p.pid}, File: {pid_file_full}')
             DEFAULT_LOGGER.info(f'Config loaded from {CFG_FILE}:\n{yaml.dump(secure_config, default_flow_style=False)}')

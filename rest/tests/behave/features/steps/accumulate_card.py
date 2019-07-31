@@ -10,26 +10,26 @@ def create_new_card(card_type='accumulation'):
     return response.json()['result']
 
 
-@given("I try to accumulate card with invalid bearer token")
+@given('I try to accumulate card with invalid bearer token')
 def step_impl(context):
     url = f'{CARDS_PATH}/HY3jBpIsGIWJ6fdj/accumulate'
     context.response = behave_request('POST', url)
 
 
-@given("I try to accumulate card with invalid card ID")
+@given('I try to accumulate card with invalid card ID')
 def step_impl(context):
     url = f'{CARDS_PATH}/invalid-id/accumulate'
     context.response = authorized_behave_request('POST', url)
 
 
-@given("I try to accumulate card with invalid JSON body")
+@given('I try to accumulate card with invalid JSON body')
 def step_impl(context):
     url = f'{CARDS_PATH}/HY3jBpIsGIWJ6fdj/accumulate'
     payload = 'invalid-json'
     context.response = authorized_behave_request('POST', url, data=payload)
 
 
-@given("I send correct data to accumulate card")
+@given('I send correct data to accumulate card')
 def step_impl(context):
     new_card_id = create_new_card()['card_id']
     url = f'{CARDS_PATH}/{new_card_id}/accumulate'
@@ -37,7 +37,7 @@ def step_impl(context):
     context.response = authorized_behave_request('POST', url, data=payload)
 
 
-@then("I will get Ok http status and modified card value")
+@then('I will get Ok http status and modified card value')
 def step_impl(context):
     assert context.response.status_code == 200
     json_ = context.response.json()
@@ -53,7 +53,7 @@ def step_impl(context):
     assert is_active is True
 
 
-@given("I send data to fulfill card")
+@given('I send data to fulfill card')
 def step_impl(context):
     new_card = create_new_card()
     new_card_id = new_card['card_id']
@@ -63,7 +63,7 @@ def step_impl(context):
     context.response = authorized_behave_request('POST', url, data=payload)
 
 
-@then("I will get Ok http status and disabled card")
+@then('I will get Ok http status and disabled card')
 def step_impl(context):
     assert context.response.status_code == 200
     json_ = context.response.json()
@@ -74,7 +74,7 @@ def step_impl(context):
     assert is_active is False
 
 
-@given("I try to accumulate disabled card")
+@given('I try to accumulate disabled card')
 def step_impl(context):
     new_card = create_new_card()
     new_card_id = new_card['card_id']
@@ -85,7 +85,7 @@ def step_impl(context):
     context.response = authorized_behave_request('POST', url, data=payload)
 
 
-@given("I try to accumulate over limit")
+@given('I try to accumulate over limit')
 def step_impl(context):
     new_card = create_new_card()
     new_card_id = new_card['card_id']
@@ -95,7 +95,7 @@ def step_impl(context):
     context.response = authorized_behave_request('POST', url, data=payload)
 
 
-@given("I try to accumulate nonaccumulatable card")
+@given('I try to accumulate nonaccumulatable card')
 def step_impl(context):
     new_card_id = create_new_card(card_type='discount')['card_id']
     url = f'{CARDS_PATH}/{new_card_id}/accumulate'

@@ -27,3 +27,7 @@ Feature: Accumulate card
   Scenario: Trying to accumulate over limit
       Given I try to accumulate over limit
        Then I will get "500" http error with "-33002" application error
+
+  Scenario: Trying to accumulate nonaccumulatable card
+      Given I try to accumulate nonaccumulatable card
+       Then I will get "500" http error with "-33001" application error

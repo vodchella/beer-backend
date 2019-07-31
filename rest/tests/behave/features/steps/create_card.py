@@ -30,10 +30,17 @@ def step_impl(context):
     context.response = authorized_behave_request('POST', url, data=payload)
 
 
+@given('I try to create card with incorrect type')
+def step_impl(context):
+    url = f'{CARDS_PATH}/create'
+    payload = '{"owner_id": "DaNhiRv862lsVbGx", "name": "Test card", "type": "?"}'
+    context.response = authorized_behave_request('POST', url, data=payload)
+
+
 @given('I send correct card data')
 def step_impl(context):
     url = f'{CARDS_PATH}/create'
-    payload = '{"owner_id": "DaNhiRv862lsVbGx", "name": "Test card"}'
+    payload = '{"owner_id": "DaNhiRv862lsVbGx", "name": "Test card", "type": "accumulation"}'
     context.response = authorized_behave_request('POST', url, data=payload)
 
 

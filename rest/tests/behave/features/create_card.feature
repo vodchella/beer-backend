@@ -16,6 +16,10 @@ Feature: Create card
       Given I try to create card with empty name
        Then I will get "400" http error
 
+  Scenario: Specify invalid card type
+      Given I try to create card with incorrect type
+       Then I will get "400" http error
+
   Scenario: Really trying to create card
       Given I send correct card data
        Then I will get Ok http status and new card in result

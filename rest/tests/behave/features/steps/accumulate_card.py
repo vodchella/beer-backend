@@ -76,3 +76,13 @@ def step_impl(context):
     payload = '{"increase_by": ' + str(limit) + '}'
     authorized_behave_request('POST', url, data=payload)
     context.response = authorized_behave_request('POST', url, data=payload)
+
+
+@given("I try to accumulate over limit")
+def step_impl(context):
+    new_card = create_new_card()
+    new_card_id = new_card['card_id']
+    limit = new_card['attributes']['limit']
+    url = f'{CARDS_PATH}/{new_card_id}/accumulate'
+    payload = '{"increase_by": ' + str(limit + 1) + '}'
+    context.response = authorized_behave_request('POST', url, data=payload)

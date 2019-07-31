@@ -19,3 +19,7 @@ Feature: Accumulate card
   Scenario: Trying to accumulate disabled card
       Given I try to accumulate disabled card
        Then I will get "500" http error with "-33003" application error
+
+  Scenario: Trying to accumulate over limit
+      Given I try to accumulate over limit
+       Then I will get "500" http error with "-33002" application error

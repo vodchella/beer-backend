@@ -56,7 +56,7 @@ def step_impl(context):
     context.response = authorized_behave_request('POST', url, data=payload)
 
 
-@then("I will get Ok http status and disabled card with info message")
+@then("I will get Ok http status and disabled card")
 def step_impl(context):
     assert context.response.status_code == 200
     json_ = context.response.json()

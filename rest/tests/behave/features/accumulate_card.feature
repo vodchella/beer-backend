@@ -14,4 +14,4 @@ Feature: Accumulate card
 
   Scenario: Trying to fulfill card
       Given I send data to fulfill card
-       Then I will get Ok http status and disabled card with info message
+       Then I will get Ok http status and disabled card

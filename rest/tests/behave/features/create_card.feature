@@ -18,7 +18,7 @@ Feature: Create card
 
   Scenario: Specify invalid card type
       Given I try to create card with incorrect type
-       Then I will get "400" http error
+       Then I will get "500" http error with "-33001" application error
 
   Scenario: Really trying to create card
       Given I send correct card data

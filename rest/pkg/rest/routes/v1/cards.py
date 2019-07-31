@@ -27,6 +27,8 @@ async def create_card(request):
                 attr = {'name': name}
             card = await CardService.create(owner, card_type, attr)
             return response.json({'result': model_to_json(card)})
+        else:
+            return response_error(ERROR_UNALLOWED_CARD_TYPE)
     return response_400(request)
 
 

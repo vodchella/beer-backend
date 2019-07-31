@@ -1,5 +1,5 @@
 #
-#  Engine's error codes
+#  Core's error codes
 #
 ERROR_INTERNAL_EXCEPTION = -32001
 ERROR_DATABASE_EXCEPTION = -32002
@@ -19,7 +19,7 @@ ERROR_CARD_IS_NOT_ACTIVE = -33003
 
 ERROR_TEXT_MAP = {
     #
-    #  Engine's error text messages
+    #  Core's error text messages
     #
     ERROR_INTERNAL_EXCEPTION: 'Internal exception',
     ERROR_DATABASE_EXCEPTION: 'Database exception',

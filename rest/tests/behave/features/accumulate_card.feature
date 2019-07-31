@@ -15,3 +15,7 @@ Feature: Accumulate card
   Scenario: Trying to fulfill card
       Given I send data to fulfill card
        Then I will get Ok http status and disabled card
+
+  Scenario: Trying to accumulate disabled card
+      Given I try to accumulate disabled card
+       Then I will get "500" http error with "-33003" application error

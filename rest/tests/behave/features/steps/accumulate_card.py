@@ -65,3 +65,14 @@ def step_impl(context):
     assert 'is_active' in result
     is_active = result['is_active']
     assert is_active is False
+
+
+@given("I try to accumulate disabled card")
+def step_impl(context):
+    new_card = create_new_card()
+    new_card_id = new_card['card_id']
+    limit = new_card['attributes']['limit']
+    url = f'{CARDS_PATH}/{new_card_id}/accumulate'
+    payload = '{"increase_by": ' + str(limit) + '}'
+    authorized_behave_request('POST', url, data=payload)
+    context.response = authorized_behave_request('POST', url, data=payload)

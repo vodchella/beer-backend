@@ -11,7 +11,7 @@ from pkg.services.employee_service import EmployeeService
 from pkg.services.user_service import UserService
 from pkg.utils.errors import response_error, response_403_short, get_raised_error
 from pkg.utils.jwt import create_secret
-from pkg.utils.context import ServerContext
+from pkg.utils.context import ServerContext, get_current_context
 from sanic.exceptions import InvalidUsage
 
 
@@ -84,6 +84,19 @@ def employee_app_context(func):
             context.employee = employee
             return await func(*positional, **named)
         return response_403_short()
+    return wrapped
+
+
+def json_request(func):
+    @wraps(func)
+    async def wrapped(*positional, **named):
+        ctx = get_current_context()
+        body = ctx.request.parsed_json
+        if body:
+            ctx.json_body = body
+            return await func(*positional, **named)
+        else:
+            return response_error(ERROR_JSON_PARSING_EXCEPTION)
     return wrapped
 
 

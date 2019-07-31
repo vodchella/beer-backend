@@ -19,8 +19,8 @@ class CardService:
         return generate(CARD_NUMBER_ALPHABET, 8)
 
     @staticmethod
-    async def create(owner: User, card_type: str, name: str):
-        attr = create_default_card_attributes(card_type, {'name': name})
+    async def create(owner: User, card_type: str, attr):
+        def_attr = create_default_card_attributes(card_type, attr)
         ctx = get_current_context()
         issuer = ctx.employee
         company = await CompanyService.find_by_service_point_id(issuer.service_point_id)
@@ -31,7 +31,7 @@ class CardService:
                                                   owner_id=owner.user_id,
                                                   issuer_id=issuer.employee_id,
                                                   issued_in_service_point_id=issuer.service_point_id,
-                                                  attributes=attr))
+                                                  attributes=def_attr))
         return await CardService.find(card_id)
 
     @staticmethod

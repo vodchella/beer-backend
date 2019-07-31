@@ -18,11 +18,14 @@ async def create_card(request):
     body = request.parsed_json
     if body:
         owner = await UserService.find(body.get('owner_id', None))
-        name = body.get('name', None)
-        card_type = body.get('type', None)
-        if card_type and card_type in ['accumulation', 'discount']:
-            if owner and name and len(name.strip()):
-                card = await CardService.create(owner, card_type, name)
+        if owner:
+            card_type = body.get('type', None)
+            if card_type and card_type in ['accumulation', 'discount']:
+                attr = {}
+                name = body.get('name', None)
+                if name and len(name.strip()):
+                    attr = {'name': name}
+                card = await CardService.create(owner, card_type, attr)
                 return response.json({'result': model_to_json(card)})
         return response_400(request)
     else:

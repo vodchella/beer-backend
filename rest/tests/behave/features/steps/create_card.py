@@ -19,14 +19,14 @@ def step_impl(context):
 @given('I try to create card with invalid owner ID')
 def step_impl(context):
     url = f'{CARDS_PATH}/create'
-    payload = '{"owner_id": "invalid"}'
+    payload = '{"owner_id": "invalid", "type": "accumulation"}'
     context.response = authorized_behave_request('POST', url, data=payload)
 
 
 @given('I try to create card with empty name')
 def step_impl(context):
     url = f'{CARDS_PATH}/create'
-    payload = '{"owner_id": "invalid", "name": " "}'
+    payload = '{"owner_id": "DaNhiRv862lsVbGx", "name": " ", "type": "accumulation"}'
     context.response = authorized_behave_request('POST', url, data=payload)
 
 

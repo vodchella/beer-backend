@@ -64,7 +64,8 @@
 									"variable": [
 										{
 											"key": "card_id",
-											"value": "HY3jBpIsGIWJ6fdj"
+											"value": "HY3jBpIsGIWJ6fdj",
+											"type": "string"
 										}
 									]
 								}
@@ -107,7 +108,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"owner_id\": \"DaNhiRv862lsVbGx\",\n\t\"name\": \"Test card\"\n}"
+									"raw": "{\n\t\"owner_id\": \"DaNhiRv862lsVbGx\",\n\t\"name\": \"Test card\",\n\t\"type\": \"accumulation\"\n}"
 								},
 								"url": {
 									"raw": "{{beer-backend-rest-server}}/api/v1/cards/create",
@@ -294,8 +295,8 @@
 									"variable": [
 										{
 											"key": "user_id",
-											"type": "string",
-											"value": "DaNhiRv862lsVbGx"
+											"value": "DaNhiRv862lsVbGx",
+											"type": "string"
 										}
 									]
 								}

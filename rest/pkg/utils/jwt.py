@@ -11,6 +11,7 @@ def _create_token(user, secret, token_type):
         raise Exception('Invalid token type')
 
     payload = {
+        'ver': 1,
         'uid': user.user_id,
         'exp': expires_at,
         'typ': token_type

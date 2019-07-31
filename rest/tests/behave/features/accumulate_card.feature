@@ -8,6 +8,10 @@ Feature: Accumulate card
       Given I try to accumulate card with invalid card ID
        Then I will get "404" http error
 
+  Scenario: Specify invalid JSON body
+      Given I try to accumulate card with invalid JSON body
+       Then I will get "500" http error with "-32003" application error
+
   Scenario: Really trying to accumulate card
       Given I send correct data to accumulate card
        Then I will get Ok http status and modified card value

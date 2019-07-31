@@ -22,6 +22,13 @@ def step_impl(context):
     context.response = authorized_behave_request('POST', url)
 
 
+@given("I try to accumulate card with invalid JSON body")
+def step_impl(context):
+    url = f'{CARDS_PATH}/HY3jBpIsGIWJ6fdj/accumulate'
+    payload = 'invalid-json'
+    context.response = authorized_behave_request('POST', url, data=payload)
+
+
 @given("I send correct data to accumulate card")
 def step_impl(context):
     new_card_id = create_new_card()['card_id']

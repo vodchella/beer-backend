@@ -15,6 +15,7 @@ install:
 before_script:
   - psql -c "create database beer;" -U postgres
   - psql -c "alter user postgres with password 'postgres';" -U postgres
+  - sudo mkdir /var/log/beer-rest
 
 script:
   - python rest/server.py

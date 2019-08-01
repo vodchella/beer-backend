@@ -1,5 +1,15 @@
 from pkg.utils.errors import response_error
+from sanic import response
 from sanic.request import Request
+from typing import Union
+
+
+def response_ok(result: Union[dict, list, str],
+                message: str = None):
+    obj = {'result': result}
+    if message:
+        obj['message'] = message
+    return response.json(obj)
 
 
 def response_400(log_stacktrace: bool = True, log_error: bool = True):

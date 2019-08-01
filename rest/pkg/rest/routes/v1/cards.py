@@ -6,8 +6,7 @@ from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
 from pkg.utils.errors import response_error
 from pkg.utils.peewee import model_to_json_object
-from pkg.utils.responses import response_400, response_404, response_403
-from sanic import response
+from pkg.utils.responses import response_400, response_404, response_403, response_ok
 from sanic.request import Request
 
 CARD_PATH = '/cards/<card_id:[A-z0-9]+>'
@@ -26,7 +25,7 @@ async def create_card(request: Request):
             name = ctx.json_body.get('name', None)
             attr = {'name': name} if name and len(name.strip()) else {}
             card = await CardService.create(owner, card_type, attr)
-            return response.json({'result': model_to_json_object(card)})
+            return response_ok(model_to_json_object(card))
         else:
             return response_error(ERROR_UNALLOWED_CARD_TYPE)
     return response_400()
@@ -37,7 +36,7 @@ async def create_card(request: Request):
 async def view_card(request: Request, card_id: str):
     card = await CardService.find(card_id)
     if card:
-        return response.json({'result': model_to_json_object(card)})
+        return response_ok(model_to_json_object(card))
     return response_404(request)
 
 
@@ -65,10 +64,8 @@ async def accumulate_value(request: Request, card_id: str):
                         card.attributes['value'] = new_value
                         await CardService.update(card)
 
-                        response_json = {'result': model_to_json_object(card)}
-                        if not card.is_active:
-                            response_json['message'] = 'Card was deactivated because of fullfilled'
-                        return response.json(response_json)
+                        msg = 'Card was deactivated because of fullfilled' if not card.is_active else None
+                        return response_ok(model_to_json_object(card), message=msg)
                     else:
                         return response_400()
                 else:

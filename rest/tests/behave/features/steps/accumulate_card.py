@@ -65,7 +65,7 @@ def step_impl(context):
 
 
 @then('I will get Ok http status and disabled card')
-def step_impl(context):
+def step_impl(context: Context):
     assert context.response.status_code == 200
     json_ = context.response.json()
     assert 'result' in json_
@@ -76,7 +76,7 @@ def step_impl(context):
 
 
 @given('I try to accumulate disabled card')
-def step_impl(context):
+def step_impl(context: Context):
     new_card = create_new_card()
     new_card_id = new_card['card_id']
     limit = new_card['attributes']['limit']
@@ -87,7 +87,7 @@ def step_impl(context):
 
 
 @given('I try to accumulate over limit')
-def step_impl(context):
+def step_impl(context: Context):
     new_card = create_new_card()
     new_card_id = new_card['card_id']
     limit = new_card['attributes']['limit']
@@ -97,7 +97,7 @@ def step_impl(context):
 
 
 @given('I try to accumulate nonaccumulatable card')
-def step_impl(context):
+def step_impl(context: Context):
     new_card_id = create_new_card(card_type='discount')['card_id']
     url = f'{CARDS_PATH}/{new_card_id}/accumulate'
     payload = '{"increase_by": 2}'

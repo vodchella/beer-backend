@@ -61,4 +61,7 @@ async def refresh_tokens(request: Request, user_id: str):
 @v1.get(f'{USER_PATH}/cards')
 @authenticated_app_context
 async def list_cards(request: Request, user_id: str):
+    ctx = get_current_context()
+    if ctx.user.user_id != user_id:
+        return response_404(request)
     return response_ok(models_to_json_array(await CardService.find_by_user(user_id)))

@@ -5,6 +5,7 @@ from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
 from pkg.utils.errors import response_error, response_400, response_404
 from sanic import response
+from sanic.request import Request
 
 
 USER_PATH = '/users/<user_id:[A-z0-9]+>'
@@ -13,7 +14,7 @@ USER_PATH = '/users/<user_id:[A-z0-9]+>'
 @v1.post(f'{USER_PATH}/change-password')
 @authenticated_app_context
 @json_request
-async def change_password(request, user_id):
+async def change_password(request: Request, user_id: str):
     ctx = get_current_context()
     old_password = ctx.json_body.get('old', None)
     new_password = ctx.json_body.get('new', None)
@@ -34,7 +35,7 @@ async def change_password(request, user_id):
 
 @v1.get(f'{USER_PATH}/login')
 @app_context
-async def login(request, user_id):
+async def login(request: Request, user_id: str):
     user = await UserService.find(user_id)
     if user:
         args = request.raw_args
@@ -47,7 +48,7 @@ async def login(request, user_id):
 
 @v1.get(f'{USER_PATH}/refresh-tokens')
 @authenticated_app_context
-async def refresh_tokens(request, user_id):
+async def refresh_tokens(request: Request, user_id: str):
     ctx = get_current_context()
     if ctx.user.user_id != user_id:
         return response_404(request)

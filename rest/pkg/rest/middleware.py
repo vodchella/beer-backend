@@ -1,6 +1,8 @@
 import json
 from pkg.constants.version import SOFTWARE_VERSION
 from pkg.utils.logger import REST_LOGGER
+from sanic.response import HTTPResponse
+from sanic.request import Request
 from . import app
 
 
@@ -11,12 +13,12 @@ IGNORE_REQUESTS_LOGGING = [
 
 # noinspection PyUnusedLocal
 @app.middleware('response')
-async def custom_headers(request, resp):
-    resp.headers['Server'] = SOFTWARE_VERSION
+async def custom_headers(request: Request, response: HTTPResponse):
+    response.headers['Server'] = SOFTWARE_VERSION
 
 
 @app.middleware('request')
-async def log_request(request):
+async def log_request(request: Request):
     if request.path not in IGNORE_REQUESTS_LOGGING:
         try:
             body = '\nBODY: ' + request.body.decode('utf-8') if request.body else ''
@@ -31,7 +33,7 @@ async def log_request(request):
         REST_LOGGER.info(log)
 
 
-def is_static_content(request):
+def is_static_content(request: Request):
     path = request.path
     for route in app.static_routes:
         m = route.pattern.match(path)
@@ -41,7 +43,7 @@ def is_static_content(request):
 
 
 @app.middleware('response')
-async def log_response(request, response):
+async def log_response(request: Request, response: HTTPResponse):
     if request.path not in IGNORE_REQUESTS_LOGGING:
         static = is_static_content(request)
         if static[0]:

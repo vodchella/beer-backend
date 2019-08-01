@@ -4,7 +4,7 @@ from glob import glob
 from pkg.utils.logger import DEFAULT_LOGGER
 
 
-def dynamic_import(path, module, prompt, module_imported_string):
+def dynamic_import(path: str, module: str, prompt: str, module_imported_string: str):
     DEFAULT_LOGGER.info(prompt)
     for md in [os.path.basename(x)[:-3] for x in glob(f'{path}/*.py') if x[-11:] != '__init__.py']:
         importlib.import_module(f'{module}.{md}')

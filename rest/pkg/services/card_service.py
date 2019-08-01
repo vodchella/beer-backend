@@ -19,7 +19,7 @@ class CardService:
         return generate(CARD_NUMBER_ALPHABET, 8)
 
     @staticmethod
-    async def create(owner: User, card_type: str, attr):
+    async def create(owner: User, card_type: str, attr: dict):
         def_attr = create_default_card_attributes(card_type, attr)
         ctx = get_current_context()
         issuer = ctx.employee
@@ -35,7 +35,7 @@ class CardService:
         return await CardService.find(card_id)
 
     @staticmethod
-    async def find(card_id):
+    async def find(card_id: str):
         ctx = get_current_context()
         try:
             return await ctx.db.get(Card, Card.card_id == card_id)

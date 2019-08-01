@@ -5,7 +5,7 @@ from pkg.utils.context import get_current_context
 
 class CompanyService:
     @staticmethod
-    async def find_by_service_point_id(service_point_id):
+    async def find_by_service_point_id(service_point_id: str):
         ctx = get_current_context()
         try:
             service_point = await ServicePointService.find(service_point_id)

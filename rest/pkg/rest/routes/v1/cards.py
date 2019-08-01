@@ -7,6 +7,7 @@ from pkg.utils.context import get_current_context
 from pkg.utils.errors import response_400, response_403, response_404, response_error
 from pkg.utils.peewee import model_to_json
 from sanic import response
+from sanic.request import Request
 
 
 CARD_PATH = '/cards/<card_id:[A-z0-9]+>'
@@ -15,7 +16,7 @@ CARD_PATH = '/cards/<card_id:[A-z0-9]+>'
 @v1.post(f'/cards/create')
 @employee_app_context
 @json_request
-async def create_card(request):
+async def create_card(request: Request):
     ctx = get_current_context()
     owner = await UserService.find(ctx.json_body.get('owner_id', None))
     if owner:
@@ -35,7 +36,7 @@ async def create_card(request):
 @v1.post(f'{CARD_PATH}/accumulate')
 @employee_app_context
 @json_request
-async def accumulate_value(request, card_id):
+async def accumulate_value(request: Request, card_id: str):
     card = await CardService.find(card_id)
     if card:
         if card.type_of_card == 'accumulation':

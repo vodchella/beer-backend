@@ -4,9 +4,10 @@ import traceback
 from pkg.constants.error_codes import ERROR_TEXT_MAP
 from pkg.constants.logging import REST_LOGGER_NAME
 from sanic import response
+from sanic.request import Request
 
 
-def get_raised_error(full=False):
+def get_raised_error(full: bool = False):
     info = sys.exc_info()
     if info[0] is None and info[1] is None and info[2] is None:
         return
@@ -17,8 +18,12 @@ def get_raised_error(full=False):
         return (e[-1:][0]).strip('\n')
 
 
-def response_error(code, message=None, status=500, default_logger=REST_LOGGER_NAME,
-                   log_stacktrace=True, log_error=True):
+def response_error(code: int,
+                   message: str = None,
+                   status: int = 500,
+                   default_logger: str = REST_LOGGER_NAME,
+                   log_stacktrace: bool = True,
+                   log_error: bool = True):
 
     msg = message if message else ERROR_TEXT_MAP[code]
 
@@ -38,12 +43,12 @@ def response_error(code, message=None, status=500, default_logger=REST_LOGGER_NA
 
 
 # noinspection PyUnusedLocal
-def response_400(request, log_stacktrace=True, log_error=True):
+def response_400(request: Request, log_stacktrace: bool = True, log_error: bool = True):
     return response_error(400, f'Request data is invalid', 400, log_stacktrace=log_stacktrace, log_error=log_error)
 
 
 # noinspection PyUnusedLocal
-def response_403(request, log_stacktrace=True, log_error=True):
+def response_403(request: Request, log_stacktrace: bool = True, log_error: bool = True):
     return response_error(403, f'Forbidden', 403, log_stacktrace=log_stacktrace, log_error=log_error)
 
 
@@ -51,6 +56,6 @@ def response_403_short():
     return response_403(None, log_stacktrace=False, log_error=False)
 
 
-def response_404(request, log_stacktrace=True, log_error=True):
+def response_404(request: Request, log_stacktrace: bool = True, log_error: bool = True):
     return response_error(404, f'Requested URL {request.path} not found', 404,
                           log_stacktrace=log_stacktrace, log_error=log_error)

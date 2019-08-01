@@ -1,9 +1,10 @@
 from nanoid import generate
+from peewee import Model
 from pkg.constants.database import ID_FIELD_ALPHABET, ID_FIELD_LENGTH
 from playhouse.shortcuts import model_to_dict
 
 
-def model_to_json(model):
+def model_to_json(model: Model):
     if model:
         return model_to_dict(model, exclude='aio')
 

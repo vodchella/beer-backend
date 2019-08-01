@@ -2,6 +2,7 @@ from pkg.rest import app
 from pkg.constants.version import SOFTWARE_VERSION
 from pkg.decorators import app_context
 from sanic import response
+from sanic.request import Request
 
 
 #
@@ -12,7 +13,7 @@ from sanic import response
 # noinspection PyUnusedLocal
 @app.get('/')
 @app_context
-async def root(context):
+async def root(request: Request):
     return response.json({
         'software': SOFTWARE_VERSION,
     })

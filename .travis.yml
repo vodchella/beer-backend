@@ -17,9 +17,10 @@ before_script:
   - psql -c "alter user postgres with password 'postgres';" -U postgres
   - sudo mkdir /var/log/beer-rest
   - sudo chmod 777 /var/log/beer-rest
+  - cd rest
 
 script:
-  - python rest/server.py
+  - python server.py
 
 env:
   global:

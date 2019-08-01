@@ -30,7 +30,7 @@ async def create_card(request: Request):
             return response.json({'result': model_to_json(card)})
         else:
             return response_error(ERROR_UNALLOWED_CARD_TYPE)
-    return response_400(request)
+    return response_400()
 
 
 @v1.post(f'{CARD_PATH}/accumulate')
@@ -62,9 +62,9 @@ async def accumulate_value(request: Request, card_id: str):
                             response_json['message'] = 'Card was deactivated because of fullfilled'
                         return response.json(response_json)
                     else:
-                        return response_400(request)
+                        return response_400()
                 else:
-                    return response_403(ctx.request)
+                    return response_403()
             else:
                 return response_error(ERROR_CARD_IS_NOT_ACTIVE)
         else:

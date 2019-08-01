@@ -20,7 +20,7 @@ async def change_password(request: Request, user_id: str):
     new_password = ctx.json_body.get('new', None)
 
     if old_password is None or new_password is None:
-        return response_400(request)
+        return response_400()
 
     if ctx.user.user_id != user_id:
         return response_404(request)

@@ -42,18 +42,16 @@ def response_error(code: int,
     return response.json(error_json, status=status)
 
 
-# noinspection PyUnusedLocal
-def response_400(request: Request, log_stacktrace: bool = True, log_error: bool = True):
+def response_400(log_stacktrace: bool = True, log_error: bool = True):
     return response_error(400, f'Request data is invalid', 400, log_stacktrace=log_stacktrace, log_error=log_error)
 
 
-# noinspection PyUnusedLocal
-def response_403(request: Request, log_stacktrace: bool = True, log_error: bool = True):
+def response_403(log_stacktrace: bool = True, log_error: bool = True):
     return response_error(403, f'Forbidden', 403, log_stacktrace=log_stacktrace, log_error=log_error)
 
 
 def response_403_short():
-    return response_403(None, log_stacktrace=False, log_error=False)
+    return response_403(log_stacktrace=False, log_error=False)
 
 
 def response_404(request: Request, log_stacktrace: bool = True, log_error: bool = True):

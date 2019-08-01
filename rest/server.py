@@ -22,6 +22,11 @@ if __name__ == '__main__':
     try:
         host = CONFIG['rest']['listen_host']
         port = CONFIG['rest']['listen_port']
+        pg_host = CONFIG['postgres']['host']
+        pg_port = CONFIG['postgres']['port']
+        pg_user = CONFIG['postgres']['user']
+        pg_pass = CONFIG['postgres']['pass']
+        pg_db = CONFIG['postgres']['db']
     except:
         DEFAULT_LOGGER.critical(get_raised_error(full=True))
         sys.exit(1)
@@ -36,11 +41,12 @@ if __name__ == '__main__':
 
             secure_config = copy.deepcopy(CONFIG)
             secure_config['log']['logdna']['key'] = '*****'
+            secure_config['postgres']['pass'] = '*****'
 
             DEFAULT_LOGGER.info(f'{SOFTWARE_VERSION} starting, PID: {p.pid}, File: {pid_file_full}')
             DEFAULT_LOGGER.info(f'Config loaded from {CFG_FILE}:\n{yaml.dump(secure_config, default_flow_style=False)}')
 
-            peewee = Peewee('postgresqlext://postgres:postgres@localhost:5432/beer')
+            peewee = Peewee(f'postgresqlext://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}')
             db = peewee(app)
             app.db = db
 

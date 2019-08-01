@@ -32,5 +32,6 @@ class IsActiveField(BooleanField):
 
 
 class CreatedAtField(DateTimeField):
-    def __init__(self, *args):
-        super(DateTimeField, self).__init__(*args, default=datetime.now)
+    def __init__(self, *args, **kwargs):
+        kwargs.pop('default', None)
+        super(DateTimeField, self).__init__(*args, **kwargs, default=datetime.now)

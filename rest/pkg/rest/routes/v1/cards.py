@@ -1,6 +1,6 @@
 from pkg.rest import v1
 from pkg.constants.error_codes import *
-from pkg.decorators import employee_app_context, json_request
+from pkg.decorators import employee_app_context, json_request, authenticated_app_context
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
@@ -30,6 +30,15 @@ async def create_card(request: Request):
         else:
             return response_error(ERROR_UNALLOWED_CARD_TYPE)
     return response_400()
+
+
+@v1.get(f'{CARD_PATH}')
+@authenticated_app_context
+async def view_card(request: Request, card_id: str):
+    card = await CardService.find(card_id)
+    if card:
+        return response.json({'result': model_to_json(card)})
+    return response_404(request)
 
 
 @v1.post(f'{CARD_PATH}/accumulate')

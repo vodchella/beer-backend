@@ -124,6 +124,69 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "view",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "bfb31d08-7323-4d27-bd48-7b28833b3519",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"increase_by\": 1\n}"
+								},
+								"url": {
+									"raw": "{{beer-backend-rest-server}}/api/v1/cards/:card_id",
+									"host": [
+										"{{beer-backend-rest-server}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cards",
+										":card_id"
+									],
+									"variable": [
+										{
+											"key": "card_id",
+											"type": "string",
+											"value": "HY3jBpIsGIWJ6fdj"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"event": [
@@ -295,8 +358,8 @@
 									"variable": [
 										{
 											"key": "user_id",
-											"value": "DaNhiRv862lsVbGx",
-											"type": "string"
+											"type": "string",
+											"value": "DaNhiRv862lsVbGx"
 										}
 									]
 								}

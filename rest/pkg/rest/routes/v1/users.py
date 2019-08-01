@@ -4,8 +4,9 @@ from pkg.decorators import authenticated_app_context, app_context, json_request
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
-from pkg.utils.errors import response_error, response_400, response_404
+from pkg.utils.errors import response_error
 from pkg.utils.peewee import models_to_json_array
+from pkg.utils.responses import response_400, response_404
 from sanic import response
 from sanic.request import Request
 

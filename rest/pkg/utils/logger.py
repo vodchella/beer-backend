@@ -64,5 +64,3 @@ if CONFIG['log']['logdna']['enabled'].lower() == 'true':
 
 DEFAULT_LOGGER = logging.getLogger(DEFAULT_LOGGER_NAME)
 REST_LOGGER = logging.getLogger(REST_LOGGER_NAME)
-# DB_LOGGER = logging.getLogger(DB_LOGGER_NAME)
-# LOGDNA_LOGGER = logging.getLogger(LOGDNA_LOGGER_NAME)

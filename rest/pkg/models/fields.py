@@ -9,22 +9,20 @@ class PrimaryKeyCharField(FixedCharField):
 
 
 class ForeignKeyCharField(FixedCharField):
-    def __init__(self, rel_model, related_name=None, on_delete=None,
-                 on_update=None, extra=None, to_field=None,
-                 object_id_name=None, *args, **kwargs):
+    def __init__(self, rel_model, *args, **kwargs):
         if rel_model != 'self' and not \
                 isinstance(rel_model, (Proxy, DeferredRelation)) and not \
                 issubclass(rel_model, Model):
             raise TypeError('Unexpected value for `rel_model`.  Expected '
                             '`Model`, `Proxy`, `DeferredRelation`, or "self"')
         self.rel_model = rel_model
-        self._related_name = related_name
+        self._related_name = kwargs.get('related_name', None)
         self.deferred = isinstance(rel_model, (Proxy, DeferredRelation))
-        self.on_delete = on_delete
-        self.on_update = on_update
-        self.extra = extra
-        self.to_field = to_field
-        self.object_id_name = object_id_name
+        self.on_delete = kwargs.get('on_delete', None)
+        self.on_update = kwargs.get('on_update', None)
+        self.extra = kwargs.get('extra', None)
+        self.to_field = kwargs.get('to_field', None)
+        self.object_id_name = kwargs.get('object_id_name', None)
         super(ForeignKeyCharField, self).__init__(*args, max_length=ID_FIELD_LENGTH, **kwargs)
 
 

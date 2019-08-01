@@ -15,21 +15,26 @@ from pkg.utils.errors import get_raised_error
 from pkg.utils.logger import DEFAULT_LOGGER
 
 
+def get_settings():
+    try:
+        _host = CONFIG['rest']['listen_host']
+        _port = CONFIG['rest']['listen_port']
+        _pg_host = CONFIG['postgres']['host']
+        _pg_port = CONFIG['postgres']['port']
+        _pg_user = CONFIG['postgres']['user']
+        _pg_pass = CONFIG['postgres']['pass']
+        _pg_db = CONFIG['postgres']['db']
+        return _host, _port, _pg_host, _pg_port, _pg_user, _pg_pass, _pg_db
+    except:
+        DEFAULT_LOGGER.critical(get_raised_error(full=True))
+        sys.exit(1)
+
+
 if __name__ == '__main__':
     if sys.version_info < (3, 6):
         panic('We need mininum Python verion 3.6 to run. Current version: %s.%s.%s' % sys.version_info[:3])
 
-    try:
-        host = CONFIG['rest']['listen_host']
-        port = CONFIG['rest']['listen_port']
-        pg_host = CONFIG['postgres']['host']
-        pg_port = CONFIG['postgres']['port']
-        pg_user = CONFIG['postgres']['user']
-        pg_pass = CONFIG['postgres']['pass']
-        pg_db = CONFIG['postgres']['db']
-    except:
-        DEFAULT_LOGGER.critical(get_raised_error(full=True))
-        sys.exit(1)
+    host, port, pg_host, pg_port, pg_user, pg_pass, pg_db = get_settings()
 
     pid_file = f'beer-rest-{port}'
     pid_dir = tempfile.gettempdir()

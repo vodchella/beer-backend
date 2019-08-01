@@ -13,6 +13,7 @@ from sanic.request import Request
 CARD_PATH = '/cards/<card_id:[A-z0-9]+>'
 
 
+# noinspection PyUnusedLocal
 @v1.post(f'/cards/create')
 @employee_app_context
 @json_request
@@ -22,10 +23,8 @@ async def create_card(request: Request):
     if owner:
         card_type = ctx.json_body.get('type', None)
         if card_type and card_type in ['accumulation', 'discount']:
-            attr = {}
             name = ctx.json_body.get('name', None)
-            if name and len(name.strip()):
-                attr = {'name': name}
+            attr = {'name': name} if name and len(name.strip()) else {}
             card = await CardService.create(owner, card_type, attr)
             return response.json({'result': model_to_json(card)})
         else:

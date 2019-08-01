@@ -17,6 +17,13 @@ before_script:
   - psql -c "alter user postgres with password 'postgres';" -U postgres
   - sudo mkdir /var/log/beer-rest
   - sudo chmod 777 /var/log/beer-rest
+  - sudo mkdir /usr/share/liquibase
+  - sudo chmod 777 /usr/share/liquibase
+  - wget -O /usr/share/liquibase/postgresql-jdbc.jar https://jdbc.postgresql.org/download/postgresql-42.1.4.jar
+  - wget https://github.com/liquibase/liquibase/releases/download/liquibase-parent-3.5.3/liquibase-3.5.3-bin.tar.gz
+  - tar --extract --file liquibase-3.5.3-bin.tar.gz --directory /usr/share/liquibase
+  - sudo ln -s /usr/share/liquibase/liquibase /usr/bin/liquibase
+  - bash ./db/db-update.sh
   - cd rest
 
 script:
@@ -25,3 +32,4 @@ script:
 env:
   global:
     - BEER_REST_CONFIG=sample_config.yml
+    - POSTGRES_JDBC=/usr/share/liquibase/postgresql-jdbc.jar

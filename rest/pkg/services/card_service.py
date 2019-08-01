@@ -43,6 +43,17 @@ class CardService:
             return None
 
     @staticmethod
+    async def find_by_user(user_id: str):
+        ctx = get_current_context()
+        try:
+            sql = Card.select() \
+                      .where(Card.owner_id == user_id) \
+                      .order_by(Card.created_at.desc())
+            return await ctx.db.execute(sql)
+        except:
+            return None
+
+    @staticmethod
     async def update(card: Card):
         ctx = get_current_context()
         await ctx.db.update(card)

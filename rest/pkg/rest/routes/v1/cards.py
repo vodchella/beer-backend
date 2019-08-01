@@ -5,7 +5,7 @@ from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
 from pkg.utils.errors import response_400, response_403, response_404, response_error
-from pkg.utils.peewee import model_to_json
+from pkg.utils.peewee import model_to_json_object
 from sanic import response
 from sanic.request import Request
 
@@ -26,7 +26,7 @@ async def create_card(request: Request):
             name = ctx.json_body.get('name', None)
             attr = {'name': name} if name and len(name.strip()) else {}
             card = await CardService.create(owner, card_type, attr)
-            return response.json({'result': model_to_json(card)})
+            return response.json({'result': model_to_json_object(card)})
         else:
             return response_error(ERROR_UNALLOWED_CARD_TYPE)
     return response_400()
@@ -37,7 +37,7 @@ async def create_card(request: Request):
 async def view_card(request: Request, card_id: str):
     card = await CardService.find(card_id)
     if card:
-        return response.json({'result': model_to_json(card)})
+        return response.json({'result': model_to_json_object(card)})
     return response_404(request)
 
 
@@ -65,7 +65,7 @@ async def accumulate_value(request: Request, card_id: str):
                         card.attributes['value'] = new_value
                         await CardService.update(card)
 
-                        response_json = {'result': model_to_json(card)}
+                        response_json = {'result': model_to_json_object(card)}
                         if not card.is_active:
                             response_json['message'] = 'Card was deactivated because of fullfilled'
                         return response.json(response_json)

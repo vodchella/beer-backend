@@ -4,9 +4,13 @@ from pkg.constants.database import ID_FIELD_ALPHABET, ID_FIELD_LENGTH
 from playhouse.shortcuts import model_to_dict
 
 
-def model_to_json(model: Model):
+def model_to_json_object(model: Model):
     if model:
         return model_to_dict(model, exclude='aio')
+
+
+def models_to_json_array(models):
+    return [model_to_json_object(model) for model in models]
 
 
 def generate_unique_id():

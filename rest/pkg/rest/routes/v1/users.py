@@ -1,9 +1,11 @@
 from pkg.rest import v1
 from pkg.constants.error_codes import *
 from pkg.decorators import authenticated_app_context, app_context, json_request
+from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
 from pkg.utils.errors import response_error, response_400, response_404
+from pkg.utils.peewee import models_to_json_array
 from sanic import response
 from sanic.request import Request
 
@@ -53,3 +55,10 @@ async def refresh_tokens(request: Request, user_id: str):
     if ctx.user.user_id != user_id:
         return response_404(request)
     return response.json({'result': await UserService.create_new_tokens(ctx.user)})
+
+
+# noinspection PyUnusedLocal
+@v1.get(f'{USER_PATH}/cards')
+@authenticated_app_context
+async def list_cards(request: Request, user_id: str):
+    return response.json({'result': models_to_json_array(await CardService.find_by_user(user_id))})

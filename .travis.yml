@@ -25,9 +25,11 @@ before_script:
   - sudo ln -s /usr/share/liquibase/liquibase /usr/bin/liquibase
   - bash ./db/db-update.sh
   - cd rest
+  - python server.py&
+  - sleep 2
 
 script:
-  - python server.py
+  - behave
 
 env:
   global:

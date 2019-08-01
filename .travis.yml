@@ -25,11 +25,14 @@ before_script:
   - sudo ln -s /usr/share/liquibase/liquibase /usr/bin/liquibase
   - bash ./db/db-update.sh
   - cd rest
-  - python server.py&
+  - python server.py 2> /dev/null &
   - sleep 2
 
 script:
   - behave
+
+after_failure:
+  - cat /var/log/beer-rest/beer-rest.log
 
 env:
   global:

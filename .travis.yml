@@ -1,7 +1,24 @@
 dist: bionic
+services:
+  - postgresql
+
+addons:
+  postgresql: "10"
+
 language: python
 python:
   - "3.6"
 
 install:
-  - pip install -r requirements.txt
+  - pip install -r rest/requirements.txt
+
+before_script:
+  - psql -c "create database beer;" -U postgres
+  - psql -c "alter user postgres with password 'postgres';" -U postgres
+
+script:
+  - python rest/server.py
+
+env:
+  global:
+    - BEER_REST_CONFIG=rest/sample_config.yml

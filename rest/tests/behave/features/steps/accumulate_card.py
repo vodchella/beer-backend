@@ -1,9 +1,10 @@
 from behave import *
+from behave.runner import Context
 from tests.behave.utils.constants import CARDS_PATH
 from tests.behave.utils import behave_request, authorized_behave_request
 
 
-def create_new_card(card_type='accumulation'):
+def create_new_card(card_type: str = 'accumulation'):
     url = f'{CARDS_PATH}/create'
     payload = '{"owner_id": "DaNhiRv862lsVbGx", "name": "Test ' + card_type + ' card", "type": "' + card_type + '"}'
     response = authorized_behave_request('POST', url, data=payload)
@@ -11,26 +12,26 @@ def create_new_card(card_type='accumulation'):
 
 
 @given('I try to accumulate card with invalid bearer token')
-def step_impl(context):
+def step_impl(context: Context):
     url = f'{CARDS_PATH}/HY3jBpIsGIWJ6fdj/accumulate'
     context.response = behave_request('POST', url)
 
 
 @given('I try to accumulate card with invalid card ID')
-def step_impl(context):
+def step_impl(context: Context):
     url = f'{CARDS_PATH}/invalid-id/accumulate'
     context.response = authorized_behave_request('POST', url)
 
 
 @given('I try to accumulate card with invalid JSON body')
-def step_impl(context):
+def step_impl(context: Context):
     url = f'{CARDS_PATH}/HY3jBpIsGIWJ6fdj/accumulate'
     payload = 'invalid-json'
     context.response = authorized_behave_request('POST', url, data=payload)
 
 
 @given('I send correct data to accumulate card')
-def step_impl(context):
+def step_impl(context: Context):
     new_card_id = create_new_card()['card_id']
     url = f'{CARDS_PATH}/{new_card_id}/accumulate'
     payload = '{"increase_by": 2}'
@@ -38,7 +39,7 @@ def step_impl(context):
 
 
 @then('I will get Ok http status and modified card value')
-def step_impl(context):
+def step_impl(context: Context):
     assert context.response.status_code == 200
     json_ = context.response.json()
     assert 'result' in json_

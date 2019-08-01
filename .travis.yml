@@ -24,4 +24,4 @@ script:
 
 env:
   global:
-    - BEER_REST_CONFIG=rest/sample_config.yml
+    - BEER_REST_CONFIG=sample_config.yml

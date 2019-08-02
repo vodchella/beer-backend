@@ -8,6 +8,10 @@ Feature: View card
       Given I try to view card with invalid card ID
        Then I will get "404" http error
 
+  Scenario: Trying to view card which not belong to me
+      Given I try to view card which not belong to me
+       Then I will get "403" http error
+
   Scenario: Really trying to view card
       Given I send correct data to view card
        Then I will get Ok http status and valid card in result

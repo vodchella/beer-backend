@@ -31,3 +31,9 @@ def step_impl(context: Context):
     assert 'card_id' in result
     assert 'type_of_card' in result
     assert 'is_active' in result
+
+
+@given('I try to view card which not belong to me')
+def step_impl(context):
+    url = f'{CARDS_PATH}/fsvV0P2q2dZ4nuL1'
+    context.response = authorized_behave_request('GET', url)

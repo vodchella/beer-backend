@@ -6,7 +6,7 @@ from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
 from pkg.utils.errors import response_error
 from pkg.utils.peewee import model_to_json_object
-from pkg.utils.responses import response_400, response_404, response_403, response_ok
+from pkg.utils.responses import response_400, response_404, response_403, response_ok, response_403_short
 from sanic.request import Request
 
 CARD_PATH = '/cards/<card_id:[A-z0-9]+>'
@@ -36,7 +36,11 @@ async def create_card(request: Request):
 async def view_card(request: Request, card_id: str):
     card = await CardService.find(card_id)
     if card:
-        return response_ok(model_to_json_object(card))
+        ctx = get_current_context()
+        if card.owner_id == ctx.user.user_id:
+            return response_ok(model_to_json_object(card))
+        else:
+            return response_403_short()
     return response_404(request)
 
 

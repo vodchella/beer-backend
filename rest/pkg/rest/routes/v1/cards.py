@@ -53,7 +53,7 @@ async def accumulate_value(request: Request, card_id: str):
         if card.type_of_card == 'accumulation':
             if card.is_active:
                 ctx = get_current_context()
-                if ctx.employee.company_id == card.company_id:  # TODO: make test for this compare
+                if ctx.employee.company_id == card.company_id:
                     increase_by = ctx.json_body.get('increase_by', None)
                     if increase_by and increase_by > 0:
                         new_value = card.attributes['value'] + increase_by

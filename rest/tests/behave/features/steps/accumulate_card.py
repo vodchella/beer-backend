@@ -102,3 +102,10 @@ def step_impl(context: Context):
     url = f'{CARDS_PATH}/{new_card_id}/accumulate'
     payload = '{"increase_by": 2}'
     context.response = authorized_behave_request('POST', url, data=payload)
+
+
+@given('I try to accumulate card belongs to another company')
+def step_impl(context):
+    url = f'{CARDS_PATH}/fsvV0P2q2dZ4nuL1/accumulate'
+    payload = '{"increase_by": 1}'
+    context.response = authorized_behave_request('POST', url, data=payload)

@@ -396,7 +396,7 @@
 							"const serverAddress = pm.variables.get('beer-backend-rest-server');",
 							"",
 							"request = {",
-							"    url: serverAddress + '/api/v1/users/DaNhiRv862lsVbGx/login?password=11111',",
+							"    url: serverAddress + '/api/v1/users/DaNhiRv862lsVbGx/login-for-postman?password=11111',",
 							"    method: 'GET'",
 							"}",
 							"",

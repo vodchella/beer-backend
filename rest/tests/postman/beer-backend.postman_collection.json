@@ -119,9 +119,6 @@
 									}
 								}
 							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"method": "GET",
 								"header": [
@@ -132,10 +129,6 @@
 										"value": "application/json"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"increase_by\": 1\n}"
-								},
 								"url": {
 									"raw": "{{beer-backend-rest-server}}/api/v1/cards/:card_id",
 									"host": [

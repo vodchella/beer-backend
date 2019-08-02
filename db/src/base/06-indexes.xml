@@ -7,4 +7,9 @@
             <column name="company_id"/>
         </createIndex>
     </changeSet>
+    <changeSet author="twister" id="unq_email">
+        <createIndex indexName="unq_email" schemaName="public" tableName="users" unique="true">
+            <column name="email"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>

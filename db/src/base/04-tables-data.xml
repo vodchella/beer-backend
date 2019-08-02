@@ -2,7 +2,8 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd" logicalFilePath="src/base/04-tables-data.xml">
     <changeSet author="twister" id="PUBLIC.USERS">
         <sql>
-            INSERT INTO public.users (user_id, email, password) VALUES ('DaNhiRv862lsVbGx', 'twister.kz@gmail.com', '$argon2id$v=19$m=102400,t=2,p=8$wygF0CNnRxSuGPR8G+oZTg$AeQvD2YWJoCnHG9V+KZ9Tg');
+            INSERT INTO public.users (user_id, email, password) VALUES ('DaNhiRv862lsVbGx', 'test-user-1@my-beer.com', '$argon2id$v=19$m=102400,t=2,p=8$wygF0CNnRxSuGPR8G+oZTg$AeQvD2YWJoCnHG9V+KZ9Tg');
+            INSERT INTO public.users (user_id, email, password) VALUES ('FADegAW4q2zY0eDv', 'test-user-2@my-beer.com', '$argon2id$v=19$m=102400,t=2,p=8$wygF0CNnRxSuGPR8G+oZTg$AeQvD2YWJoCnHG9V+KZ9Tg');
         </sql>
         <rollback>
             TRUNCATE public.users;
@@ -11,6 +12,7 @@
     <changeSet author="twister" id="PUBLIC.COMPANIES">
         <sql>
             INSERT INTO public.companies (company_id, name) VALUES ('hLL04DwaV9oGzF3n', 'Тестовая компания');
+            INSERT INTO public.companies (company_id, name) VALUES ('MtcFfi9yfl9E1Y02', 'Beer company');
         </sql>
         <rollback>
             TRUNCATE public.companies;
@@ -19,6 +21,7 @@
     <changeSet author="twister" id="PUBLIC.SERVICE_POINTS">
         <sql>
             INSERT INTO public.service_points (service_point_id, name, company_id) VALUES ('ej6FJhwGSCkkLILH', 'Тестовый магазин', 'hLL04DwaV9oGzF3n');
+            INSERT INTO public.service_points (service_point_id, name, company_id) VALUES ('KGC6cp7oEc5hhSMT', 'Beer point', 'MtcFfi9yfl9E1Y02');
         </sql>
         <rollback>
             TRUNCATE public.service_points;
@@ -27,6 +30,7 @@
     <changeSet author="twister" id="PUBLIC.EMPLOYEES">
         <sql>
             INSERT INTO public.employees (employee_id, user_id, company_id, service_point_id) VALUES ('uQfx7An8KHlK7khU', 'DaNhiRv862lsVbGx', 'hLL04DwaV9oGzF3n', 'ej6FJhwGSCkkLILH');
+            INSERT INTO public.employees (employee_id, user_id, company_id, service_point_id) VALUES ('53RznrJSHipCutjP', 'FADegAW4q2zY0eDv', 'MtcFfi9yfl9E1Y02', 'KGC6cp7oEc5hhSMT');
         </sql>
         <rollback>
             TRUNCATE public.employees;
@@ -35,6 +39,7 @@
     <changeSet author="twister" id="PUBLIC.CARDS">
         <sql>
             INSERT INTO public.cards (card_id, card_number, type_of_card, attributes, company_id, owner_id, issuer_id, issued_in_service_point_id) VALUES ('HY3jBpIsGIWJ6fdj', '00000001', 'accumulation', '{"name": "Тестовая карта", "value": 0, "limit": 19}', 'hLL04DwaV9oGzF3n', 'DaNhiRv862lsVbGx', 'uQfx7An8KHlK7khU', 'ej6FJhwGSCkkLILH');
+            INSERT INTO public.cards (card_id, card_number, type_of_card, attributes, company_id, owner_id, issuer_id, issued_in_service_point_id) VALUES ('fsvV0P2q2dZ4nuL1', '10000001', 'accumulation', '{"name": "Test beer card", "value": 0, "limit": 5}', 'MtcFfi9yfl9E1Y02', 'FADegAW4q2zY0eDv', '53RznrJSHipCutjP', 'KGC6cp7oEc5hhSMT');
         </sql>
         <rollback>
             TRUNCATE public.cards;

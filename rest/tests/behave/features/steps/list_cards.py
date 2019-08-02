@@ -10,7 +10,7 @@ def step_impl(context: Context):
     context.response = behave_request('GET', url)
 
 
-@given('I try to list cards with invalid user ID')
+@given('I try to list cards with invalid or not my user ID')
 def step_impl(context: Context):
     url = f'{USERS_PATH}/incorrectid/cards'
     context.response = authorized_behave_request('GET', url)

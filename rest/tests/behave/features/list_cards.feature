@@ -4,8 +4,8 @@ Feature: List cards
       Given I try to list cards with invalid bearer token
        Then I will get "403" http error
 
-  Scenario: Specify invalid user ID
-      Given I try to list cards with invalid user ID
+  Scenario: Specify invalid or not my user ID
+      Given I try to list cards with invalid or not my user ID
        Then I will get "404" http error
 
   Scenario: Really trying to list cards

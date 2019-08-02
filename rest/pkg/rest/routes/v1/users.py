@@ -64,9 +64,9 @@ async def login(request: Request, user_id: str):
 @authenticated_app_context
 async def refresh_tokens(request: Request, user_id: str):
     ctx = get_current_context()
-    if ctx.user.user_id != user_id:
-        return response_404(request)
-    return response_ok(await UserService.create_new_tokens(ctx.user))
+    if ctx.user.user_id == user_id:
+        return response_ok(await UserService.create_new_tokens(ctx.user))
+    return response_404(request)
 
 
 # noinspection PyUnusedLocal
@@ -74,6 +74,6 @@ async def refresh_tokens(request: Request, user_id: str):
 @authenticated_app_context
 async def list_cards(request: Request, user_id: str):
     ctx = get_current_context()
-    if ctx.user.user_id != user_id:
-        return response_404(request)
-    return response_ok(models_to_json_array(await CardService.find_by_user(user_id)))
+    if ctx.user.user_id == user_id:
+        return response_ok(models_to_json_array(await CardService.find_by_user(user_id)))
+    return response_404(request)

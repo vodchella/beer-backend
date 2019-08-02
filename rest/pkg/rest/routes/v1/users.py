@@ -49,6 +49,17 @@ async def login(request: Request, user_id: str):
     return response_error(ERROR_INVALID_USER_OR_PASSWORD)
 
 
+@v1.get(f'{USER_PATH}/login-for-postman')
+@app_context
+async def login(request: Request, user_id: str):
+    user = await UserService.find(user_id)
+    if user:
+        password = request.raw_args.get('password', None)
+        if password and UserService.verify_password(user, password):
+            return response_ok(await UserService.create_new_tokens(user))
+    return response_error(ERROR_INVALID_USER_OR_PASSWORD)
+
+
 @v1.get(f'{USER_PATH}/refresh-tokens')
 @authenticated_app_context
 async def refresh_tokens(request: Request, user_id: str):

@@ -4,6 +4,7 @@ import re
 from asyncpg.exceptions._base import PostgresError
 from functools import wraps
 from jwt.exceptions import PyJWTError
+from pkg.config import CONFIG
 from pkg.constants.error_codes import *
 from pkg.constants.logging import DB_LOGGER_NAME
 from pkg.rest import app
@@ -12,7 +13,7 @@ from pkg.services.user_service import UserService
 from pkg.utils.errors import response_error, get_raised_error
 from pkg.utils.jwt import create_secret
 from pkg.utils.context import ServerContext, get_current_context
-from pkg.utils.responses import response_403_short
+from pkg.utils.responses import response_403_short, response_404
 from sanic.exceptions import InvalidUsage
 
 
@@ -99,6 +100,19 @@ def json_request(func):
         else:
             return response_error(ERROR_JSON_PARSING_EXCEPTION)
     return wrapped
+
+
+def application_type(*allowed_types):
+    def decorator(func):
+        @wraps(func)
+        async def wrapped(*positional, **named):
+            if CONFIG['app']['type'] in allowed_types:
+                return await func(*positional, **named)
+            else:
+                ctx = get_current_context()
+                return response_404(ctx.request)
+        return wrapped
+    return decorator
 
 
 def singleton(cls):

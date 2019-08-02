@@ -1,7 +1,7 @@
 from pkg.rest import v1
 from pkg.constants.error_codes import *
 from pkg.constants.regexp import REGEXP_EMAIL, REGEXP_ID
-from pkg.decorators import authenticated_app_context, app_context, json_request
+from pkg.decorators import authenticated_app_context, app_context, json_request, application_type
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
@@ -54,6 +54,7 @@ async def login(request: Request, email: str):
 
 @v1.get(f'{USER_PATH}/login-for-postman')
 @app_context
+@application_type('dev')
 async def login(request: Request, user_id: str):
     user = await UserService.find(user_id)
     if user:

@@ -26,16 +26,6 @@
 								}
 							],
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{bearer-token}}",
-											"type": "string"
-										}
-									]
-								},
 								"method": "POST",
 								"header": [
 									{
@@ -47,7 +37,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"increase_by\": 16\n}"
+									"raw": "{\n\t\"increase_by\": 1\n}"
 								},
 								"url": {
 									"raw": "{{beer-backend-rest-server}}/api/v1/cards/:card_id/accumulate",
@@ -87,16 +77,6 @@
 								}
 							],
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{bearer-token}}",
-											"type": "string"
-										}
-									]
-								},
 								"method": "POST",
 								"header": [
 									{
@@ -143,16 +123,6 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{bearer-token}}",
-											"type": "string"
-										}
-									]
-								},
 								"method": "GET",
 								"header": [
 									{
@@ -180,8 +150,8 @@
 									"variable": [
 										{
 											"key": "card_id",
-											"value": "HY3jBpIsGIWJ6fdj",
-											"type": "string"
+											"type": "string",
+											"value": "HY3jBpIsGIWJ6fdj"
 										}
 									]
 								}
@@ -196,21 +166,6 @@
 								"id": "740d456f-e0b5-420d-b2ab-4d12bdffc85b",
 								"type": "text/javascript",
 								"exec": [
-									"const serverAddress = pm.variables.get('beer-backend-rest-server');",
-									"",
-									"request = {",
-									"    url: serverAddress + '/api/v1/users/DaNhiRv862lsVbGx/login?password=11111',",
-									"    method: 'GET'",
-									"}",
-									"",
-									"pm.sendRequest(request, function (err, response) {",
-									"    if (response.code === 200) {",
-									"        token = response.json()['result']['auth'];",
-									"        pm.environment.set('bearer-token', token)",
-									"    } else {",
-									"        console.log(err ? err : response.json());",
-									"    }",
-									"});",
 									""
 								]
 							}
@@ -234,16 +189,6 @@
 						{
 							"name": "change-password",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJEYU5oaVJ2ODYybHNWYkd4IiwiZXhwIjoxNTYyMTY0MTYzLCJ0eXAiOiJhIn0.EVx6HD8TPdD_sk9DM3l-0ADB_s5B9KNtnDMolKZaazs",
-											"type": "string"
-										}
-									]
-								},
 								"method": "POST",
 								"header": [
 									{
@@ -283,6 +228,9 @@
 						{
 							"name": "login-by-passord",
 							"request": {
+								"auth": {
+									"type": "noauth"
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -329,7 +277,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJEYU5oaVJ2ODYybHNWYkd4IiwiZXhwIjoxNTYyNzYxNzYzLCJ0eXAiOiJyIn0.7umRqIs30Nv0Cn58IBdVDdd7CYAq9knWU-GNPvq-2-s",
+											"value": "{{bearer-refresh-token}}",
 											"type": "string"
 										}
 									]
@@ -358,8 +306,8 @@
 									"variable": [
 										{
 											"key": "user_id",
-											"value": "DaNhiRv862lsVbGx",
-											"type": "string"
+											"type": "string",
+											"value": "DaNhiRv862lsVbGx"
 										}
 									]
 								}
@@ -369,16 +317,6 @@
 						{
 							"name": "cards",
 							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXIiOjEsInVpZCI6IkRhTmhpUnY4NjJsc1ZiR3giLCJleHAiOjE1NjQ2ODk4NzUsInR5cCI6ImEifQ.CbpMOUHvuYMBz8GN2_MOwkbj7eyTOn-tUqoWBZJLaXw",
-											"type": "string"
-										}
-									]
-								},
 								"method": "GET",
 								"header": [
 									{
@@ -417,6 +355,9 @@
 				{
 					"name": "ping",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -432,6 +373,54 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{bearer-token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f6236383-6478-4737-ab44-cfb719bdcfbc",
+						"type": "text/javascript",
+						"exec": [
+							"const serverAddress = pm.variables.get('beer-backend-rest-server');",
+							"",
+							"request = {",
+							"    url: serverAddress + '/api/v1/users/DaNhiRv862lsVbGx/login?password=11111',",
+							"    method: 'GET'",
+							"}",
+							"",
+							"pm.sendRequest(request, function (err, response) {",
+							"    if (response.code === 200) {",
+							"        token = response.json()['result']['auth'];",
+							"        refresh_token = response.json()['result']['refresh'];",
+							"        pm.environment.set('bearer-token', token)",
+							"        pm.environment.set('bearer-refresh-token', refresh_token)",
+							"    } else {",
+							"        console.log(err ? err : response.json());",
+							"    }",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b0af428b-2660-461e-a441-234e5cbdf8bf",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},

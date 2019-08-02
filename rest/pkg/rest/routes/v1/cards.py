@@ -1,5 +1,6 @@
 from pkg.rest import v1
 from pkg.constants.error_codes import *
+from pkg.constants.regexp import REGEXP_ID
 from pkg.decorators import employee_app_context, json_request, authenticated_app_context
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
@@ -9,7 +10,7 @@ from pkg.utils.peewee import model_to_json_object
 from pkg.utils.responses import response_400, response_404, response_403, response_ok, response_403_short
 from sanic.request import Request
 
-CARD_PATH = '/cards/<card_id:[A-z0-9]+>'
+CARD_PATH = f'/cards/<card_id:{REGEXP_ID}>'
 
 
 # noinspection PyUnusedLocal

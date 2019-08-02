@@ -35,16 +35,17 @@ async def change_password(request: Request, user_id: str):
     return response_ok('ok')
 
 
+# noinspection PyUnusedLocal
 @v1.get(f'{USER_PATH}/login')
 @app_context
+@json_request
 async def login(request: Request, user_id: str):
     user = await UserService.find(user_id)
     if user:
-        args = request.raw_args
-        if args:
-            password = args.get('password', None)
-            if password and UserService.verify_password(user, password):
-                return response_ok(await UserService.create_new_tokens(user))
+        ctx = get_current_context()
+        password = ctx.json_body.get('password', None)
+        if password and UserService.verify_password(user, password):
+            return response_ok(await UserService.create_new_tokens(user))
     return response_error(ERROR_INVALID_USER_OR_PASSWORD)
 
 

@@ -227,6 +227,9 @@
 						},
 						{
 							"name": "login-by-passord",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -240,8 +243,12 @@
 										"type": "text"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"password\": \"11111\"\n}"
+								},
 								"url": {
-									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/login?password=11111",
+									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/login",
 									"host": [
 										"{{beer-backend-rest-server}}"
 									],
@@ -251,12 +258,6 @@
 										"users",
 										":user_id",
 										"login"
-									],
-									"query": [
-										{
-											"key": "password",
-											"value": "11111"
-										}
 									],
 									"variable": [
 										{

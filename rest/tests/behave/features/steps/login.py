@@ -13,16 +13,14 @@ def step_impl(context: Context):
 
 @given('I try to login with incorrect password')
 def step_impl(context: Context):
-    url = f'{TEST_USER_PATH}/login'
     payload = '{"password": "incorrect"}'
-    context.response = behave_request('GET', url, data=payload)
+    context.response = behave_request('GET', LOGIN_USER_PATH, data=payload)
 
 
 @given('I send correct login data')
 def step_impl(context: Context):
-    url = f'{TEST_USER_PATH}/login'
     payload = '{"password": "' + PASSWORD + '"}'
-    context.response = behave_request('GET', url, data=payload)
+    context.response = behave_request('GET', LOGIN_USER_PATH, data=payload)
 
 
 @then('I will get Ok http status and tokens')
@@ -31,11 +29,10 @@ def step_impl(context: Context):
     json_ = context.response.json()
     assert 'result' in json_
     result = json_['result']
-    assert 'auth' in result and 'refresh' in result
+    assert 'auth' in result and 'refresh' in result and 'user_id' in result
 
 
 @given('I try to login with invalid JSON')
 def step_impl(context):
-    url = f'{TEST_USER_PATH}/login'
     payload = 'invalid-json'
-    context.response = behave_request('GET', url, data=payload)
+    context.response = behave_request('GET', LOGIN_USER_PATH, data=payload)

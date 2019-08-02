@@ -1,5 +1,6 @@
 from pkg.rest import v1
 from pkg.constants.error_codes import *
+from pkg.constants.regexp import REGEXP_EMAIL, REGEXP_ID
 from pkg.decorators import authenticated_app_context, app_context, json_request
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
@@ -10,7 +11,7 @@ from pkg.utils.responses import response_400, response_404, response_ok
 from sanic.request import Request
 
 
-USER_PATH = '/users/<user_id:[A-z0-9]+>'
+USER_PATH = f'/users/<user_id:{REGEXP_ID}>'
 
 
 @v1.post(f'{USER_PATH}/change-password')
@@ -36,16 +37,18 @@ async def change_password(request: Request, user_id: str):
 
 
 # noinspection PyUnusedLocal
-@v1.get(f'{USER_PATH}/login')
+@v1.get(f'/users/<email:{REGEXP_EMAIL}>/login')
 @app_context
 @json_request
-async def login(request: Request, user_id: str):
-    user = await UserService.find(user_id)
+async def login(request: Request, email: str):
+    user = await UserService.find_by_email(email)
     if user:
         ctx = get_current_context()
         password = ctx.json_body.get('password', None)
         if password and UserService.verify_password(user, password):
-            return response_ok(await UserService.create_new_tokens(user))
+            tokens = await UserService.create_new_tokens(user)
+            result = {'user_id': user.user_id, **tokens}
+            return response_ok(result)
     return response_error(ERROR_INVALID_USER_OR_PASSWORD)
 
 

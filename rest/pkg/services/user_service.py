@@ -15,6 +15,14 @@ class UserService:
             return None
 
     @staticmethod
+    async def find_by_email(email: str):
+        ctx = get_current_context()
+        try:
+            return await ctx.db.get(User, User.email == email)
+        except:
+            return None
+
+    @staticmethod
     def verify_password(user: User, password: str):
         try:
             return verify_hash(user.password, password)

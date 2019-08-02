@@ -1,7 +1,7 @@
 import json
 from json import JSONDecodeError
 from requests import HTTPError, Session, request, Response
-from tests.behave.utils.constants import PASSWORD, TEST_USER_PATH
+from tests.behave.utils.constants import PASSWORD, TEST_USER_PATH, LOGIN_USER_PATH
 
 
 def get_response_json(response: Response):
@@ -22,9 +22,8 @@ def behave_request(method: str, url: str, token: str = None, **kwargs):
 
 
 def authorized_behave_request(method: str, url: str, token_type: str = 'auth', **kwargs):
-    login_url = f'{TEST_USER_PATH}/login'
     payload = '{"password": "' + PASSWORD + '"}'
-    tokens = json.loads(behave_request('GET', login_url, data=payload).text)['result']
+    tokens = json.loads(behave_request('GET', LOGIN_USER_PATH, data=payload).text)['result']
     return behave_request(method, url, token=tokens[token_type], **kwargs)
 
 

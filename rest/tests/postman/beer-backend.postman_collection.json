@@ -241,7 +241,7 @@
 									"raw": "{\n\t\"password\": \"11111\"\n}"
 								},
 								"url": {
-									"raw": "{{beer-backend-rest-server}}/api/v1/users/:user_id/login",
+									"raw": "{{beer-backend-rest-server}}/api/v1/users/:email/login",
 									"host": [
 										"{{beer-backend-rest-server}}"
 									],
@@ -249,14 +249,13 @@
 										"api",
 										"v1",
 										"users",
-										":user_id",
+										":email",
 										"login"
 									],
 									"variable": [
 										{
-											"key": "user_id",
-											"value": "DaNhiRv862lsVbGx",
-											"type": "string"
+											"key": "email",
+											"value": "test-user-1@my-beer.com"
 										}
 									]
 								}

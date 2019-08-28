@@ -32,7 +32,7 @@ def get_settings():
 
 if __name__ == '__main__':
     if sys.version_info < (3, 6):
-        panic('We need mininum Python verion 3.6 to run. Current version: %s.%s.%s' % sys.version_info[:3])
+        panic('We need minimum Python version 3.6 to run. Current version: %s.%s.%s' % sys.version_info[:3])
 
     host, port, pg_host, pg_port, pg_user, pg_pass, pg_db = get_settings()
 

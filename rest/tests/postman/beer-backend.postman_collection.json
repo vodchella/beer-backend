@@ -344,28 +344,6 @@
 						}
 					],
 					"_postman_isSubFolder": true
-				},
-				{
-					"name": "ping",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{beer-backend-rest-server}}/api/v1/ping",
-							"host": [
-								"{{beer-backend-rest-server}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"ping"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"auth": {
@@ -429,6 +407,26 @@
 					],
 					"path": [
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ping",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{beer-backend-rest-server}}/ping",
+					"host": [
+						"{{beer-backend-rest-server}}"
+					],
+					"path": [
+						"ping"
 					]
 				}
 			},

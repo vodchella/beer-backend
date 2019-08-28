@@ -8,7 +8,7 @@ import yaml
 from lib.sanic_peewee import Peewee
 from pkg.config import CONFIG, CFG_FILE
 from pkg.constants.version import SOFTWARE_VERSION
-from pkg.rest import app, v1
+from pkg.rest import app, users, cards, root
 from pkg.utils.dynamic_import import dynamic_import
 from pkg.utils.console import panic
 from pkg.utils.errors import get_raised_error
@@ -61,7 +61,9 @@ if __name__ == '__main__':
                            'Loading REST modules...',
                            '... %s loaded')
 
-            app.blueprint(v1)
+            app.blueprint(cards)
+            app.blueprint(users)
+            app.blueprint(root)
             if CONFIG['app']['type'] == 'dev':
                 app.blueprint(swagger_blueprint)
 

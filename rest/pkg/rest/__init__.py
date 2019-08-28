@@ -5,7 +5,9 @@ from sanic import Sanic, Blueprint
 
 try:
     app = Sanic(__name__, log_config=LOG_CONFIG)
-    v1 = Blueprint('v1', url_prefix='/api/v1')
+    root = Blueprint('Root', url_prefix='/')
+    cards = Blueprint('Cards', url_prefix='/api/v1/cards')
+    users = Blueprint('Users', url_prefix='/api/v1/users')
 except:
     panic()
 

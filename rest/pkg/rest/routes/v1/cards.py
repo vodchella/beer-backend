@@ -1,4 +1,4 @@
-from pkg.rest import v1
+from pkg.rest import cards
 from pkg.constants.error_codes import *
 from pkg.constants.regexp import REGEXP_ID
 from pkg.decorators import employee_app_context, json_request, authenticated_app_context
@@ -10,11 +10,11 @@ from pkg.utils.peewee import model_to_json_object
 from pkg.utils.responses import response_400, response_404, response_403, response_ok, response_403_short
 from sanic.request import Request
 
-CARD_PATH = f'/cards/<card_id:{REGEXP_ID}>'
+CARD_PATH = f'/<card_id:{REGEXP_ID}>'
 
 
 # noinspection PyUnusedLocal
-@v1.post(f'/cards/create')
+@cards.post(f'/create')
 @employee_app_context
 @json_request
 async def create_card(request: Request):
@@ -32,7 +32,7 @@ async def create_card(request: Request):
     return response_400()
 
 
-@v1.get(f'{CARD_PATH}')
+@cards.get(f'{CARD_PATH}')
 @authenticated_app_context
 async def view_card(request: Request, card_id: str):
     card = await CardService.find(card_id)
@@ -45,7 +45,7 @@ async def view_card(request: Request, card_id: str):
     return response_404(request)
 
 
-@v1.post(f'{CARD_PATH}/accumulate')
+@cards.post(f'{CARD_PATH}/accumulate')
 @employee_app_context
 @json_request
 async def accumulate_value(request: Request, card_id: str):

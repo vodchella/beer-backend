@@ -1,4 +1,4 @@
-from pkg.rest import v1
+from pkg.rest import users
 from pkg.constants.error_codes import *
 from pkg.constants.regexp import REGEXP_EMAIL, REGEXP_ID
 from pkg.decorators import authenticated_app_context, app_context, json_request, application_type
@@ -11,10 +11,10 @@ from pkg.utils.responses import response_400, response_404, response_ok
 from sanic.request import Request
 
 
-USER_PATH = f'/users/<user_id:{REGEXP_ID}>'
+USER_PATH = f'/<user_id:{REGEXP_ID}>'
 
 
-@v1.post(f'{USER_PATH}/change-password')
+@users.post(f'{USER_PATH}/change-password')
 @authenticated_app_context
 @json_request
 async def change_password(request: Request, user_id: str):
@@ -37,7 +37,7 @@ async def change_password(request: Request, user_id: str):
 
 
 # noinspection PyUnusedLocal
-@v1.get(f'/users/<email:{REGEXP_EMAIL}>/login')
+@users.get(f'/<email:{REGEXP_EMAIL}>/login')
 @app_context
 @json_request
 async def login(request: Request, email: str):
@@ -52,7 +52,7 @@ async def login(request: Request, email: str):
     return response_error(ERROR_INVALID_USER_OR_PASSWORD)
 
 
-@v1.get(f'{USER_PATH}/login-for-postman')
+@users.get(f'{USER_PATH}/login-for-postman')
 @app_context
 @application_type('dev')
 async def login(request: Request, user_id: str):
@@ -64,7 +64,7 @@ async def login(request: Request, user_id: str):
     return response_error(ERROR_INVALID_USER_OR_PASSWORD)
 
 
-@v1.get(f'{USER_PATH}/refresh-tokens')
+@users.get(f'{USER_PATH}/refresh-tokens')
 @authenticated_app_context
 async def refresh_tokens(request: Request, user_id: str):
     ctx = get_current_context()
@@ -74,7 +74,7 @@ async def refresh_tokens(request: Request, user_id: str):
 
 
 # noinspection PyUnusedLocal
-@v1.get(f'{USER_PATH}/cards')
+@users.get(f'{USER_PATH}/cards')
 @authenticated_app_context
 async def list_cards(request: Request, user_id: str):
     ctx = get_current_context()

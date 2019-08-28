@@ -13,6 +13,7 @@ from pkg.utils.dynamic_import import dynamic_import
 from pkg.utils.console import panic
 from pkg.utils.errors import get_raised_error
 from pkg.utils.logger import DEFAULT_LOGGER
+from sanic_openapi import swagger_blueprint
 
 
 def get_settings():
@@ -61,6 +62,9 @@ if __name__ == '__main__':
                            '... %s loaded')
 
             app.blueprint(v1)
+            if CONFIG['app']['type'] == 'dev':
+                app.blueprint(swagger_blueprint)
+
             app.host, app.port = host, port
             app.static_routes = list(filter(lambda r: r.name == 'static', app.router.routes_all.values()))
             app.run(host=host, port=port, access_log=False)

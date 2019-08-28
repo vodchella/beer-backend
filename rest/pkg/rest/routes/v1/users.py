@@ -63,7 +63,7 @@ async def login(request: Request, email: str):
 async def login(request: Request, user_id: str):
     user = await UserService.find(user_id)
     if user:
-        password = request.raw_args.get('password', None)
+        password = request.args.get('password', None)
         if password and UserService.verify_password(user, password):
             return response_ok(await UserService.create_new_tokens(user))
     return response_error(ERROR_INVALID_USER_OR_PASSWORD)

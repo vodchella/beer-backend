@@ -15,4 +15,3 @@ try:
     users = Blueprint('Users', url_prefix='/api/v1/users')
 except:
     panic()
-

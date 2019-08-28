@@ -109,7 +109,6 @@ def application_type(*allowed_types):
             if CONFIG['app']['type'] in allowed_types:
                 return await func(*positional, **named)
             else:
-                ctx = get_current_context()
                 return response_404()
         return wrapped
     return decorator

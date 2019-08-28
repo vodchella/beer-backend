@@ -1,7 +1,6 @@
 from pkg.utils.context import get_current_context
 from pkg.utils.errors import response_error
 from sanic import response
-from sanic.request import Request
 from typing import Union
 
 

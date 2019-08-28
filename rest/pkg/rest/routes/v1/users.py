@@ -15,6 +15,7 @@ from sanic_openapi import doc
 USER_PATH = f'/<user_id:{REGEXP_ID}>'
 
 
+# noinspection PyUnusedLocal
 @users.post(f'{USER_PATH}/change-password')
 @doc.summary('Меняет пароль пользователя')
 @authenticated_app_context
@@ -28,7 +29,7 @@ async def change_password(request: Request, user_id: str):
         return response_400()
 
     if ctx.user.user_id != user_id:
-        return response_404(request)
+        return response_404()
 
     if not UserService.verify_password(ctx.user, old_password):
         return response_error(ERROR_INCORRECT_PASSWORD)
@@ -68,6 +69,7 @@ async def login(request: Request, user_id: str):
     return response_error(ERROR_INVALID_USER_OR_PASSWORD)
 
 
+# noinspection PyUnusedLocal
 @users.get(f'{USER_PATH}/refresh-tokens')
 @doc.summary('Обновляет токены')
 @authenticated_app_context
@@ -75,7 +77,7 @@ async def refresh_tokens(request: Request, user_id: str):
     ctx = get_current_context()
     if ctx.user.user_id == user_id:
         return response_ok(await UserService.create_new_tokens(ctx.user))
-    return response_404(request)
+    return response_404()
 
 
 # noinspection PyUnusedLocal
@@ -86,4 +88,4 @@ async def list_cards(request: Request, user_id: str):
     ctx = get_current_context()
     if ctx.user.user_id == user_id:
         return response_ok(models_to_json_array(await CardService.find_by_user(user_id)))
-    return response_404(request)
+    return response_404()

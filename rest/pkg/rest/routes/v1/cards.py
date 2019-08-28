@@ -34,6 +34,7 @@ async def create_card(request: Request):
     return response_400()
 
 
+# noinspection PyUnusedLocal
 @cards.get(f'{CARD_PATH}')
 @doc.summary('Возвращает карту по ID')
 @authenticated_app_context
@@ -45,9 +46,10 @@ async def view_card(request: Request, card_id: str):
             return response_ok(model_to_json_object(card))
         else:
             return response_403_short()
-    return response_404(request)
+    return response_404()
 
 
+# noinspection PyUnusedLocal
 @cards.post(f'{CARD_PATH}/accumulate')
 @doc.summary('Увеличивает счётчик на накопительной карте')
 @employee_app_context
@@ -84,4 +86,4 @@ async def accumulate_value(request: Request, card_id: str):
         else:
             return response_error(ERROR_UNALLOWED_CARD_TYPE)
     else:
-        return response_404(request)
+        return response_404()

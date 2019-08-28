@@ -110,7 +110,7 @@ def application_type(*allowed_types):
                 return await func(*positional, **named)
             else:
                 ctx = get_current_context()
-                return response_404(ctx.request)
+                return response_404()
         return wrapped
     return decorator
 

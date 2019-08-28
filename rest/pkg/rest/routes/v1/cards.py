@@ -9,12 +9,14 @@ from pkg.utils.errors import response_error
 from pkg.utils.peewee import model_to_json_object
 from pkg.utils.responses import response_400, response_404, response_403, response_ok, response_403_short
 from sanic.request import Request
+from sanic_openapi import doc
 
 CARD_PATH = f'/<card_id:{REGEXP_ID}>'
 
 
 # noinspection PyUnusedLocal
 @cards.post(f'/create')
+@doc.summary('Создаёт новую карту')
 @employee_app_context
 @json_request
 async def create_card(request: Request):
@@ -33,6 +35,7 @@ async def create_card(request: Request):
 
 
 @cards.get(f'{CARD_PATH}')
+@doc.summary('Возвращает карту по ID')
 @authenticated_app_context
 async def view_card(request: Request, card_id: str):
     card = await CardService.find(card_id)
@@ -46,6 +49,7 @@ async def view_card(request: Request, card_id: str):
 
 
 @cards.post(f'{CARD_PATH}/accumulate')
+@doc.summary('Увеличивает счётчик на накопительной карте')
 @employee_app_context
 @json_request
 async def accumulate_value(request: Request, card_id: str):

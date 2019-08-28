@@ -4,6 +4,7 @@ from pkg.constants.version import SOFTWARE_VERSION
 from pkg.decorators import app_context
 from sanic import response
 from sanic.request import Request
+from sanic_openapi import doc
 
 
 #
@@ -13,6 +14,7 @@ from sanic.request import Request
 
 # noinspection PyUnusedLocal
 @r.get('/')
+@doc.summary('Возвращает наименование сервера и версию ПО')
 @app_context
 async def root(request: Request):
     return response.json({
@@ -22,6 +24,7 @@ async def root(request: Request):
 
 # noinspection PyUnusedLocal
 @r.get('/ping')
+@doc.summary('Возвращает версию ПО')
 @app_context
 async def ping(context):
     return response.json({'version': SERVER_VERSION_FULL})

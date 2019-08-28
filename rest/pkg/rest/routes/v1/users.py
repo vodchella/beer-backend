@@ -9,12 +9,14 @@ from pkg.utils.errors import response_error
 from pkg.utils.peewee import models_to_json_array
 from pkg.utils.responses import response_400, response_404, response_ok
 from sanic.request import Request
+from sanic_openapi import doc
 
 
 USER_PATH = f'/<user_id:{REGEXP_ID}>'
 
 
 @users.post(f'{USER_PATH}/change-password')
+@doc.summary('Меняет пароль пользователя')
 @authenticated_app_context
 @json_request
 async def change_password(request: Request, user_id: str):
@@ -38,6 +40,7 @@ async def change_password(request: Request, user_id: str):
 
 # noinspection PyUnusedLocal
 @users.get(f'/<email:{REGEXP_EMAIL}>/login')
+@doc.summary('Авторизирует пользователя по email')
 @app_context
 @json_request
 async def login(request: Request, email: str):
@@ -53,6 +56,7 @@ async def login(request: Request, email: str):
 
 
 @users.get(f'{USER_PATH}/login-for-postman')
+@doc.summary('Авторизирует пользователя по ID. Доступно только в DEV-окружении')
 @app_context
 @application_type('dev')
 async def login(request: Request, user_id: str):
@@ -65,6 +69,7 @@ async def login(request: Request, user_id: str):
 
 
 @users.get(f'{USER_PATH}/refresh-tokens')
+@doc.summary('Обновляет токены')
 @authenticated_app_context
 async def refresh_tokens(request: Request, user_id: str):
     ctx = get_current_context()
@@ -75,6 +80,7 @@ async def refresh_tokens(request: Request, user_id: str):
 
 # noinspection PyUnusedLocal
 @users.get(f'{USER_PATH}/cards')
+@doc.summary('Получает список карт пользователя')
 @authenticated_app_context
 async def list_cards(request: Request, user_id: str):
     ctx = get_current_context()

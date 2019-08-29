@@ -52,3 +52,10 @@ def step_impl(context: Context):
     assert 'result' in json_
     result = json_['result']
     assert 'card_id' in result and 'card_number' in result
+
+
+@given('I try to create card with unknown attribute')
+def step_impl(context: Context):
+    url = f'{CARDS_PATH}/create'
+    payload = '{"owner_id": "DaNhiRv862lsVbGx", "unknown_key": "?", "type": "accumulation"}'
+    context.response = authorized_behave_request('POST', url, data=payload)

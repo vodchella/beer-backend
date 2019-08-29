@@ -20,6 +20,10 @@ Feature: Create card
       Given I try to create card with incorrect type
        Then I will get "500" http error with "-33001" application error
 
+  Scenario: Specify unknown card attribute
+      Given I try to create card with unknown attribute
+       Then I will get "500" http error with "-32001" application error
+
   Scenario: Really trying to create card
       Given I send correct card data
        Then I will get Ok http status and new card in result

@@ -7,7 +7,7 @@ class StrictDict:
 
         for key in init_dict.keys():
             if key not in allowed_attributes:
-                raise Exception(f'Trying to set invalid attribute: {key}')
+                raise Exception(f'Trying to set unknown attribute: {key}')
 
         self._allowed_attributes = allowed_attributes
         self._dict = init_dict
@@ -22,7 +22,7 @@ class StrictDict:
         if key in self._allowed_attributes:
             return self._dict[key]
         else:
-            raise Exception(f'Trying to get invalid attribute: {key}')
+            raise Exception(f'Trying to get unknown attribute: {key}')
 
     def __setattr__(self, key, value):
         if key in ['_allowed_attributes', '_dict']:
@@ -30,7 +30,7 @@ class StrictDict:
         elif key in self._allowed_attributes:
             self._dict[key] = value
         else:
-            raise Exception(f'Trying to set invalid attribute: {key}')
+            raise Exception(f'Trying to set unknown attribute: {key}')
 
     def __str__(self):
         return str(self._dict)

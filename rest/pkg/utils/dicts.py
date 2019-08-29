@@ -23,7 +23,7 @@ class StrictDict:
 
     def __getattr__(self, key):
         if key in self._allowed_attributes:
-            return self._dict[key]
+            return self._dict.get(key, None)
         else:
             raise Exception(f'Trying to get unknown attribute: {key}')
 

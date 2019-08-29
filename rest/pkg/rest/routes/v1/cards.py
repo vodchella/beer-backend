@@ -67,7 +67,7 @@ async def accumulate_value(request: Request, card_id: str):
                         attributes = AccumulationCardAttributes(card.attributes)
 
                         new_value = attributes.value + increase_by
-                        if attributes.limit > 0:
+                        if attributes.limit:
                             if new_value > attributes.limit:
                                 return response_error(ERROR_CARD_LIMIT_EXCEEDED)
                             elif new_value == attributes.limit:

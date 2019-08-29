@@ -5,6 +5,7 @@ from pkg.decorators import employee_app_context, json_request, authenticated_app
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
+from pkg.utils.dicts import copy_dict_and_exclude_keys
 from pkg.utils.errors import response_error
 from pkg.utils.peewee import model_to_json_object
 from pkg.utils.responses import response_400, response_404, response_403, response_ok, response_403_short
@@ -25,9 +26,8 @@ async def create_card(request: Request):
     if owner:
         card_type = ctx.json_body.get('type', None)
         if card_type and card_type in ['accumulation', 'discount']:
-            name = ctx.json_body.get('name', None)
-            attr = {'name': name} if name and len(name.strip()) else {}
-            card = await CardService.create(owner, card_type, attr)
+            attrs = copy_dict_and_exclude_keys(ctx.json_body, 'owner_id', 'type')
+            card = await CardService.create(owner, card_type, attrs)
             return response_ok(model_to_json_object(card))
         else:
             return response_error(ERROR_UNALLOWED_CARD_TYPE)

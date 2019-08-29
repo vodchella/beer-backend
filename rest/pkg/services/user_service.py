@@ -1,4 +1,3 @@
-from pkg.models import User
 from pkg.utils.argon import *
 from pkg.utils.context import get_current_context
 from pkg.utils.jwt import *
@@ -8,19 +7,21 @@ from pkg.utils.peewee import generate_unique_id
 class UserService:
     @staticmethod
     async def find(user_id: str):
-        ctx = get_current_context()
-        try:
-            return await ctx.db.get(User, User.user_id == user_id)
-        except:
-            return None
+        if user_id:
+            ctx = get_current_context()
+            try:
+                return await ctx.db.get(User, User.user_id == user_id)
+            except:
+                return None
 
     @staticmethod
     async def find_by_email(email: str):
-        ctx = get_current_context()
-        try:
-            return await ctx.db.get(User, User.email == email)
-        except:
-            return None
+        if email:
+            ctx = get_current_context()
+            try:
+                return await ctx.db.get(User, User.email == email)
+            except:
+                return None
 
     @staticmethod
     def verify_password(user: User, password: str):

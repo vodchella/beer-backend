@@ -30,22 +30,24 @@ class CardService:
 
     @staticmethod
     async def find(card_id: str):
-        ctx = get_current_context()
-        try:
-            return await ctx.db.get(Card, Card.card_id == card_id)
-        except:
-            return None
+        if card_id:
+            ctx = get_current_context()
+            try:
+                return await ctx.db.get(Card, Card.card_id == card_id)
+            except:
+                return None
 
     @staticmethod
     async def find_by_user(user_id: str):
-        ctx = get_current_context()
-        try:
-            sql = Card.select() \
-                      .where(Card.owner_id == user_id) \
-                      .order_by(Card.created_at.desc())
-            return await ctx.db.execute(sql)
-        except:
-            return None
+        if user_id:
+            ctx = get_current_context()
+            try:
+                sql = Card.select() \
+                          .where(Card.owner_id == user_id) \
+                          .order_by(Card.created_at.desc())
+                return await ctx.db.execute(sql)
+            except:
+                return None
 
     @staticmethod
     async def update(card: Card):

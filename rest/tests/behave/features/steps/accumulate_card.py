@@ -6,7 +6,7 @@ from tests.behave.utils import behave_request, authorized_behave_request
 
 def create_new_card(card_type: str = 'accumulation'):
     url = f'{CARDS_PATH}/create'
-    payload = '{"owner_id": "DaNhiRv862lsVbGx", "name": "Test ' + card_type + ' card", "type": "' + card_type + '"}'
+    payload = '{"owner_id": "DaNhiRv862lsVbGx", "type": "' + card_type + '"}'
     response = authorized_behave_request('POST', url, data=payload)
     return response.json()['result']
 

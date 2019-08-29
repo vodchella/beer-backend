@@ -7,16 +7,29 @@ from pkg.utils.context import get_current_context
 from pkg.utils.peewee import generate_unique_id
 
 
-class AccumulationCardAttributes(StrictDict):
-    def __init__(self, init_dict):
-        super().__init__(['limit', 'value', 'name'], init_dict)
+class CardAttributes(StrictDict):
+    def __init__(self, allowed_attributes, required_data: dict, optional_data: dict):
+        init_data = required_data
+        if optional_data:
+            init_data = {**init_data, **optional_data}
+        super().__init__(allowed_attributes, init_data)
 
 
-def create_default_card_attributes(card_type, additional_data):
-    def_attr = {'limit': 19, 'value': 0} if card_type == 'accumulation' else {}
-    if additional_data:
-        def_attr = {**def_attr, **additional_data}
-    return def_attr
+class AccumulationCardAttributes(CardAttributes):
+    def __init__(self, optional_data: dict):
+        required_data = {'limit': 19, 'value': 0}
+        super().__init__(['limit', 'value', 'name'], required_data, optional_data)
+
+
+class DiscountCardAttributes(CardAttributes):
+    def __init__(self, optional_data: dict):
+        super().__init__([], {}, optional_data)
+
+
+CARD_ATTRIBUTE_CLASSES = {
+    'accumulation': AccumulationCardAttributes,
+    'discount': DiscountCardAttributes,
+}
 
 
 class CardService:
@@ -26,7 +39,7 @@ class CardService:
 
     @staticmethod
     async def create(owner: User, card_type: str, attr: dict):
-        def_attr = create_default_card_attributes(card_type, attr)
+        card_attributes = CARD_ATTRIBUTE_CLASSES[card_type](attr)
         ctx = get_current_context()
         issuer = ctx.employee
         company = await CompanyService.find_by_service_point_id(issuer.service_point_id)
@@ -37,16 +50,11 @@ class CardService:
                                                   owner_id=owner.user_id,
                                                   issuer_id=issuer.employee_id,
                                                   issued_in_service_point_id=issuer.service_point_id,
-                                                  attributes=def_attr))
+                                                  attributes=card_attributes.get_dict()))
         return await CardService.find(card_id)
 
     @staticmethod
     async def find(card_id: str):
-        cls = AccumulationCardAttributes({'limit': 19, 'value': 1})
-        print(cls.value)
-        print(cls['limit'])
-        print(cls)
-
         ctx = get_current_context()
         try:
             return await ctx.db.get(Card, Card.card_id == card_id)

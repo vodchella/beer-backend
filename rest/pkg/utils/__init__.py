@@ -34,3 +34,6 @@ class StrictDict:
 
     def __str__(self):
         return str(self._dict)
+
+    def get_dict(self):
+        return self._dict

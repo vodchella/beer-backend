@@ -14,7 +14,7 @@ class CardService:
 
     @staticmethod
     async def create(owner: User, card_type: str, attr: dict):
-        card_attributes = CARD_ATTRIBUTE_CLASSES[card_type](attr)
+        card_attributes = CARD_ATTRIBUTE_CLASSES[card_type](optional_data=attr)
         ctx = get_current_context()
         issuer = ctx.employee
         company = await CompanyService.find_by_service_point_id(issuer.service_point_id)

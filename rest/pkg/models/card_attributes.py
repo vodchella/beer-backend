@@ -10,14 +10,14 @@ class CardAttributes(StrictDict):
 
 
 class AccumulationCardAttributes(CardAttributes):
-    def __init__(self, optional_data: dict):
-        required_data = {'limit': 19, 'value': 0}
-        super().__init__(['limit', 'value', 'name'], required_data, optional_data)
+    def __init__(self, required_data: dict = None, optional_data: dict = None):
+        req_data = required_data or {'limit': 19, 'value': 0}
+        super().__init__(['limit', 'value', 'name'], req_data, optional_data)
 
 
 class DiscountCardAttributes(CardAttributes):
-    def __init__(self, optional_data: dict):
-        super().__init__([], {}, optional_data)
+    def __init__(self, required_data: dict = None, optional_data: dict = None):
+        super().__init__([], required_data, optional_data)
 
 
 CARD_ATTRIBUTE_CLASSES = {

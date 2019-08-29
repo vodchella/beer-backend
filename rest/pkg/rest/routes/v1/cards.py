@@ -2,7 +2,7 @@ from pkg.rest import cards
 from pkg.constants.error_codes import *
 from pkg.constants.regexp import REGEXP_ID
 from pkg.decorators import employee_app_context, json_request, authenticated_app_context
-from pkg.models.card_attributes import CARD_ATTRIBUTE_CLASSES
+from pkg.models.card_attributes import CARD_ATTRIBUTE_CLASSES, AccumulationCardAttributes
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
@@ -64,16 +64,17 @@ async def accumulate_value(request: Request, card_id: str):
                 if ctx.employee.company_id == card.company_id:
                     increase_by = ctx.json_body.get('increase_by', None)
                     if increase_by and increase_by > 0:
-                        new_value = card.attributes['value'] + increase_by
+                        attributes = AccumulationCardAttributes(card.attributes)
 
-                        limit = card.attributes.get('limit', 0)
-                        if limit > 0:
-                            if new_value > limit:
+                        new_value = attributes.value + increase_by
+                        if attributes.limit > 0:
+                            if new_value > attributes.limit:
                                 return response_error(ERROR_CARD_LIMIT_EXCEEDED)
-                            elif new_value == limit:
+                            elif new_value == attributes.limit:
                                 card.is_active = False
+                        attributes.value = new_value
 
-                        card.attributes['value'] = new_value
+                        card.attributes = attributes.get_dict()
                         await CardService.update(card)
 
                         msg = 'Card was deactivated because of fullfilled' if not card.is_active else None

@@ -2,6 +2,7 @@ from pkg.rest import cards
 from pkg.constants.error_codes import *
 from pkg.constants.regexp import REGEXP_ID
 from pkg.decorators import employee_app_context, json_request, authenticated_app_context
+from pkg.models.card_attributes import CARD_ATTRIBUTE_CLASSES
 from pkg.services.card_service import CardService
 from pkg.services.user_service import UserService
 from pkg.utils.context import get_current_context
@@ -25,7 +26,7 @@ async def create_card(request: Request):
     owner = await UserService.find(ctx.json_body.get('owner_id', None))
     if owner:
         card_type = ctx.json_body.get('type', None)
-        if card_type and card_type in ['accumulation', 'discount']:
+        if card_type and card_type in CARD_ATTRIBUTE_CLASSES.keys():
             attrs = copy_dict_and_exclude_keys(ctx.json_body, 'owner_id', 'type')
             card = await CardService.create(owner, card_type, attrs)
             return response_ok(model_to_json_object(card))

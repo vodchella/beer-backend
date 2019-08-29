@@ -8,7 +8,7 @@ class StrictDict:
     def __init__(self, allowed_attributes, init_dict: dict):
         super().__init__()
 
-        for key in init_dict.keys():
+        for key in (init_dict.keys() if init_dict else []):
             if key not in allowed_attributes:
                 raise Exception(f'Trying to set unknown attribute: {key}')
 

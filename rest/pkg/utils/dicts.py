@@ -39,7 +39,7 @@ class StrictDict:
         return str(self._dict)
 
     def get_dict(self):
-        return self._dict
+        return copy.deepcopy(self._dict)
 
 
 def copy_dict_and_exclude_keys(input_dict: dict, *exclude_keys):

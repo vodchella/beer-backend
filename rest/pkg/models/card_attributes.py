@@ -1,4 +1,4 @@
-from pkg.utils import StrictDict
+from pkg.utils.dicts import StrictDict
 
 
 class CardAttributes(StrictDict):

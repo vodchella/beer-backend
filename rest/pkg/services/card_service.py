@@ -2,8 +2,14 @@ from nanoid import generate
 from pkg.constants.database import CARD_NUMBER_ALPHABET
 from pkg.models import Card, User
 from pkg.services.company_service import CompanyService
+from pkg.utils import StrictDict
 from pkg.utils.context import get_current_context
 from pkg.utils.peewee import generate_unique_id
+
+
+class AccumulationCardAttributes(StrictDict):
+    def __init__(self, init_dict):
+        super().__init__(['limit', 'value', 'name'], init_dict)
 
 
 def create_default_card_attributes(card_type, additional_data):
@@ -36,6 +42,11 @@ class CardService:
 
     @staticmethod
     async def find(card_id: str):
+        cls = AccumulationCardAttributes({'limit': 19, 'value': 1})
+        print(cls.value)
+        print(cls['limit'])
+        print(cls)
+
         ctx = get_current_context()
         try:
             return await ctx.db.get(Card, Card.card_id == card_id)

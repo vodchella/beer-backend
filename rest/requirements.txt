@@ -20,7 +20,7 @@ psycopg2==2.8.3
 psycopg2-binary==2.8.3
 pycparser==2.19
 PyJWT==1.7.1
-PyYAML==5.1.1
+PyYAML==5.4
 requests==2.22.0
 sanic==19.3.1
 sanic-openapi==0.6.0
